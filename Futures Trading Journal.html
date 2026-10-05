@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Futures Trading Journal</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#eceff2;--card:#fff;--tx:#161b22;--mut:#667085;--bd:#dde1e6;--ac:#3b4cca;--g:#0f9d58;--r:#d93025;--soft:#f5f7f9;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1116;--card:#171b22;--tx:#e8ebf0;--mut:#8b94a3;--bd:#262c36;--ac:#7c8bff;--g:#34c37a;--r:#ff6b5f;--soft:#1d222b}}
+:root[data-theme="dark"]{--bg:#0e1116;--card:#171b22;--tx:#e8ebf0;--mut:#8b94a3;--bd:#262c36;--ac:#7c8bff;--g:#34c37a;--r:#ff6b5f;--soft:#1d222b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums}
+header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:20px 20px 4px;max-width:1280px;margin:0 auto}
+h1{font-size:22px;margin:0;font-weight:600;letter-spacing:-.01em}
+h2{font-size:15px;margin:0 0 12px;font-weight:600}
+.sub{color:var(--mut);font-size:13px}
+main{display:grid;grid-template-columns:340px 1fr;gap:16px;padding:16px 20px 32px;max-width:1280px;margin:0 auto;align-items:start}
+@media(max-width:900px){main{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:16px}
+.stack{display:grid;gap:16px;min-width:0}
+form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{display:grid;gap:4px;font-size:12.5px;color:var(--mut)}
+.full{grid-column:1/-1}
+input,select,textarea{font:inherit;color:var(--tx);background:var(--soft);border:1px solid var(--bd);border-radius:6px;padding:8px 9px;width:100%;min-width:0}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
+button{font:inherit;cursor:pointer;border-radius:6px;border:1px solid var(--bd);background:var(--soft);color:var(--tx);padding:8px 12px}
+button.pri{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:500}
+.prev{grid-column:1/-1;background:var(--soft);border:1px dashed var(--bd);border-radius:8px;padding:10px 12px;font-size:13px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.prev b{display:block;font-size:15px}
+.err{grid-column:1/-1;color:var(--r);font-size:13px;min-height:1em}
+.hero{display:flex;flex-wrap:wrap;gap:24px 40px;align-items:flex-end}
+.big{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.k{background:var(--soft);border-radius:8px;padding:10px 12px}
+.k span{display:block;color:var(--mut);font-size:12.5px}
+.k b{font-size:17px;font-weight:600}
+.pos{color:var(--g)}.neg{color:var(--r)}
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+svg{width:100%;height:auto;display:block}
+svg text{fill:var(--mut);font-size:10px;font-family:inherit}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px;white-space:nowrap}
+th,td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--bd)}
+th{color:var(--mut);font-weight:500;font-size:12px}
+th:nth-child(-n+4),td:nth-child(-n+4),th:nth-child(11),td:nth-child(11){text-align:left}
+.empty{color:var(--mut);padding:24px 8px;text-align:center}
+.x{border:0;background:none;color:var(--mut);padding:2px 6px}
+details summary{cursor:pointer;font-weight:600}
+textarea{min-height:110px;font-family:ui-monospace,Consolas,monospace;font-size:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.ed{width:96px;padding:4px 6px;font-size:12.5px;text-align:right}.ed.sg{width:130px;text-align:left}
+.flt{display:flex;gap:10px;flex-wrap:wrap}.flt label{flex:1 1 140px}
+
+@media (pointer:coarse){input,select,textarea,.ed,.ed.sg{font-size:16px}button{min-height:40px}}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Futures Trading Journal</h1><div class="sub">MNQ · MYM · MCL — zadaj obchod a štatistiky sa prepočítajú samé</div></div>
+</header>
+<main>
+  <section class="stack">
+    <div class="card">
+      <h2>Nový obchod</h2>
+      <form id="f" autocomplete="off">
+        <label>Symbol<select id="sym"><option>MNQ</option><option>MYM</option><option>MCL</option></select></label>
+        <label>Smer<select id="side"><option value="Long">Long (kúpa)</option><option value="Short">Short (predaj)</option></select></label>
+        <label>Počet kontraktov<input id="qty" type="number" min="1" step="1" value="1" required></label>
+        <label>Komisie spolu ($)<input id="comm" type="number" min="0" step="0.01" value="0"></label>
+        <label>Vstupná cena<input id="entry" type="number" step="any" required></label>
+        <label>Výstupná cena<input id="exit" type="number" step="any" required></label>
+        <label>Stop loss<input id="stop" type="number" step="any" required></label>
+        <label>Take profit (voliteľné)<input id="tp" type="number" step="any"></label>
+        <label>Čas vstupu<input id="tin" type="datetime-local" required></label>
+        <label>Čas výstupu<input id="tout" type="datetime-local" required></label>
+        <label class="full">Stratégia<input id="strat" list="sl" placeholder="napr. Breakout"><datalist id="sl"></datalist></label>
+        <label class="full">Poznámka<input id="note"></label>
+        <div class="prev" id="prev"></div>
+        <div class="err" id="err"></div>
+        <button class="pri full" type="submit">Uložiť obchod</button>
+      </form>
+    </div>
+    <div class="card">
+      <h2>Import z Tradovate</h2>
+      <p class="sub" style="margin:0 0 10px">V Tradovate: Account Reports → Fills → Download CSV. Obchody sa poskladajú z jednotlivých vykonaní (od nulovej pozície po nulovú). Už importované sa preskočia.</p>
+      <button id="imp">Vybrať súbor Fills.csv</button>
+      <input type="file" id="fim" accept=".csv,text/csv" hidden>
+      <div class="sub" id="im" style="margin-top:8px"></div>
+    </div>
+    <div class="card">
+      <h2>Účet</h2>
+      <label>Počiatočný zostatok ($)<input id="start" type="number" min="0" step="any"></label>
+      <p class="sub" style="margin:10px 0 0">Hodnota bodu: MNQ $2, MYM $0,50, MCL $100 (za 1,00 USD pohybu).</p>
+    </div>
+  </section>
+
+  <section class="stack">
+    <div class="card flt">
+      <label>Obdobie<select id="fp"><option value="all">Celé obdobie</option><option value="month">Mesiac</option><option value="week">Týždeň (ISO)</option></select></label>
+      <label id="fvw" hidden>Vyber<select id="fv"></select></label>
+      <label>Symbol<select id="fs"><option value="">Všetky</option><option>MNQ</option><option>MYM</option><option>MCL</option></select></label>
+      <label>Stratégia<select id="fg"></select></label>
+    </div>
+    <div class="card" id="top"></div>
+    <div class="card"><h2>Štatistiky</h2><div class="grid" id="stats"></div></div>
+    <div class="charts">
+      <div class="card"><h2>Vývoj účtu</h2><div id="c1"></div></div>
+      <div class="card"><h2>Mesačný P&amp;L</h2><div id="c2"></div></div>
+      <div class="card"><h2>P&amp;L podľa symbolu</h2><div id="c3"></div></div>
+      <div class="card"><h2>P&amp;L podľa stratégie</h2><div id="c4"></div></div>
+    </div>
+    <div class="card"><h2>Obchody</h2><div class="tw" id="tbl"></div></div>
+    <div class="card">
+      <details open><summary>Záloha dát</summary>
+        <p class="sub">Dáta sú uložené len v tomto prehliadači na tomto zariadení. Vytvor zálohu, skopíruj ju a ulož (napr. do Poznámok). Neskôr ju vlož späť do poľa a načítaj.</p>
+        <div class="row"><button id="dl">Vytvoriť zálohu</button><button id="ul">Načítať zo zálohy</button><button id="csv">Zobraziť CSV</button></div>
+        <textarea id="bt" placeholder="Tu sa zobrazí záloha alebo CSV. Pre obnovu sem vlož zálohu."></textarea>
+        <div class="sub" id="bm"></div>
+      </details>
+    </div>
+  </section>
+</main>
+<script>
+const PV={MNQ:2,MYM:0.5,MCL:100};
+const $=id=>document.getElementById(id);
+let S={start:5000,trades:[]};
+try{const r=localStorage.getItem('tj1');if(r){const o=JSON.parse(r);if(o&&Array.isArray(o.trades))S=o}}catch(e){}
+const save=()=>{try{localStorage.setItem('tj1',JSON.stringify(S))}catch(e){}};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const m$=n=>(n<0?'-':'')+'$'+Math.abs(n).toLocaleString('sk-SK',{minimumFractionDigits:2,maximumFractionDigits:2});
+const cls=n=>n>0?'pos':n<0?'neg':'';
+const dur=ms=>{const m=Math.round(ms/60000),d=Math.floor(m/1440),h=Math.floor(m%1440/60);return (d?d+' d ':'')+h+' h '+(m%60)+' min'};
+const fd=t=>new Date(t).toLocaleString('sk-SK',{day:'numeric',month:'numeric',year:'2-digit',hour:'2-digit',minute:'2-digit'});
+
+function calc(t){
+  const d=t.side==='Long'?1:-1,pv=PV[t.sym],pts=d*(t.exit-t.entry),r1=(t.stop==null||isNaN(t.stop))?0:Math.abs(t.entry-t.stop);
+  return{pts,r1,R:r1>0?pts/r1:null,pnl:pts*t.qty*pv-t.comm,risk:r1>0?r1*t.qty*pv:null,
+    dur:new Date(t.tout)-new Date(t.tin)};
+}
+function readForm(){
+  return{sym:$('sym').value,side:$('side').value,qty:+$('qty').value,comm:+$('comm').value||0,
+    entry:parseFloat($('entry').value),exit:parseFloat($('exit').value),stop:parseFloat($('stop').value),
+    tp:$('tp').value===''?null:parseFloat($('tp').value),tin:$('tin').value,tout:$('tout').value,
+    strat:$('strat').value.trim()||'—',note:$('note').value.trim()};
+}
+function validate(t){
+  if([t.entry,t.exit,t.stop].some(isNaN)||!(t.qty>=1))return'Vyplň vstup, výstup, stop a počet kontraktov.';
+  if(!t.tin||!t.tout)return'Vyplň čas vstupu aj výstupu.';
+  if(new Date(t.tout)<new Date(t.tin))return'Výstup nemôže byť pred vstupom.';
+  if(t.entry===t.stop)return'Stop loss sa nesmie rovnať vstupnej cene (nedá sa vypočítať R).';
+  if(t.side==='Long'&&t.stop>t.entry)return'Pri Long musí byť stop pod vstupnou cenou.';
+  if(t.side==='Short'&&t.stop<t.entry)return'Pri Short musí byť stop nad vstupnou cenou.';
+  return'';
+}
+function preview(){
+  const t=readForm(),el=$('prev');
+  if([t.entry,t.exit,t.stop].some(isNaN)){el.innerHTML='<div class="sub" style="grid-column:1/-1">Po zadaní cien uvidíš tu výpočet obchodu.</div>';return}
+  const c=calc(t);
+  el.innerHTML=`<div>Body<b class="${cls(c.pts)}">${c.pts.toFixed(2)}</b></div><div>R multiple<b class="${cls(c.R)}">${c.R==null?'—':c.R.toFixed(2)+' R'}</b></div><div>P&amp;L<b class="${cls(c.pnl)}">${m$(c.pnl)}</b></div><div>Riziko 1R<b>${c.risk==null?'—':m$(c.risk)}</b></div>`+
+  (t.tp!=null&&c.r1>0?`<div>Max R:R<b>${(Math.abs(t.tp-t.entry)/c.r1).toFixed(2)}</b></div>`:'');
+}
+
+function rows(){return S.trades.map(t=>({t,c:calc(t)})).sort((a,b)=>new Date(a.t.tout)-new Date(b.t.tout))}
+function bars(items,fmtL){
+  if(!items.length)return'<div class="empty">Zatiaľ žiadne dáta</div>';
+  const W=560,H=190,p=28,mx=Math.max(...items.map(i=>Math.abs(i[1])),1),z=H/2,bw=Math.min(46,(W-p*2)/items.length-8);
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img"><line x1="${p}" x2="${W-p}" y1="${z}" y2="${z}" stroke="var(--bd)"/>`;
+  items.forEach((it,i)=>{
+    const x=p+(i+.5)*(W-p*2)/items.length,h=Math.abs(it[1])/mx*(H/2-22),y=it[1]>=0?z-h:z;
+    s+=`<rect x="${x-bw/2}" y="${y}" width="${bw}" height="${Math.max(h,1)}" rx="2" fill="${it[1]>=0?'var(--g)':'var(--r)'}"/>`+
+    `<text x="${x}" y="${it[1]>=0?y-4:y+h+11}" text-anchor="middle">${Math.round(it[1])}</text>`+
+    `<text x="${x}" y="${H-2}" text-anchor="middle">${esc(fmtL?fmtL(it[0]):it[0]).slice(0,12)}</text>`;
+  });
+  return s+'</svg>';
+}
+function line(vals){
+  if(vals.length<2)return'<div class="empty">Zadaj aspoň jeden obchod</div>';
+  const W=560,H=190,p=34,mn=Math.min(...vals),mxv=Math.max(...vals),rg=(mxv-mn)||1;
+  const X=i=>p+i*(W-p-10)/(vals.length-1),Y=v=>H-22-(v-mn)/rg*(H-40);
+  const pts=vals.map((v,i)=>X(i)+','+Y(v)).join(' ');
+  return`<svg viewBox="0 0 ${W} ${H}" role="img"><line x1="${p}" x2="${W-10}" y1="${Y(vals[0])}" y2="${Y(vals[0])}" stroke="var(--bd)" stroke-dasharray="4 4"/>`+
+  `<polygon points="${X(0)},${H-22} ${pts} ${X(vals.length-1)},${H-22}" fill="var(--ac)" opacity=".12"/>`+
+  `<polyline points="${pts}" fill="none" stroke="var(--ac)" stroke-width="2" stroke-linejoin="round"/>`+
+  `<text x="2" y="${Y(mxv)+3}">${Math.round(mxv)}</text><text x="2" y="${Y(mn)+3}">${Math.round(mn)}</text>`+
+  `<text x="${p}" y="${H-6}">obchod 0</text><text x="${W-10}" y="${H-6}" text-anchor="end">obchod ${vals.length-1}</text></svg>`;
+}
+const F={p:'all',v:'',s:'',g:''};
+const isoWeek=d=>{d=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const n=d.getUTCDay()||7;d.setUTCDate(d.getUTCDate()+4-n);const y=d.getUTCFullYear();return y+'-T'+String(Math.ceil(((d-Date.UTC(y,0,1))/864e5+1)/7)).padStart(2,'0')};
+const pk=t=>F.p==='month'?t.tin.slice(0,7):isoWeek(new Date(t.tin));
+function fillF(all){
+  $('fvw').hidden=F.p==='all';
+  if(F.p!=='all'){const k=[...new Set(all.map(r=>pk(r.t)))].sort().reverse();
+    if(!k.includes(F.v))F.v=k[0]||'';
+    $('fv').innerHTML=k.map(x=>`<option>${x}</option>`).join('');$('fv').value=F.v}
+  const g=[...new Set(S.trades.map(t=>t.strat))].sort();if(F.g&&!g.includes(F.g))F.g='';
+  $('fg').innerHTML='<option value="">Všetky</option>'+g.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');$('fg').value=F.g;
+}
+const scoped=all=>all.filter(r=>(!F.s||r.t.sym===F.s)&&(!F.g||r.t.strat===F.g)&&(F.p==='all'||pk(r.t)===F.v));
+function groupSum(rs,key){const m=new Map();rs.forEach(r=>m.set(key(r),(m.get(key(r))||0)+r.c.pnl));return[...m]}
+
+function render(){
+  const all=rows();fillF(all);const rs=scoped(all),n=rs.length;
+  let sb=S.start;if(n&&!F.s&&!F.g)sb=S.start+all.slice(0,all.indexOf(rs[0])).reduce((x,r)=>x+r.c.pnl,0);
+  $('start').value=S.start;
+  $('sl').innerHTML=[...new Set(S.trades.map(t=>t.strat).filter(x=>x!=='—'))].map(x=>`<option value="${esc(x)}">`).join('');
+  let bal=sb,peak=sb,mdd=0,mddA=0,curW=0,curL=0,mW=0,mL=0;const eq=[sb];
+  rs.forEach(r=>{bal+=r.c.pnl;eq.push(bal);peak=Math.max(peak,bal);const dd=(bal-peak)/peak;if(dd<mdd)mdd=dd;mddA=Math.min(mddA,bal-peak);
+    if(r.c.pnl>0){curW++;curL=0}else if(r.c.pnl<0){curL++;curW=0}else{curW=0;curL=0}mW=Math.max(mW,curW);mL=Math.max(mL,curL)});
+  const pnl=bal-sb,W=rs.filter(r=>r.c.pnl>0),L=rs.filter(r=>r.c.pnl<0),sum=a=>a.reduce((s,r)=>s+r.c.pnl,0);
+  const gw=sum(W),gl=sum(L),totR=rs.reduce((s,r)=>s+(r.c.R||0),0),nR=rs.filter(r=>r.c.R!=null).length;
+  $('top').innerHTML=`<div class="hero"><div><div class="sub">Zostatok účtu</div><div class="big">${m$(bal)}</div></div>
+   <div><div class="sub">Celkový P&amp;L</div><div class="big ${cls(pnl)}">${m$(pnl)}</div></div>
+   <div><div class="sub">Výnos</div><div class="big ${cls(pnl)}">${sb>0?(pnl/sb*100).toFixed(1):'0.0'} %</div></div></div>`;
+  const K=(a,b,c)=>`<div class="k"><span>${a}</span><b class="${c||''}">${b}</b></div>`;
+  $('stats').innerHTML=[
+    K('Počet obchodov',n),K('Úspešnosť',n?(W.length/n*100).toFixed(1)+' %':'—'),
+    K('Expectancy (R / obchod)',nR?(totR/nR).toFixed(2)+' R':'—',cls(totR)),K('Celkové R'+(nR<n?` (${nR} z ${n} so stopom)`:''),nR?totR.toFixed(2)+' R':'—',cls(totR)),
+    K('Profit factor',gl<0?(gw/Math.abs(gl)).toFixed(2):(gw>0?'∞':'—')),
+    K('Priemerný zisk',W.length?m$(gw/W.length):'—','pos'),K('Priemerná strata',L.length?m$(gl/L.length):'—','neg'),
+    K('Najväčší zisk',W.length?m$(Math.max(...W.map(r=>r.c.pnl))):'—','pos'),K('Najväčšia strata',L.length?m$(Math.min(...L.map(r=>r.c.pnl))):'—','neg'),
+    K('Max. série výhier',mW),K('Max. série strát',mL),
+    K('Max. drawdown',n?(mdd*100).toFixed(1)+' % ('+m$(mddA)+')':'—','neg'),
+    K('Long / Short',rs.filter(r=>r.t.side==='Long').length+' / '+rs.filter(r=>r.t.side==='Short').length),
+    K('Priemerný čas v obchode',n?dur(rs.reduce((s,r)=>s+r.c.dur,0)/n):'—'),
+    K('Komisie spolu',m$(rs.reduce((s,r)=>s+r.t.comm,0)))].join('');
+  $('c1').innerHTML=line(eq);
+  const ml=n=>{const[y,m]=n.split('-');return m+'/'+y.slice(2)};
+  $('c2').innerHTML=bars(groupSum(rs,r=>r.t.tout.slice(0,7)).sort((a,b)=>a[0]<b[0]?-1:1),ml);
+  $('c3').innerHTML=bars(groupSum(rs,r=>r.t.sym));
+  $('c4').innerHTML=bars(groupSum(rs,r=>r.t.strat));
+  $('tbl').innerHTML=n?`<table><thead><tr><th>#</th><th>Vstup</th><th>Symbol</th><th>Smer</th><th>Qty</th><th>Vstup (cena)</th><th>Výstup (cena)</th><th>Stop</th><th>R</th><th>P&amp;L</th><th>Stratégia</th><th></th></tr></thead><tbody>`+
+    [...rs].reverse().map((r,i)=>`<tr title="${esc(r.t.note)}"><td>${n-i}</td><td>${fd(r.t.tin)}</td><td>${r.t.sym}</td><td>${r.t.side}</td><td>${r.t.qty}</td><td>${+Number(r.t.entry).toFixed(4)}</td><td>${+Number(r.t.exit).toFixed(4)}</td><td><input class="ed" type="number" step="any" data-id="${r.t.id}" data-f="stop" value="${r.t.stop??''}" placeholder="doplň" aria-label="Stop loss"></td><td class="${cls(r.c.R)}">${r.c.R==null?'—':r.c.R.toFixed(2)}</td><td class="${cls(r.c.pnl)}">${m$(r.c.pnl)}</td><td><input class="ed sg" list="sl" data-id="${r.t.id}" data-f="strat" value="${r.t.strat==='—'?'':esc(r.t.strat)}" placeholder="doplň" aria-label="Stratégia"></td><td><button class="x" data-id="${r.t.id}" aria-label="Zmazať obchod">✕</button></td></tr>`).join('')+'</tbody></table>'
+    :'<div class="empty">Žiadne obchody. Vyplň formulár vľavo a ulož prvý, alebo zmeň filter.</div>';
+  $('tbl').querySelectorAll('.x').forEach(b=>b.onclick=()=>{S.trades=S.trades.filter(t=>t.id!==b.dataset.id);save();render()});
+  $('tbl').querySelectorAll('input[data-f]').forEach(i=>i.onchange=()=>{
+    const t=S.trades.find(x=>x.id===i.dataset.id);if(!t)return;
+    if(i.dataset.f==='stop'){const v=i.value===''?null:parseFloat(i.value);
+      if(v!=null&&(isNaN(v)||v===t.entry||(t.side==='Long'?v>t.entry:v<t.entry))){i.style.outline='2px solid var(--r)';i.title='Stop musí byť pod vstupom (Long) alebo nad vstupom (Short).';return}
+      t.stop=v}else t.strat=i.value.trim()||'—';
+    save();render()});
+}
+
+$('f').addEventListener('input',()=>{$('err').textContent='';preview()});
+$('f').addEventListener('submit',e=>{
+  e.preventDefault();const t=readForm(),er=validate(t);
+  if(er){$('err').textContent=er;return}
+  t.id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+  S.trades.push(t);save();render();
+  ['entry','exit','stop','tp','note'].forEach(i=>$(i).value='');preview();
+});
+$('start').addEventListener('change',()=>{const v=parseFloat($('start').value);S.start=isNaN(v)?0:v;save();render()});
+const dlf=(name,txt)=>{$('bt').value=txt.replace(/^\ufeff/,'');$('bm').textContent='Hotovo. Text je v poli vyššie, skopíruj ho.'};
+$('dl').onclick=()=>{dlf('trading-journal-zaloha-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(S),'application/json');};
+$('ul').onclick=()=>{try{const o=JSON.parse($('bt').value);if(!o||!Array.isArray(o.trades))throw 0;
+  S={start:+o.start||0,trades:o.trades.filter(t=>PV[t.sym]&&t.tin&&t.tout)};save();render();$('bm').textContent='Načítaných obchodov: '+S.trades.length}
+  catch(er){$('bm').textContent='Záloha nie je platná, skontroluj vložený text.'}};
+$('csv').onclick=()=>{const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+  const h=['Vstup','Výstup','Symbol','Smer','Qty','Vstupná cena','Výstupná cena','Stop','Target','Komisie','R','Body','P&L','Stratégia','Poznámka'];
+  dlf('trading-journal.csv','\ufeff'+[h.map(q).join(';'),...rows().map(r=>[r.t.tin,r.t.tout,r.t.sym,r.t.side,r.t.qty,r.t.entry,r.t.exit,r.t.stop,r.t.tp,r.t.comm,(r.c.R==null?'':r.c.R.toFixed(2)),r.c.pts,r.c.pnl.toFixed(2),r.t.strat,r.t.note].map(q).join(';'))].join('\r\n'),'text/csv')};
+$('fp').onchange=()=>{F.p=$('fp').value;render()};
+$('fv').onchange=()=>{F.v=$('fv').value;render()};
+$('fs').onchange=()=>{F.s=$('fs').value;render()};
+$('fg').onchange=()=>{F.g=$('fg').value;render()};
+/*IMPORT*/
+function parseCSV(txt){const rows=[];let r=[],f='',q=false;
+  for(let i=0;i<txt.length;i++){const c=txt[i];
+    if(q){if(c==='"'){if(txt[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
+    else if(c==='"')q=true;else if(c===','){r.push(f);f=''}
+    else if(c==='\n'){r.push(f);rows.push(r);r=[];f=''}else if(c!=='\r')f+=c}
+  if(f!==''||r.length){r.push(f);rows.push(r)}return rows}
+const lt=s=>{const m=/^(\d\d)\/(\d\d)\/(\d{4}) (\d\d:\d\d:\d\d)$/.exec(String(s).trim());return m?`${m[3]}-${m[1]}-${m[2]}T${m[4]}`:null};
+function fromFills(txt){
+  const R=parseCSV(txt.replace(/^\ufeff/,'')).filter(r=>r.length>1),h=(R.shift()||[]).map(x=>x.trim()),ix=n=>h.indexOf(n);
+  if(['Fill ID','Timestamp','_timestamp','B/S','Quantity','Price','Contract','Product'].some(n=>ix(n)<0))
+    return{err:'Súbor nevyzerá ako Fills z Tradovate (chýbajú očakávané stĺpce).'};
+  const ci=ix('commission');
+  const fl=R.map(r=>({id:r[ix('Fill ID')].trim(),ts:r[ix('_timestamp')],lt:lt(r[ix('Timestamp')]),buy:r[ix('B/S')].trim()==='Buy',
+    q:+r[ix('Quantity')],p:+r[ix('Price')],c:r[ix('Contract')].trim(),prod:r[ix('Product')].trim(),fee:ci<0?0:(+r[ci]||0)}))
+    .filter(x=>x.q>0&&x.lt&&!isNaN(x.p)).sort((a,b)=>a.ts<b.ts?-1:a.ts>b.ts?1:(a.id<b.id?-1:1));
+  const pos={},cur={},out=[],skipped=new Set();
+  for(const f of fl){
+    if(!PV[f.prod]){skipped.add(f.prod);continue}
+    const d=f.buy?1:-1;let q=f.q;if(pos[f.c]===undefined)pos[f.c]=0;
+    while(q>0){
+      if(pos[f.c]===0)cur[f.c]={sym:f.prod,side:d>0?'Long':'Short',ins:[],outs:[],comm:0,fids:[],tin:f.lt,contract:f.c};
+      const t=cur[f.c],opening=(d>0)===(t.side==='Long'),use=opening?q:Math.min(q,Math.abs(pos[f.c]));
+      (opening?t.ins:t.outs).push([use,f.p]);t.comm+=f.fee*use/f.q;if(!t.fids.includes(f.id))t.fids.push(f.id);
+      pos[f.c]+=d*use;q-=use;t.tout=f.lt;
+      if(pos[f.c]===0){out.push(t);delete cur[f.c]}
+    }
+  }
+  const sq=a=>a.reduce((s,x)=>s+x[0],0),avg=a=>a.reduce((s,x)=>s+x[0]*x[1],0)/sq(a);
+  const trades=out.map(t=>({id:'tv'+t.fids[0],sym:t.sym,side:t.side,qty:sq(t.ins),comm:+t.comm.toFixed(2),
+    entry:+avg(t.ins).toFixed(6),exit:+avg(t.outs).toFixed(6),stop:null,tp:null,tin:t.tin,tout:t.tout,strat:'—',note:'Tradovate '+t.contract,fids:t.fids}));
+  return{trades,open:Object.keys(cur).length,skipped:[...skipped]};
+}
+/*END*/
+$('imp').onclick=()=>$('fim').click();
+$('fim').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(x=>{
+  let r;try{r=fromFills(x)}catch(er){r={err:'Súbor sa nepodarilo spracovať.'}}
+  if(r.err){$('im').textContent=r.err;return}
+  const known=new Set(S.trades.flatMap(t=>t.fids||[]));let add=0,dup=0;
+  r.trades.forEach(t=>{if(t.fids.some(i=>known.has(i)))dup++;else{S.trades.push(t);add++}});
+  save();render();
+  $('im').textContent='Pridaných obchodov: '+add+(dup?', preskočených (už importované): '+dup:'')+(r.open?', otvorených pozícií (neimportované): '+r.open:'')+(r.skipped.length?', nepodporované produkty: '+r.skipped.join(', '):'')+(add?'. Doplň stop loss a stratégiu v tabuľke.':'.');
+});e.target.value=''};
+const now=new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,16);
+$('tin').value=now;$('tout').value=now;
+render();preview();
+</script>
+</body>
+</html>
