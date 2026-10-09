@@ -2,7 +2,7 @@
 <html lang="sk">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, viewport-fit=cover">
 <title>Futures Trading Journal</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
@@ -12,16 +12,20 @@ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:en
 :root[data-theme="dark"]{--bg:#0e1116;--card:#171b22;--tx:#e8ebf0;--mut:#8b94a3;--bd:#262c36;--ac:#7c8bff;--g:#34c37a;--r:#ff6b5f;--soft:#1d222b}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
+html,body{overflow-x:hidden;-webkit-text-size-adjust:100%}
+input[type=datetime-local],input[type=time]{-webkit-appearance:none;appearance:none;display:block;min-width:0;max-width:100%;min-height:38px;text-align:left}
+input[type=time]{text-align:center}
+.card{min-width:0}
 body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums}
 header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:20px 20px 4px;max-width:1280px;margin:0 auto}
 h1{font-size:22px;margin:0;font-weight:600;letter-spacing:-.01em}
 h2{font-size:15px;margin:0 0 12px;font-weight:600}
 .sub{color:var(--mut);font-size:13px}
-main{display:grid;grid-template-columns:340px 1fr;gap:16px;padding:16px 20px 32px;max-width:1280px;margin:0 auto;align-items:start}
-@media(max-width:900px){main{grid-template-columns:1fr}}
+main{display:grid;grid-template-columns:340px minmax(0,1fr);gap:16px;padding:16px 20px 32px;max-width:1280px;margin:0 auto;align-items:start}
+@media(max-width:900px){main{grid-template-columns:minmax(0,1fr)}}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:16px}
-.stack{display:grid;gap:16px;min-width:0}
-form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stack{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;min-width:0;width:100%}
+form{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
 label{display:grid;gap:4px;font-size:12.5px;color:var(--mut)}
 .full{grid-column:1/-1}
 input,select,textarea{font:inherit;color:var(--tx);background:var(--soft);border:1px solid var(--bd);border-radius:6px;padding:8px 9px;width:100%;min-width:0}
@@ -81,6 +85,7 @@ textarea{min-height:110px;font-family:ui-monospace,Consolas,monospace;font-size:
 
 @media (pointer:coarse){input,select,textarea,.ed,.ed.sg{font-size:16px}button{min-height:40px}}
 [hidden]{display:none!important}
+@media(max-width:600px){main{padding:10px 8px 24px;gap:12px}.stack{gap:12px}header{padding:14px 12px 2px}.card{padding:14px 12px}label.tl{grid-column:1/-1}}
 </style>
 </head>
 <body>
@@ -99,10 +104,10 @@ textarea{min-height:110px;font-family:ui-monospace,Consolas,monospace;font-size:
         <label>Komisie spolu ($)<input id="comm" type="number" min="0" step="0.01" value="0"></label>
         <label>Vstupná cena<input id="entry" type="number" step="any" required></label>
         <label>Výstupná cena<input id="exit" type="number" step="any" required></label>
-        <label>Stop loss (len plán, voliteľné)<input id="stop" type="number" step="any"></label>
-        <label>Take profit (voliteľné)<input id="tp" type="number" step="any"></label>
-        <label>Čas vstupu<input id="tin" type="datetime-local" required></label>
-        <label>Čas výstupu<input id="tout" type="datetime-local" required></label>
+        <label>Stop loss (plán)<input id="stop" type="number" step="any"></label>
+        <label>Take profit (plán)<input id="tp" type="number" step="any"></label>
+        <label class="tl">Čas vstupu<input id="tin" type="datetime-local" required></label>
+        <label class="tl">Čas výstupu<input id="tout" type="datetime-local" required></label>
         <label class="full">Stratégia<input id="strat" list="sl" placeholder="prázdne = podľa času vstupu"><datalist id="sl"></datalist></label>
         <label class="full">Poznámka<input id="note"></label>
         <div class="prev" id="prev"></div>
@@ -382,7 +387,7 @@ function renderRisk(){
   $('rk').innerHTML=`<label>1R v USD<input type="number" min="1" step="any" data-r="oneR" value="${S.risk.oneR}"><span class="sub">Príklad: čistý P&amp;L ${m$(2*S.risk.oneR)} = +2,00 R</span></label><label>Cieľ (R:R)<input type="number" min="0" step="0.1" data-r="target" value="${S.risk.target}"></label>`}
 function renderAuto(){
   $('aon').checked=S.auto.on;
-  $('aw').innerHTML=S.auto.w.map((w,i)=>`<div style="display:grid;grid-template-columns:1fr 92px 92px;gap:6px"><input data-w="${i}" data-f="name" value="${esc(w.name)}" aria-label="Názov stratégie"><input type="time" data-w="${i}" data-f="from" value="${w.from}" aria-label="Od"><input type="time" data-w="${i}" data-f="to" value="${w.to}" aria-label="Do"></div>`).join('')+'<div class="sub">Názov · od · do</div>'}
+  $('aw').innerHTML=S.auto.w.map((w,i)=>`<div style="display:grid;grid-template-columns:minmax(0,1fr) 96px 96px;gap:6px"><input data-w="${i}" data-f="name" value="${esc(w.name)}" aria-label="Názov stratégie"><input type="time" data-w="${i}" data-f="from" value="${w.from}" aria-label="Od"><input type="time" data-w="${i}" data-f="to" value="${w.to}" aria-label="Do"></div>`).join('')+'<div class="sub">Názov · od · do</div>'}
 function renderTsa(){
   const cu=$('tsa').value;$('tsa').innerHTML='<option value="">Topstep (vytvorí sa automaticky)</option>'+S.accounts.map(a=>`<option value="${a.id}">${esc(a.name)}</option>`).join('');$('tsa').value=cu}
 function renderRst(){
@@ -390,7 +395,7 @@ function renderRst(){
   $('rsa').value=cu;$('rsw').hidden=S.accounts.length<2}
 function renderAcc(){
   const all=rows(),pn=id=>all.filter(r=>r.t.acc===id).reduce((x,r)=>x+r.c.pnl,0),cn=id=>S.trades.filter(t=>t.acc===id).length;
-  $('accs').innerHTML=S.accounts.map(a=>`<div style="margin-bottom:10px"><div style="display:grid;grid-template-columns:1fr 100px auto;gap:6px"><input data-a="${a.id}" data-f="name" value="${esc(a.name)}" aria-label="Názov účtu"><input type="number" step="any" data-a="${a.id}" data-f="start" value="${a.start}" aria-label="Počiatočný zostatok"><button class="x" data-del="${a.id}" aria-label="Zmazať účet" ${S.accounts.length<2||cn(a.id)?'disabled title="Zmazať sa dá len prázdny účet, ak ich je viac."':''}>✕</button></div><div class="sub">Zostatok: ${m$(a.start+pn(a.id))} · obchodov: ${cn(a.id)}</div></div>`).join('')}
+  $('accs').innerHTML=S.accounts.map(a=>`<div style="margin-bottom:10px"><div style="display:grid;grid-template-columns:minmax(0,1fr) 100px auto;gap:6px"><input data-a="${a.id}" data-f="name" value="${esc(a.name)}" aria-label="Názov účtu"><input type="number" step="any" data-a="${a.id}" data-f="start" value="${a.start}" aria-label="Počiatočný zostatok"><button class="x" data-del="${a.id}" aria-label="Zmazať účet" ${S.accounts.length<2||cn(a.id)?'disabled title="Zmazať sa dá len prázdny účet, ak ich je viac."':''}>✕</button></div><div class="sub">Zostatok: ${m$(a.start+pn(a.id))} · obchodov: ${cn(a.id)}</div></div>`).join('')}
 const scoped=all=>all.filter(r=>(!F.a||r.t.acc===F.a)&&(!F.s||r.t.sym===F.s)&&(!F.g||r.t.strat===F.g)&&(F.p==='all'||pk(r.t)===F.v));
 function groupSum(rs,key){const m=new Map();rs.forEach(r=>m.set(key(r),(m.get(key(r))||0)+r.c.pnl));return[...m]}
 
