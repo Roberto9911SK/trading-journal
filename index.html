@@ -141,6 +141,7 @@ label.tl{grid-column:1/-1}
 #pg3 .jcb .card{box-shadow:none}
 @media(max-width:600px){#pg3 .jtr{padding:10px}}
 #pg3 .jg{align-items:start}#pg3 .jg>label{align-content:start}
+#pg3 .jtr.skip{opacity:.8;border-left-style:dashed;gap:6px}
 </style>
 </head>
 <body>
@@ -244,8 +245,8 @@ label.tl{grid-column:1/-1}
   </section>
 </main>
 <div id="pg3" class="dashpg" hidden>
-  <div class="jsub" role="group" aria-label="Sekcie denníka"><button id="js1" aria-pressed="true">Denný záznam</button><button id="js2" aria-pressed="false">Týždenné vyhodnotenie</button><button id="js3" aria-pressed="false">História</button></div>
-  <div id="jv1"></div><div id="jv2" hidden></div><div id="jv3" hidden></div>
+  <div class="jsub" role="group" aria-label="Sekcie denníka"><button id="js1" aria-pressed="true">Denný záznam</button><button id="js2" aria-pressed="false">Týždenné vyhodnotenie</button><button id="js3" aria-pressed="false">História</button><button id="js4" aria-pressed="false">Analýza rastu</button></div>
+  <div id="jv1"></div><div id="jv2" hidden></div><div id="jv3" hidden></div><div id="jv4" hidden></div>
 </div>
 <div id="pg2" class="dashpg" hidden>
   <div class="card" style="margin-bottom:16px">
@@ -291,7 +292,7 @@ const jopt=(v,a)=>a.indexOf(v)>=0?v:'';
 const jrate=v=>{if(v===''||v==null||v===false)return null;const n=Math.round(+v);return n>=0&&n<=10?n:null};
 function jTrade(x){x=x&&typeof x==='object'?x:{};
   return{setup:jstr(x.setup),cond:jopt(x.cond,J_ALLOW.cond),entry:jopt(x.entry,J_ALLOW.entry),risk:jopt(x.risk,J_ALLOW.risk),mist:jopt(x.mist,J_ALLOW.mist),mistTxt:jstr(x.mistTxt),
-    emo:Array.isArray(x.emo)?J_EMO.map(a=>a[0]).filter(k=>x.emo.indexOf(k)>=0):[],right:jstr(x.right),diff:jstr(x.diff),cls:jopt(x.cls,J_ALLOW.cls)}}
+    emo:Array.isArray(x.emo)?J_EMO.map(a=>a[0]).filter(k=>x.emo.indexOf(k)>=0):[],right:jstr(x.right),diff:jstr(x.diff),cls:jopt(x.cls,J_ALLOW.cls),skip:x.skip===true,early:jopt(x.early,['','no','yes']),earlyR:(typeof x.earlyR==='number'&&isFinite(x.earlyR)&&Math.abs(x.earlyR)<=1000)?x.earlyR:null}}
 function jDay(x){x=x&&typeof x==='object'?x:{};
   const an=Object.create(null),src=x.an&&typeof x.an==='object'?x.an:{};
   Object.keys(src).forEach(id=>{if(id!=='__proto__'&&id.length<=200)an[id]=jTrade(src[id])});
@@ -825,7 +826,7 @@ const jFmtD=k=>{const d=jDt(k);return J_DAYS[d.getDay()]+' '+d.getDate()+'. '+(d
 const jShortD=k=>{const d=jDt(k);return d.getDate()+'. '+(d.getMonth()+1)+'.'};
 const jWkKey=k=>isoWeek(jDt(jMon(k)));
 const jDefDate=()=>{let k=jYmd(new Date());const w=jDt(k).getDay();if(w===5)k=jAdd(k,-1);else if(w===6)k=jAdd(k,-2);else if(w===0)k=jAdd(k,-3);return k};
-let J={view:'day',date:null,week:null};
+let J={view:'day',date:null,week:null,err:''};
 J.date=(UI.jd&&okD(UI.jd))?UI.jd:jDefDate();J.week=jMon(J.date);
 const jTr=k=>S.trades.filter(t=>String(t.tin).slice(0,10)===k).sort((a,b)=>String(a.tin)<String(b.tin)?-1:String(a.tin)>String(b.tin)?1:0);
 const jGet=k=>S.journal.days[k]||null;
@@ -834,11 +835,11 @@ function jEns(k){if(!S.journal.days[k])S.journal.days[k]=jDay({});return S.journ
 let jT=0;
 const jMsg=m=>{const e=$('jsave');if(e)e.textContent=m};
 function jSaveSoon(){clearTimeout(jT);jT=setTimeout(jFlush,500);jMsg('Ukladám…')}
-function jFlush(){clearTimeout(jT);jT=0;save();jMsg('Uložené '+new Date().toLocaleTimeString('sk-SK'))}
+function jFlush(){clearTimeout(jT);jT=0;try{localStorage.setItem('tj1',JSON.stringify(S));J.err='';jMsg('Uložené '+new Date().toLocaleTimeString('sk-SK'))}catch(e){J.err='⚠ Nepodarilo sa uložiť (úložisko prehliadača je plné alebo zablokované). Hneď si stiahni zálohu, inak o zmeny môžeš prísť.';jMsg(J.err)}return !J.err}
 const jRes=p=>p>0?['WIN','pos']:p<0?['LOSS','neg']:['BREAK-EVEN',''];
 const jRs=c=>Number.isFinite(c.R)?(c.R>0?'+':'')+c.R.toFixed(2)+' R':'—';
 const jTm=s=>String(s||'').slice(11,16);
-const jHas=a=>!!a&&!!(a.setup||a.cond||a.entry||a.risk||a.mist||a.mistTxt||a.emo.length||a.right||a.diff||a.cls);
+const jHas=a=>!!a&&!!(a.setup||a.cond||a.entry||a.risk||a.mist||a.mistTxt||a.emo.length||a.right||a.diff||a.cls||a.early||a.earlyR!=null);
 const jOpt=(o,v)=>o.map(x=>`<option value="${x[0]}"${x[0]===v?' selected':''}>${esc(x[1])}</option>`).join('');
 const jSel=(f,tid,v,o)=>`<select data-f="${f}"${tid!=null?` data-t="${esc(tid)}"`:''}>${jOpt(o,v)}</select>`;
 const jTa=(f,tid,v,r)=>`<textarea rows="${r||2}" maxlength="4000" data-f="${f}"${tid!=null?` data-t="${esc(tid)}"`:''}>${esc(v)}</textarea>`;
@@ -864,6 +865,7 @@ function jTrHead(t,c){const r=jRes(c.pnl),nd=String(t.tin).slice(0,10),xd=String
   return'<div class="jth">'+it('Dátum a čas',esc(nd)+' '+esc(jTm(t.tin))+' → '+(xd!==nd?esc(xd)+' ':'')+esc(jTm(t.tout)))+it('Účet',esc(accN(t.acc)))+it('Symbol / smer',esc(t.sym)+' '+esc(t.side))+it('Kontrakty',esc(t.qty))+
     it('Vstup → výstup',esc(t.entry)+' → '+esc(t.exit))+it('Stratégia',esc(t.strat||'—'))+it('Čistý P&amp;L po poplatkoch',esc(m$(c.pnl)),cls(c.pnl))+it('Výsledok',r[0],r[1])+it('Realizované R',esc(jRs(c)),cls(c.R))+'</div>'}
 
+function jEarlyInfo(a,c){let x='Realizované R: '+jRs(c);if(a.early==='yes'&&a.earlyR!=null&&Number.isFinite(c.R)){const d=a.earlyR-c.R;x+=' · Rozdiel (ušlé R): '+(d>0?'+':'')+d.toFixed(2)+' R'}return x}
 function jTrCard(t,a,i){const c=calc(t),id=jTid(t),wl=c.pnl>0?' w':c.pnl<0?' l':'';a=a||jTrade({});
   if(!id)return`<div class="jtr${wl}">${jTrHead(t,c)}<div class="jwarn">Tento obchod nemá identifikátor, preto ho nie je možné prepojiť s denníkom.</div></div>`;
   const emo=J_EMO.map(e=>`<label class="jck"><input type="checkbox" data-f="an.emo" data-t="${esc(id)}" data-k="${e[0]}"${a.emo.indexOf(e[0])>=0?' checked':''}>${esc(e[1])}</label>`).join('');
@@ -874,11 +876,16 @@ function jTrCard(t,a,i){const c=calc(t),id=jTid(t),wl=c.pnl>0?' w':c.pnl<0?' l':
   <label>Dodržal som vstupné pravidlá?${jSel('an.entry',id,a.entry,O_ENT)}</label>
   <label>Dodržal som plánovaný risk a pravidlá SL/TP?${jSel('an.risk',id,a.risk,O_ENT)}</label>
   <label>Urobil som počas obchodu chybu?${jSel('an.mist',id,a.mist,O_MIS)}</label>
-  <label class="jmt"${a.mist==='yes'?'':' hidden'}>Akú chybu?${jTa('an.mistTxt',id,a.mistTxt)}</label></div>
+  <label class="jmt"${a.mist==='yes'?'':' hidden'}>Akú chybu?${jTa('an.mistTxt',id,a.mistTxt)}</label>
+  <label>Ukončil som obchod predčasne (pred plánovaným SL/TP)?${jSel('an.early',id,a.early,O_MIS)}</label>
+  <label class="jer"${a.early==='yes'?'':' hidden'}>Koľko R by obchod finálne dosiahol, keby som ho nechal bežať? (môže byť aj záporné)<input type="text" inputmode="decimal" autocomplete="off" data-f="an.earlyR" data-t="${esc(id)}" value="${a.earlyR==null?'':esc(String(a.earlyR))}" placeholder="napr. 2 alebo -0,5"><span class="jerr" role="alert"></span><span class="sub jeri">${esc(jEarlyInfo(a,c))}</span></label></div>
   <fieldset class="jem"><legend>Čo ovplyvnilo moje rozhodovanie? (môžeš vybrať viac)</legend><div class="jemo">${emo}</div></fieldset>
   <div class="jg"><label>Čo som urobil správne?${jTa('an.right',id,a.right)}</label><label>Čo by som nabudúce urobil inak?${jTa('an.diff',id,a.diff)}</label></div>
   <label>Klasifikácia obchodu (moje vlastné hodnotenie)${jSel('an.cls',id,a.cls,J_CLS)}</label>
-  <div class="jwb">${jWarnH(jWarn(a,c))}</div></div>`}
+  <div class="jwb">${jWarnH(jWarn(a,c))}</div>
+  <div class="row"><button data-act="skip" data-t="${esc(id)}">Nerelevantný obchod — vynechať z denníka</button></div><div class="sub">Obchod ostane v Žurnáli a vo všetkých štatistikách, len sa nebude hodnotiť v denníku.</div></div>`}
+function jTrSkip(t,i){const c=calc(t),id=jTid(t),r=jRes(c.pnl);
+  return`<div class="jtr skip" data-tid="${esc(id)}"><h3 class="jh3">Obchod ${i+1} <span class="bd">Nerelevantný — vynechaný z denníka</span></h3><div class="sub">${esc(String(t.tin).slice(0,10))} ${esc(jTm(t.tin))} · ${esc(t.sym)} ${esc(t.side)} ×${esc(t.qty)} · ${esc(m$(c.pnl))} · ${r[0]} — nehodnotí sa v denníku (v Žurnáli ostáva).</div><div class="row"><button data-act="unskip" data-t="${esc(id)}">Vrátiť do denníka</button></div></div>`}
 
 function jOrphan(id,a,k){const t=S.trades.find(x=>jTid(x)===id);
   const msg=t?`Tento obchod už nemá vstup v tento deň (je zaradený na ${String(t.tin).slice(0,10)}). Poznámky ostávajú uložené tu, ale do analýzy tohto dňa sa nezapočítavajú.`:'Pôvodný obchod už nie je dostupný (bol odstránený z Žurnálu). Poznámky ostávajú zachované, nezapočítavajú sa do analýzy.';
@@ -893,21 +900,22 @@ function jDiscRow(r,i,v){const t=v==='ok'?['Dodržané','g']:v==='viol'?['Poruš
   <span class="bd ${t[1]}" data-st>${t[0]}</span></div>`}
 
 // ---- štatistiky dňa a týždňa (finančný výsledok z calc(t) je oddelený od hodnotenia používateľa) ----
-function jStat(k){const e=jGet(k),s={k,e,n:0,pnl:0,cat:{profit_plan:0,loss_plan:0,profit_viol:0,loss_viol:0,ambig:0,none:0},evald:0,mist:new Map(),mistN:0,emo:{},viol:{},ok:{},unf:0,trs:[],orph:0};
-  s.trs=jTr(k).map(t=>({t,c:calc(t),a:(e&&e.an[jTid(t)])||null}));s.n=s.trs.length;
+function jStat(k){const e=jGet(k),s={k,e,n:0,pnl:0,cat:{profit_plan:0,loss_plan:0,profit_viol:0,loss_viol:0,ambig:0,none:0},evald:0,mist:new Map(),mistN:0,emo:{},viol:{},ok:{},unf:0,trs:[],orph:0,skipped:0,skipPnl:0,early:0,earlyK:0,leftR:0};
+  const all=jTr(k).map(t=>({t,c:calc(t),a:(e&&e.an[jTid(t)])||null}));s.all=all;s.trs=all.filter(r=>!(r.a&&r.a.skip));s.n=s.trs.length;s.skipped=all.length-s.trs.length;s.skipPnl=Math.round(all.filter(r=>r.a&&r.a.skip).reduce((a,r)=>a+r.c.pnl,0)*100)/100;
   s.trs.forEach(r=>{s.pnl+=r.c.pnl;const a=r.a;s.cat[a&&a.cls?a.cls:'none']++;if(a&&a.cls&&a.cls!=='ambig')s.evald++;
     if(a){if(a.mist==='yes'){const key=a.mistTxt.trim().toLowerCase()||'(chyba bez popisu)',o=s.mist.get(key)||{txt:a.mistTxt.trim()||'(chyba bez popisu)',n:0};o.n++;s.mist.set(key,o);s.mistN++}
       a.emo.forEach(x=>{s.emo[x]=(s.emo[x]||0)+1})}});
+  s.trs.forEach(r=>{if(r.a&&r.a.early==='yes'){s.early++;if(r.a.earlyR!=null&&Number.isFinite(r.c.R)){s.earlyK++;s.leftR+=r.a.earlyR-r.c.R}}});s.leftR=Math.round(s.leftR*100)/100;
   s.pnl=Math.round(s.pnl*100)/100;
   J_DISC.forEach(r=>{const v=e?e.disc[r[0]]:'';if(v==='viol')s.viol[r[0]]=1;else if(v==='ok')s.ok[r[0]]=1;else s.unf++});
-  if(e){const ids=new Set(s.trs.map(r=>jTid(r.t)));Object.keys(e.an).forEach(id=>{if(!ids.has(id)&&jHas(e.an[id]))s.orph++})}
+  if(e){const ids=new Set(s.all.map(r=>jTid(r.t)));Object.keys(e.an).forEach(id=>{if(!ids.has(id)&&jHas(e.an[id]))s.orph++})}
   return s}
-function jSumS(list){const m={n:0,pnl:0,cat:{profit_plan:0,loss_plan:0,profit_viol:0,loss_viol:0,ambig:0,none:0},evald:0,mist:new Map(),mistN:0,emo:{},viol:{},ok:{},unf:0,orph:0,ratings:[],filled:0,drafts:0,full:0};
-  list.forEach(s=>{m.n+=s.n;m.pnl+=s.pnl;m.evald+=s.evald;m.mistN+=s.mistN;m.orph+=s.orph;m.unf+=s.unf;Object.keys(m.cat).forEach(c=>{m.cat[c]+=s.cat[c]});
+function jSumS(list){const m={n:0,pnl:0,cat:{profit_plan:0,loss_plan:0,profit_viol:0,loss_viol:0,ambig:0,none:0},evald:0,mist:new Map(),mistN:0,emo:{},viol:{},ok:{},unf:0,orph:0,ratings:[],filled:0,drafts:0,full:0,skipped:0,skipPnl:0,early:0,earlyK:0,leftR:0};
+  list.forEach(s=>{m.n+=s.n;m.pnl+=s.pnl;m.evald+=s.evald;m.mistN+=s.mistN;m.orph+=s.orph;m.early+=s.early;m.earlyK+=s.earlyK;m.leftR+=s.leftR;m.skipped+=s.skipped;m.skipPnl+=s.skipPnl;m.unf+=s.unf;Object.keys(m.cat).forEach(c=>{m.cat[c]+=s.cat[c]});
     s.mist.forEach((o,key)=>{const x=m.mist.get(key)||{txt:o.txt,n:0};x.n+=o.n;m.mist.set(key,x)});
     Object.keys(s.emo).forEach(x=>{m.emo[x]=(m.emo[x]||0)+s.emo[x]});Object.keys(s.viol).forEach(x=>{m.viol[x]=(m.viol[x]||0)+1});Object.keys(s.ok).forEach(x=>{m.ok[x]=(m.ok[x]||0)+1});
     if(s.e){m.filled++;if(s.e.status!=='done')m.drafts++;if(s.e.end.rating!=null)m.ratings.push(s.e.end.rating);if(J_DISC.every(r=>s.e.disc[r[0]]==='ok'))m.full++}});
-  m.pnl=Math.round(m.pnl*100)/100;m.avg=m.ratings.length?m.ratings.reduce((a,b)=>a+b,0)/m.ratings.length:null;return m}
+  m.pnl=Math.round(m.pnl*100)/100;m.skipPnl=Math.round(m.skipPnl*100)/100;m.avg=m.ratings.length?m.ratings.reduce((a,b)=>a+b,0)/m.ratings.length:null;return m}
 const jTop=(o,skip)=>Object.keys(o).filter(k=>k!==skip).map(k=>[k,o[k]]).sort((a,b)=>b[1]-a[1]);
 const jMist=m=>Array.from(m.values()).sort((a,b)=>b.n-a.n);
 const jRuleN=k=>J_SHORT[J_DISC.findIndex(r=>r[0]===k)]||k;
@@ -925,11 +933,11 @@ function jSummary(k){const s=jStat(k),e=s.e,en=e?e.end:{},c=s.cat;
   <h3 class="jh3">Tvoje hodnotenie obchodov</h3>
   <div class="jg"><div class="k"><span>Podľa plánu (zisk / strata)</span><b>${c.profit_plan} / ${c.loss_plan}</b></div><div class="k"><span>S porušením pravidiel (zisk / strata)</span><b>${c.profit_viol} / ${c.loss_viol}</b></div>
   <div class="k"><span>Nejednoznačné / nevyhodnotené</span><b>${c.ambig}</b></div><div class="k"><span>Bez klasifikácie</span><b>${c.none}</b></div></div>
-  <h3 class="jh3">Najčastejšie chyby</h3>${li(mist)}<h3 class="jh3">Emócie pri obchodoch</h3>${li(emo)}
+  ${s.early?`<p><b>Predčasne ukončené obchody:</b> ${s.early}${s.earlyK?` · rozdiel oproti tomu, čo si ušiel (ušlé R): <b>${(s.leftR>0?'+':'')+s.leftR.toFixed(2)} R</b>`:' · R, ktoré by obchod dosiahol, nie je vyplnené'}</p>`:''}<h3 class="jh3">Najčastejšie chyby</h3>${li(mist)}<h3 class="jh3">Emócie pri obchodoch</h3>${li(emo)}
   <h3 class="jh3">Disciplína dňa</h3><p>Dodržané: <b>${ok}</b> · Explicitne porušené: <b>${vv}</b> · Nevyplnené: <b>${s.unf}</b> (nevyplnené sa nepočíta ako porušenie)</p>${li(viol)}${e&&e.discWhy?`<p><b>Prečo:</b> ${esc(e.discWhy)}</p>`:''}
   <h3 class="jh3">Záver dňa</h3><dl class="jdl2"><dt>Najlepšie rozhodnutie</dt><dd>${tx(en.best)}</dd><dt>Najväčšia chyba</dt><dd>${tx(en.big)}</dd><dt>Hlavné poučenie</dt><dd>${tx(en.learned)}</dd><dt>Cieľ na ďalší deň</dt><dd>${tx(en.improve)}</dd>
   <dt>Straty spôsobené porušením plánu</dt><dd>${en.lossPlan?esc((O_LPL.find(o=>o[0]===en.lossPlan)||[])[1]):'<span class="bd">chýba</span>'}</dd></dl>
-  ${s.orph?`<p class="sub">K tomuto dňu je uložených ${s.orph} poznámok k obchodom, ktoré tu už nie sú dostupné — nezapočítané.</p>`:''}</section>`}
+  ${s.skipped?`<p class="sub">Vynechané nerelevantné obchody: ${s.skipped} (čistý P&amp;L ${esc(m$(s.skipPnl))}) — v Žurnáli ostávajú, no v zhrnutí a analýze denníka sa nepočítajú.</p>`:''}${s.orph?`<p class="sub">K tomuto dňu je uložených ${s.orph} poznámok k obchodom, ktoré tu už nie sú dostupné — nezapočítané.</p>`:''}</section>`}
 
 // ---- denný pohľad ----
 function jDayHtml(){const k=J.date,e=jGet(k),d=e||jDay({}),st=jState(k),dis=d.status==='done',trs=jTr(k),wd=jDt(k).getDay();
@@ -941,8 +949,8 @@ function jDayHtml(){const k=J.date,e=jGet(k),d=e||jDay({}),st=jState(k),dis=d.st
   h+=`<fieldset class="jfs"${dis?' disabled':''}>`;
   if(dis)h+='<p class="sub">Záznam je dokončený. Na úpravu použi tlačidlo „Upraviť denník“.</p>';
   h+=`<section class="card"><h2>Príprava pred obchodovaním</h2><div class="jg"><label>Bol som dnes pripravený obchodovať podľa plánu?${jSel('prep.ready',null,d.prep.ready,O_RDY)}</label><label>Na ktoré pravidlo som si mal dnes dávať najväčší pozor?${jTa('prep.rule',null,d.prep.rule)}</label></div></section>`;
-  h+=`<section class="card"><h2>Obchody dňa (${trs.length})</h2><p class="sub">Obchody sa načítali automaticky z Žurnálu podľa dátumu vstupu ${esc(k)}. Nepíšu sa znova ani sa nekopírujú.</p>`;
-  h+=trs.length?'<div class="jstack">'+trs.map((t,i)=>jTrCard(t,d.an[jTid(t)],i)).join('')+'</div>':'<div class="empty">V Žurnáli nie sú pre tento deň žiadne obchody. Denník môžeš aj tak vyplniť (príprava, disciplína, záver).</div>';
+  const nsk=trs.filter(t=>{const x=d.an[jTid(t)];return x&&x.skip}).length;h+=`<section class="card"><h2>Obchody dňa (${trs.length-nsk}${nsk?' relevantných, '+nsk+' vynechaných':''})</h2><p class="sub">Obchody sa načítali automaticky z Žurnálu podľa dátumu vstupu ${esc(k)}. Nepíšu sa znova ani sa nekopírujú.</p>`;
+  h+=trs.length?'<div class="jstack">'+trs.map((t,i)=>{const x=d.an[jTid(t)];return x&&x.skip&&jTid(t)?jTrSkip(t,i):jTrCard(t,x,i)}).join('')+'</div>':'<div class="empty">V Žurnáli nie sú pre tento deň žiadne obchody. Denník môžeš aj tak vyplniť (príprava, disciplína, záver).</div>';
   if(orph.length)h+='<h3 class="jh3">Poznámky k nedostupným obchodom</h3><div class="jstack">'+orph.map(id=>jOrphan(id,d.an[id],k)).join('')+'</div>';
   h+='</section>';
   h+=`<section class="card"><h2>Kontrola disciplíny za deň</h2><p class="sub">Pri každom pravidle vyber „Dodržané“ alebo „Porušené“. Ak nevyberieš nič, ostáva „Nevyplnené“ — to sa nepočíta ako porušenie.</p>${J_DISC.map((r,i)=>jDiscRow(r,i,d.disc[r[0]])).join('')}<label class="jw2">Ktoré pravidlo som porušil a prečo?${jTa('discWhy',null,d.discWhy,3)}</label></section>`;
@@ -950,7 +958,7 @@ function jDayHtml(){const k=J.date,e=jGet(k),d=e||jDay({}),st=jState(k),dis=d.st
   <label>Boli moje straty spôsobené porušením plánu?${jSel('end.lossPlan',null,d.end.lossPlan,O_LPL)}</label><label>Čo som sa dnes naučil?${jTa('end.learned',null,d.end.learned)}</label>
   <label>Jedna vec, ktorú budúci obchodný deň zlepším${jTa('end.improve',null,d.end.improve)}</label>
   <label>Hodnotenie disciplíny (celé číslo 0–10)<input type="number" inputmode="numeric" min="0" max="10" step="1" data-f="end.rating" value="${d.end.rating==null?'':d.end.rating}" aria-describedby="jrerr"><span id="jrerr" class="jerr" role="alert"></span></label></div></section></fieldset>`;
-  h+=`<section class="card jacts"><span id="jsave" class="sub" role="status" aria-live="polite">${e&&e.updated?'Naposledy uložené '+esc(new Date(e.updated).toLocaleString('sk-SK')):'Zatiaľ neuložené'}</span><div class="row">`+
+  h+=`<section class="card jacts"><span id="jsave" class="sub" role="status" aria-live="polite">${J.err?esc(J.err):e&&e.updated?'Naposledy uložené '+esc(new Date(e.updated).toLocaleString('sk-SK')):'Zatiaľ neuložené'}</span><div class="row">`+
     (dis?'<button class="pri" data-act="edit">Upraviť denník</button>':'<button data-act="save">Uložiť rozpracovaný denník</button><button class="pri" data-act="finish">Dokončiť a vyhodnotiť deň</button>')+
     (e?'<button data-act="del">Vymazať denníkový záznam</button>':'')+'</div><p class="sub">Rozpracovaný záznam sa ukladá aj automaticky pri písaní. Obchody v Žurnáli sa ukladaním nemenia.</p></section>';
   return h}
@@ -1001,7 +1009,7 @@ function jWeekHtml(){const mon=J.week,key=jWkKey(mon),days=[0,1,2,3].map(i=>jAdd
    sec('Finančný výsledok (obchody v Žurnáli, čistý P&amp;L cez calc)')+row('Zaznamenané obchody',s=>s.n,sum.n)+row('Čistý P&amp;L',s=>`<span class="${cls(s.pnl)}">${s.n?esc(m$(s.pnl)):'—'}</span>`,`<span class="${cls(sum.pnl)}">${sum.n?esc(m$(sum.pnl)):'—'}</span>`)+
    sec('Moje hodnotenie (denník)')+row('Stav denníka',stt,sum.filled+' z 4')+row('Vyhodnotené obchody',s=>s.evald,sum.evald)+
    row('Ziskový podľa plánu',s=>s.cat.profit_plan,sum.cat.profit_plan)+row('Stratový podľa plánu',s=>s.cat.loss_plan,sum.cat.loss_plan)+row('Ziskový s porušením',s=>s.cat.profit_viol,sum.cat.profit_viol)+row('Stratový s porušením',s=>s.cat.loss_viol,sum.cat.loss_viol)+
-   row('Nejednoznačný / nevyhodnotený',s=>s.cat.ambig,sum.cat.ambig)+row('Bez klasifikácie',s=>s.cat.none,sum.cat.none)+row('Chyby v obchodoch (Áno)',s=>s.mistN,sum.mistN)+
+   row('Nejednoznačný / nevyhodnotený',s=>s.cat.ambig,sum.cat.ambig)+row('Bez klasifikácie',s=>s.cat.none,sum.cat.none)+row('Chyby v obchodoch (Áno)',s=>s.mistN,sum.mistN)+row('Predčasné výstupy (Áno)',s=>s.early,sum.early)+row('Ušlé R pri predčasných (s vyplneným R)',s=>s.earlyK?(s.leftR>0?'+':'')+s.leftR.toFixed(2):'—',sum.earlyK?(sum.leftR>0?'+':'')+sum.leftR.toFixed(2):'—')+
    row('Explicitne porušené pravidlá',s=>Object.keys(s.viol).length,Object.values(sum.viol).reduce((a,b)=>a+b,0))+row('Nevyplnené pravidlá',s=>s.unf,sum.unf)+
    row('Hodnotenie disciplíny',s=>s.e&&s.e.end.rating!=null?s.e.end.rating:'<span class="bd">chýba</span>',sum.avg==null?'chýba':'Ø '+jNum(sum.avg))+
    row('Pripravený podľa plánu',s=>s.e&&s.e.prep.ready?(s.e.prep.ready==='yes'?'Áno':'Nie'):'<span class="bd">chýba</span>',list.filter(s=>s.e&&s.e.prep.ready==='yes').length+' × Áno')+
@@ -1020,7 +1028,7 @@ function jWeekHtml(){const mon=J.week,key=jWkKey(mon),days=[0,1,2,3].map(i=>jAdd
   const cb=(t,a,c)=>`<div class="card jcb ${c}"><h3 class="jh3">${t}</h3>${C.empty?'<p>Nedostatok údajov: v tomto týždni nie sú obchody ani vyplnené záznamy.</p>':li(a.map(esc))}</div>`;
   return`<section class="card"><h2>Týždenné vyhodnotenie</h2><div class="jdt"><button data-act="wprev" aria-label="Predchádzajúci týždeň">‹</button><label>Ľubovoľný dátum v týždni<input type="date" id="jwdate" value="${esc(mon)}"></label><button data-act="wnext" aria-label="Nasledujúci týždeň">›</button><button data-act="wthis">Aktuálny týždeň</button></div>
   <div class="jbar"><span class="bd b">${esc(key)}</span><span class="bd">${esc(jShortD(days[0]))} – ${esc(jShortD(days[3]))} ${days[3].slice(0,4)} (Po–Št)</span>${ex?`<span class="bd y">Mimo Po–Št: ${ex} obchodov (${esc(m$(exP))}) — nezahrnuté</span>`:''}</div></section>
-  <section class="card"><h2>Súhrn po dňoch</h2>${tbl}<p class="sub">Finančný výsledok (P&amp;L z obchodov) a tvoje hodnotenie disciplíny sú oddelené: zisk neznamená dodržanie plánu a strata neznamená chybu. „Nevyplnené“ pravidlo sa nepočíta ako porušenie.${sum.drafts?` Rozpracované záznamy: ${sum.drafts}.`:''}${sum.orph?` Poznámky k nedostupným obchodom (nezapočítané): ${sum.orph}.`:''}</p></section>
+  <section class="card"><h2>Súhrn po dňoch</h2>${tbl}<p class="sub">Finančný výsledok (P&amp;L z obchodov) a tvoje hodnotenie disciplíny sú oddelené: zisk neznamená dodržanie plánu a strata neznamená chybu. „Nevyplnené“ pravidlo sa nepočíta ako porušenie.${sum.drafts?` Rozpracované záznamy: ${sum.drafts}.`:''}${sum.skipped?` Vynechané nerelevantné obchody: ${sum.skipped} (čistý P&amp;L ${esc(m$(sum.skipPnl))}) — v Žurnáli ostávajú, tu sa nepočítajú.`:''}${sum.orph?` Poznámky k nedostupným obchodom (nezapočítané): ${sum.orph}.`:''}</p></section>
   <div class="jcols"><section class="card"><h2>Opakujúce sa chyby</h2>${li(rep)}</section><section class="card"><h2>Najčastejšie porušované pravidlá</h2>${li(viol)}</section><section class="card"><h2>Emócie</h2>${li(emo)}</section></div>
   <section class="card"><h2>Poučenia a plánované zlepšenia</h2>${les?'<ul>'+les+'</ul>':'<span class="bd">žiadne údaje</span>'}</section>
   <section class="card"><h2>Psychológia obchodovania</h2><p class="sub">Vychádza len z tvojich zaznamenaných odpovedí. Kde odpoveď chýba, je to označené.</p>${psy}
@@ -1037,14 +1045,102 @@ function jHistHtml(){const ds=Object.keys(S.journal.days).sort().reverse(),ws=Ob
   const wl=ws.length?'<ul>'+ws.map(k=>{const w=S.journal.weeks[k];return`<li>${esc(k)} — ${w.rating==null?'bez hodnotenia':'disciplína '+w.rating+'/10'} <button data-act="wopen" data-w="${esc(k)}">Otvoriť</button></li>`}).join('')+'</ul>':'<span class="bd">žiadne</span>';
   return`<section class="card"><h2>História denníkových záznamov</h2>${tb}</section><section class="card"><h2>Uložené týždenné závery</h2>${wl}</section>`}
 
+// ---- ANALÝZA RASTU: oddiel DENNÍKA, počíta sa živo z obchodov (calc) a z tvojich odpovedí v denníku ----
+const J_PLAN=['profit_plan','loss_plan'],J_VIOL=['profit_viol','loss_viol'];
+J.gp='all';
+function jGAgg(a){const o={n:a.length,pnl:0,w:0,r:0};a.forEach(x=>{o.pnl+=x.c.pnl;if(x.c.pnl>0)o.w++;if(Number.isFinite(x.c.R))o.r+=x.c.R});
+  o.pnl=Math.round(o.pnl*100)/100;o.wr=o.n?o.w/o.n:null;o.ar=o.n?o.r/o.n:null;o.ex=o.n?o.pnl/o.n:null;return o}
+const jPc=v=>v==null?'—':Math.round(v*100)+' %',jMn=v=>v==null?'—':`<span class="${cls(v)}">${esc(m$(v))}</span>`,jRr=v=>v==null?'—':(v>0?'+':'')+v.toFixed(2)+' R';
+const jCat=x=>x.a&&x.a.cls||'none';
+function jGData(){const wk=+J.gp,since=wk?jAdd(jMon(jYmd(new Date())),-(wk-1)*7):'';
+  const al=S.trades.filter(t=>!since||String(t.tin).slice(0,10)>=since).map(t=>{const k=String(t.tin).slice(0,10),e=S.journal.days[k],id=jTid(t);return{t,k,c:calc(t),a:(e&&id&&e.an[id])||null}});
+  const tr=al.filter(x=>!(x.a&&x.a.skip)),sk=al.filter(x=>x.a&&x.a.skip);
+  const days=Object.keys(S.journal.days).filter(k=>!since||k>=since).sort().map(k=>({k,e:S.journal.days[k]}));
+  return{tr,days,since,sk}}
+function jGroup(tr,kf){const m=new Map();tr.forEach(x=>{const k=kf(x);if(!m.has(k))m.set(k,[]);m.get(k).push(x)});return m}
+function jSplitRows(m,lab,ord){const rows=Array.from(m.entries());rows.sort(ord||((a,b)=>b[1].length-a[1].length));
+  return rows.map(r=>{const all=jGAgg(r[1]),pl=jGAgg(r[1].filter(x=>J_PLAN.indexOf(jCat(x))>=0)),vi=jGAgg(r[1].filter(x=>J_VIOL.indexOf(jCat(x))>=0));
+    return`<tr><td>${lab(r[0])}</td><td>${all.n}</td><td>${jMn(all.pnl)}</td><td>${pl.n}</td><td>${pl.n?jMn(pl.pnl):'—'}</td><td>${vi.n}</td><td>${vi.n?jMn(vi.pnl):'—'}</td></tr>`}).join('')}
+const jSplitTbl=(first,rows)=>`<div class="tw"><table class="jt"><thead><tr><th>${first}</th><th>Obchody</th><th>P&amp;L</th><th>Podľa plánu: n</th><th>P&amp;L</th><th>S porušením: n</th><th>P&amp;L</th></tr></thead><tbody>${rows||'<tr><td colspan="7">Žiadne dáta</td></tr>'}</tbody></table></div>`;
+
+function jEarlyHtml(tr){const MINE=5,ey=tr.filter(x=>x.a&&x.a.early==='yes'),en=tr.filter(x=>x.a&&x.a.early==='no').length,kn=ey.filter(x=>x.a.earlyR!=null&&Number.isFinite(x.c.R));
+  const st=a=>{const k=a.length,f=a.filter(x=>x.a.earlyR>x.c.R).length,b=a.filter(x=>x.a.earlyR<x.c.R).length,sr=a.reduce((s,x)=>s+x.c.R,0),sp=a.reduce((s,x)=>s+x.a.earlyR,0),tg=a.filter(x=>x.a.earlyR>=(S.risk.target||2)).length;return{k,f,b,same:k-f-b,ar:k?sr/k:null,ap:k?sp/k:null,left:sp-sr,al:k?(sp-sr)/k:null,tg}};
+  const A=st(kn),rg=v=>v==null?'—':(v>0?'+':'')+v.toFixed(2)+' R',oneR=(S.risk&&S.risk.oneR>0)?S.risk.oneR:100;
+  const tile=(l,v)=>`<div class="k"><span>${l}</span><b>${v}</b></div>`;
+  let h=`<section class="card"><h2>4. Predčasné výstupy</h2><p class="sub">Z obchodov, pri ktorých si v denníku označil „Ukončil som obchod predčasne“ a zadal, koľko R by obchod dosiahol. „Ušlé R“ = potenciálne R − realizované R (kladné = cena išla ďalej tvojím smerom). Je to tvoj odhad zo spätného pohľadu.</p>
+  <div class="jg">${tile('Predčasne ukončené obchody',ey.length+' z '+tr.length)}${tile('S vyplneným R',kn.length)}${tile('Cena išla ďalej tvojím smerom',A.k?A.f+' z '+A.k+' ('+jPc(A.f/A.k)+')':'—')}${tile('Ø realizované R → Ø potenciálne R',A.k?jRr(A.ar)+' → '+jRr(A.ap):'—')}${tile('Ušlé R spolu / Ø na obchod',A.k?rg(A.left)+' / '+rg(A.al):'—')}${tile('Dosiahlo cieľ ('+(S.risk.target||2)+' R) alebo viac',A.k?A.tg+' z '+A.k+' ('+jPc(A.tg/A.k)+')':'—')}</div>`;
+  if(ey.length>kn.length)h+=`<p class="sub">Pri ${ey.length-kn.length} predčasných výstupoch chýba zadané R — nezapočítané.</p>`;
+  if(en)h+=`<p class="sub">Obchody označené ako neukončené predčasne: ${en}.</p>`;
+  if(kn.length<MINE)h+=`<div class="jwarn" role="status"><b>Nedostatok údajov.</b> Na záver treba aspoň ${MINE} predčasných výstupov s vyplneným R (máš ${kn.length}). Zatiaľ sa nič nezovšeobecňuje.</div>`;
+  else{const r=A.f/A.k;let t;
+    if(r>=0.6&&A.al>0)t=`Pri predčasných výstupoch išla cena ďalej v <b>${jPc(r)}</b> prípadov a v priemere si nechal na stole <b>${rg(A.al)}</b> na obchod (spolu ${rg(A.left)} ≈ ${esc(m$(A.left*oneR))} pri 1R = ${esc(m$(oneR))}). Zváž držať takéto obchody dlhšie podľa plánu.`;
+    else if(r<=0.4)t=`Pri predčasných výstupoch išla cena ďalej len v <b>${jPc(r)}</b> prípadov (Ø ušlé ${rg(A.al)}). Predčasné ukončenie ti v tejto vzorke väčšinou neuškodilo.`;
+    else t=`Zmiešaný obraz: cena išla ďalej v <b>${jPc(r)}</b> prípadov, Ø ušlé R ${rg(A.al)}. Zatiaľ nie je jasné, či ti predčasný výstup pomáha alebo škodí.`;
+    h+=`<div class="jcb b card"><h3 class="jh3">Záver</h3><p>${t}</p><p class="sub">Súvislosť v tvojich dátach, nie dôkaz; ušlé R sa nerátajú s poplatkami a malá vzorka je šum.</p></div>`}
+  const grp=(first,kf)=>{const m=jGroup(kn,kf),rows=Array.from(m.entries()).sort((a,b)=>b[1].length-a[1].length).map(r=>{const s=st(r[1]);return`<tr><td>${esc(r[0])}</td><td>${s.k}${s.k<MINE?' <span class="bd y">málo dát</span>':''}</td><td>${jPc(s.f/s.k)}</td><td>${jRr(s.ar)}</td><td>${jRr(s.ap)}</td><td>${rg(s.al)}</td></tr>`}).join('');
+    return`<h3 class="jh3">${first}</h3><div class="tw"><table class="jt"><thead><tr><th>${first}</th><th>Predčasné (s R)</th><th>Išlo ďalej</th><th>Ø realizované</th><th>Ø potenciálne</th><th>Ø ušlé R</th></tr></thead><tbody>${rows||'<tr><td colspan="6">Žiadne dáta</td></tr>'}</tbody></table></div>`};
+  return h+grp('Podľa stratégie',x=>x.t.strat||'bez stratégie')+grp('Podľa symbolu',x=>x.t.sym)+'</section>'}
+function jGrowHtml(){const D=jGData(),tr=D.tr,MINV=3,MINS=5;
+  const cl=tr.filter(x=>x.a&&x.a.cls),ev=cl.filter(x=>x.a.cls!=='ambig'),plT=ev.filter(x=>J_PLAN.indexOf(x.a.cls)>=0),viT=ev.filter(x=>J_VIOL.indexOf(x.a.cls)>=0),pl=jGAgg(plT),vi=jGAgg(viT);
+  const sel=`<section class="card"><h2>Analýza rastu</h2><div class="jdt"><label>Obdobie<select id="jgp"><option value="all"${J.gp==='all'?' selected':''}>Všetky dáta</option><option value="4"${J.gp==='4'?' selected':''}>Posledné 4 týždne</option><option value="8"${J.gp==='8'?' selected':''}>Posledných 8 týždňov</option><option value="12"${J.gp==='12'?' selected':''}>Posledných 12 týždňov</option></select></label></div>
+  <p class="sub">Vychádza z obchodov v Žurnáli (čistý P&amp;L cez calc) a z tvojho vlastného hodnotenia v denníku. Ide o súvislosti v tvojich dátach, nie o dôkaz príčiny. Malý počet obchodov je šum — preto sa pri málo dátach závery nevyslovujú.</p>
+  <div class="jg"><div class="k"><span>Obchody v období (bez vynechaných)</span><b>${tr.length}</b></div><div class="k"><span>S tvojou klasifikáciou</span><b>${cl.length}${tr.length?' ('+jPc(cl.length/tr.length)+')':''}</b></div><div class="k"><span>Vyhodnotené (bez „nejednoznačných“)</span><b>${ev.length}</b></div></div>`;
+  const skn=D.sk.length?`<p class="sub">Vynechané nerelevantné obchody: ${D.sk.length} (čistý P&amp;L ${esc(m$(jGAgg(D.sk).pnl))}) — v Žurnáli ostávajú, v tejto analýze sa nepočítajú.</p>`:'';
+  let head;
+  if(pl.n>=MINV&&vi.n>=MINV){const d=pl.ex-vi.ex;
+    head=`<div class="jcb b card"><h3 class="jh3">Hlavný záver</h3><p>Obchody podľa plánu: <b>${pl.n}</b>, spolu ${jMn(pl.pnl)} (Ø ${jMn(pl.ex)}). Obchody s porušením pravidiel: <b>${vi.n}</b>, spolu ${jMn(vi.pnl)} (Ø ${jMn(vi.ex)}).</p><p>${vi.pnl<0&&pl.pnl>0?`Porušenia ťa v tomto období stáli <b>${esc(m$(Math.abs(vi.pnl)))}</b>, kým obchody podľa plánu zarobili <b>${esc(m$(pl.pnl))}</b>.`:vi.pnl>=0&&pl.pnl<0?'Obchody s porušením vyšli v pláne lepšie než podľa plánu — zisk z porušenia nie je dôkaz správneho postupu, over to na väčšej vzorke.':'Rozdiel medzi obchodmi podľa plánu a s porušením je '+esc(m$(Math.abs(d)))+' na obchod v prospech '+(d>=0?'obchodov podľa plánu':'obchodov s porušením')+'.'}</p></div>`}
+  else head=`<div class="jwarn" role="status"><b>Nedostatok údajov.</b> Na hlavný záver treba aspoň ${MINV} obchody podľa plánu a ${MINV} s porušením (máš ${pl.n} a ${vi.n}). Doplň klasifikáciu obchodov v denníku — zatiaľ sa nič nezovšeobecňuje.</div>`;
+  const cats=[['profit_plan','Ziskový podľa plánu'],['loss_plan','Stratový podľa plánu'],['profit_viol','Ziskový s porušením'],['loss_viol','Stratový s porušením'],['ambig','Nejednoznačný / nevyhodnotený'],['none','Bez klasifikácie']];
+  const crow=cats.map(c=>{const a=jGAgg(tr.filter(x=>jCat(x)===c[0]));return`<tr><td>${c[1]}</td><td>${a.n}</td><td>${a.n?jMn(a.pnl):'—'}</td><td>${a.n?jMn(a.ex):'—'}</td></tr>`}).join('');
+  const sec1=`<section class="card"><h2>1. Cena chýb v dolároch</h2><div class="tw"><table class="jt"><thead><tr><th>Kategória (tvoje hodnotenie)</th><th>Obchody</th><th>P&amp;L spolu</th><th>Ø P&amp;L</th></tr></thead><tbody>${crow}
+  <tr class="tot"><td><b>Podľa plánu spolu</b></td><td>${pl.n}</td><td>${pl.n?jMn(pl.pnl):'—'}</td><td>${pl.n?jMn(pl.ex):'—'}</td></tr><tr class="tot"><td><b>S porušením spolu</b></td><td>${vi.n}</td><td>${vi.n?jMn(vi.pnl):'—'}</td><td>${vi.n?jMn(vi.ex):'—'}</td></tr></tbody></table></div>`;
+  const mm=jGroup(tr.filter(x=>x.a&&x.a.mist==='yes'),x=>x.a.mistTxt.trim().toLowerCase()||'(chyba bez popisu)');
+  const mrows=Array.from(mm.entries()).map(r=>[r[1][0].a.mistTxt.trim()||'(chyba bez popisu)',jGAgg(r[1])]).sort((a,b)=>a[1].pnl-b[1].pnl).map(r=>`<tr><td>${esc(r[0])}</td><td>${r[1].n}</td><td>${jMn(r[1].pnl)}</td><td>${jMn(r[1].ex)}</td></tr>`).join('');
+  const em=jGroup([].concat.apply([],tr.filter(x=>x.a&&x.a.emo.length).map(x=>x.a.emo.map(e=>({e,x})))).map(z=>Object.assign({_e:z.e},z.x)),x=>x._e);
+  const erows=Array.from(em.entries()).map(r=>[r[0],jGAgg(r[1])]).sort((a,b)=>a[1].pnl-b[1].pnl).map(r=>`<tr><td>${esc(J_EMON[r[0]])}</td><td>${r[1].n}</td><td>${jMn(r[1].pnl)}</td><td>${jMn(r[1].ex)}</td></tr>`).join('');
+  const dp={};tr.forEach(x=>{dp[x.k]=(dp[x.k]||0)+x.c.pnl});
+  const drows=J_DISC.map(r=>{const v=D.days.filter(d=>d.e.disc[r[0]]==='viol'),o=D.days.filter(d=>d.e.disc[r[0]]==='ok'),av=a=>a.length?a.reduce((s,d)=>s+(dp[d.k]||0),0)/a.length:null;
+    return`<tr><td>${esc(J_SHORT[J_DISC.indexOf(r)])}</td><td>${v.length}</td><td>${v.length?jMn(av(v)):'—'}</td><td>${o.length}</td><td>${o.length?jMn(av(o)):'—'}</td></tr>`}).join('');
+  const sec1b=`<h3 class="jh3">Podľa uvedenej chyby (od najdrahšej)</h3><div class="tw"><table class="jt"><thead><tr><th>Chyba</th><th>Obchody</th><th>P&amp;L spolu</th><th>Ø P&amp;L</th></tr></thead><tbody>${mrows||'<tr><td colspan="4">Žiadne zaznamenané chyby</td></tr>'}</tbody></table></div>
+  <h3 class="jh3">Podľa emócie (obchod môže mať viac emócií)</h3><div class="tw"><table class="jt"><thead><tr><th>Emócia</th><th>Obchody</th><th>P&amp;L spolu</th><th>Ø P&amp;L</th></tr></thead><tbody>${erows||'<tr><td colspan="4">Žiadne zaznamenané emócie</td></tr>'}</tbody></table></div>
+  <h3 class="jh3">Podľa pravidla disciplíny (P&amp;L celého dňa)</h3><div class="tw"><table class="jt"><thead><tr><th>Pravidlo</th><th>Dni porušené</th><th>Ø P&amp;L dňa</th><th>Dni dodržané</th><th>Ø P&amp;L dňa</th></tr></thead><tbody>${drows}</tbody></table></div><p class="sub">P&amp;L dňa zahŕňa všetky obchody dňa, nielen tie s chybou. Nevyplnené pravidlá sa nepočítajú nikam.</p></section>`;
+  // 2. vzorce v čase
+  const wm=new Map();tr.forEach(x=>{const w=jMon(x.k);if(!wm.has(w))wm.set(w,{tr:[],d:[]});wm.get(w).tr.push(x)});D.days.forEach(d=>{const w=jMon(d.k);if(!wm.has(w))wm.set(w,{tr:[],d:[]});wm.get(w).d.push(d)});
+  const ws=Array.from(wm.keys()).sort(),wrows=[],rated=[],rw={};
+  ws.forEach(w=>{const g=wm.get(w),a=jGAgg(g.tr),e=g.tr.filter(x=>x.a&&x.a.cls&&x.a.cls!=='ambig'),p=e.filter(x=>J_PLAN.indexOf(x.a.cls)>=0).length,rt=g.d.filter(d=>d.e.end.rating!=null).map(d=>d.e.end.rating),avg=rt.length?rt.reduce((s,v)=>s+v,0)/rt.length:null;
+    let nv=0;g.d.forEach(d=>J_DISC.forEach(r=>{if(d.e.disc[r[0]]==='viol'){nv++;(rw[r[0]]=rw[r[0]]||new Set()).add(w)}}));if(avg!=null)rated.push(avg);
+    wrows.push(`<tr><td>${esc(isoWeek(jDt(w)))} (${esc(jShortD(w))})</td><td>${a.n}</td><td>${a.n?jMn(a.pnl):'—'}</td><td>${e.length}</td><td>${e.length?jPc(p/e.length):'—'}</td><td>${nv}</td><td>${avg==null?'<span class="bd">chýba</span>':jNum(avg)}</td></tr>`)});
+  let trend='<span class="bd">málo údajov</span> (potrebné aspoň 4 týždne s hodnotením disciplíny)';
+  if(rated.length>=4){const h=Math.floor(rated.length/2),m1=rated.slice(0,h).reduce((s,v)=>s+v,0)/h,m2=rated.slice(h).reduce((s,v)=>s+v,0)/(rated.length-h),d=m2-m1;
+    trend=Math.abs(d)<0.5?'bez výraznej zmeny (Ø '+jNum(m1)+' → '+jNum(m2)+')':d>0?'zlepšuje sa (Ø '+jNum(m1)+' → '+jNum(m2)+')':'zhoršuje sa (Ø '+jNum(m1)+' → '+jNum(m2)+')'}
+  const rep=J_DISC.filter(r=>rw[r[0]]&&rw[r[0]].size>=2).sort((a,b)=>rw[b[0]].size-rw[a[0]].size).map(r=>esc(J_SHORT[J_DISC.indexOf(r)])+' — porušené v '+rw[r[0]].size+' týždňoch');
+  const sec2=`<section class="card"><h2>2. Vzorce v čase</h2><div class="tw"><table class="jt"><thead><tr><th>Týždeň</th><th>Obchody</th><th>P&amp;L</th><th>Vyhodnotené</th><th>% podľa plánu</th><th>Explicitné porušenia</th><th>Ø disciplína</th></tr></thead><tbody>${wrows.join('')||'<tr><td colspan="7">Žiadne dáta</td></tr>'}</tbody></table></div>
+  <p><b>Trend disciplíny:</b> ${trend}</p><p><b>Pravidlá porušované opakovane (aspoň v 2 týždňoch):</b></p>${rep.length?'<ul>'+rep.map(x=>'<li>'+x+'</li>').join('')+'</ul>':'<span class="bd">žiadne</span>'}
+  <h3 class="jh3">Podľa dňa v týždni</h3>${jSplitTbl('Deň',jSplitRows(jGroup(tr,x=>jDt(x.k).getDay()),k=>esc(J_DAYS[k]),(a,b)=>((a[0]+6)%7)-((b[0]+6)%7)))}
+  <h3 class="jh3">Podľa hodiny vstupu</h3>${jSplitTbl('Hodina',jSplitRows(jGroup(tr,x=>String(x.t.tin).slice(11,13)),k=>esc(k)+':00',(a,b)=>a[0]<b[0]?-1:1))}
+  <h3 class="jh3">Podľa symbolu</h3>${jSplitTbl('Symbol',jSplitRows(jGroup(tr,x=>x.t.sym),k=>esc(k)))}<p class="sub">„Podľa plánu“ a „S porušením“ sú tvoje hodnotenia; zvyšok (nejednoznačné, bez klasifikácie) je len v stĺpci Obchody.</p></section>`;
+  // 3. kontrola stratégie
+  const sm=jGroup(tr,x=>x.t.strat||'bez stratégie'),srows=[],verd=[];
+  Array.from(sm.entries()).sort((a,b)=>b[1].length-a[1].length).forEach(r=>{const all=jGAgg(r[1]),p=jGAgg(r[1].filter(x=>J_PLAN.indexOf(jCat(x))>=0)),v=jGAgg(r[1].filter(x=>J_VIOL.indexOf(jCat(x))>=0)),n=esc(r[0]);
+    srows.push(`<tr><td>${n}</td><td>${all.n}</td><td>${jPc(all.wr)}</td><td>${jRr(all.ar)}</td><td>${jMn(all.ex)}</td><td>${p.n}${p.n&&p.n<MINS?' <span class="bd y">málo dát</span>':''}</td><td>${jPc(p.wr)}</td><td>${jRr(p.ar)}</td><td>${p.n?jMn(p.ex):'—'}</td><td>${v.n}</td><td>${v.n?jMn(v.ex):'—'}</td></tr>`);
+    let t;if(p.n<MINS)t=`málo obchodov podľa plánu (${p.n}, treba aspoň ${MINS}) — o samotnej stratégii sa zatiaľ nedá rozhodnúť.`;
+    else if(p.ex>0&&all.ex<=0)t=`pri dodržaní plánu zarába (Ø ${esc(m$(p.ex))} na obchod), no celkovo je v strate (Ø ${esc(m$(all.ex))}) — vykonanie ju ťahá dole, nie samotná stratégia.`;
+    else if(p.ex>0)t=`zarába aj pri dodržaní plánu (Ø ${esc(m$(p.ex))} na obchod, ${p.n} obchodov).`;
+    else t=`aj pri dodržaní plánu je v strate (Ø ${esc(m$(p.ex))} na obchod, ${p.n} obchodov) — skontroluj samotné pravidlá stratégie, nie len disciplínu.`;
+    verd.push(`<li><b>${n}:</b> ${t}</li>`)});
+  const sec3=`<section class="card"><h2>3. Kontrola stratégie</h2><p class="sub">Porovnanie všetkých obchodov stratégie s obchodmi, ktoré si sám označil „podľa plánu“. Tak oddelíš kvalitu stratégie od kvality vykonania.</p>
+  <div class="tw"><table class="jt"><thead><tr><th>Stratégia</th><th>Všetky: n</th><th>Win rate</th><th>Ø R</th><th>Expektancia</th><th>Podľa plánu: n</th><th>Win rate</th><th>Ø R</th><th>Expektancia</th><th>S porušením: n</th><th>Expektancia</th></tr></thead><tbody>${srows.join('')||'<tr><td colspan="11">Žiadne dáta</td></tr>'}</tbody></table></div>
+  <p class="sub">Expektancia = Ø čistý P&amp;L na obchod (calc, po poplatkoch). Ø R = Ø realizované R.</p><ul>${verd.join('')}</ul></section>`;
+  return sel+skn+head+'</section>'+sec1+sec1b+sec2+sec3+jEarlyHtml(tr)}
+
 // ---- vykresľovanie a udalosti ----
 function jRender(){const v=J.view;
-  ['1','2','3'].forEach((n,i)=>{if(['day','week','hist'][i]!==v)$('jv'+n).innerHTML=''});
-  ['1','2','3'].forEach((n,i)=>{const on=['day','week','hist'][i]===v;$('js'+n).setAttribute('aria-pressed',String(on));$('jv'+n).hidden=!on});
-  if(v==='day')$('jv1').innerHTML=jDayHtml();else if(v==='week')$('jv2').innerHTML=jWeekHtml();else $('jv3').innerHTML=jHistHtml()}
+  ['1','2','3','4'].forEach((n,i)=>{if(['day','week','hist','grow'][i]!==v)$('jv'+n).innerHTML=''});
+  ['1','2','3','4'].forEach((n,i)=>{const on=['day','week','hist','grow'][i]===v;$('js'+n).setAttribute('aria-pressed',String(on));$('jv'+n).hidden=!on});
+  if(v==='day')$('jv1').innerHTML=jDayHtml();else if(v==='week')$('jv2').innerHTML=jWeekHtml();else if(v==='hist')$('jv3').innerHTML=jHistHtml();else $('jv4').innerHTML=jGrowHtml()}
 function jGo(date){if(jT)jFlush();J.date=date;J.week=jMon(date);UI.jd=date;try{localStorage.setItem('tj1ui',JSON.stringify(UI))}catch(e){}jRender()}
 function jTrUpd(box,id){const k=J.date,d=jGet(k),a=d&&d.an[id];if(!a)return;const t=S.trades.find(x=>jTid(x)===id);
-  box.querySelector('.jmt').hidden=a.mist!=='yes';box.querySelector('.jwb').innerHTML=jWarnH(jWarn(a,t?calc(t):null))}
+  box.querySelector('.jmt').hidden=a.mist!=='yes';box.querySelector('.jer').hidden=a.early!=='yes';if(t)box.querySelector('.jeri').textContent=jEarlyInfo(a,calc(t));box.querySelector('.jwb').innerHTML=jWarnH(jWarn(a,t?calc(t):null))}
 function jEdit(el){const f=el.dataset.f;if(!f)return;
   if(J.view==='week'||f.slice(0,2)==='w.'){const key=jWkKey(J.week),cur=S.journal.weeks[key]||jWeek({}),raw=Object.assign({},cur),fk=f.slice(2),er=$('jwerr');
     if(fk==='rating'){const v=el.value.trim();if(v!==''&&!/^(\d|10)$/.test(v)){raw.rating=null;er.textContent='Zadaj celé číslo od 0 do 10.'}else{er.textContent='';raw.rating=v===''?null:+v}}else raw[fk]=el.value;
@@ -1061,7 +1157,9 @@ function jEdit(el){const f=el.dataset.f;if(!f)return;
   else if(p[0]==='an'){id=el.dataset.t;box=el.closest('.jtr');const a=raw.an[id]||(raw.an[id]=jTrade({}));
     if(p[1]==='emo'){const cbs=Array.from(box.querySelectorAll('input[data-f="an.emo"]'));
       if(el.checked)cbs.forEach(c=>{if(c!==el&&((el.dataset.k==='none')||c.dataset.k==='none'))c.checked=false});
-      a.emo=cbs.filter(c=>c.checked).map(c=>c.dataset.k)}else a[p[1]]=el.value}
+      a.emo=cbs.filter(c=>c.checked).map(c=>c.dataset.k)}
+    else if(p[1]==='earlyR'){const v=el.value.trim().replace(',','.'),er=box.querySelector('.jerr');if(v===''){a.earlyR=null;er.textContent=''}else if(/^-?\d+(\.\d+)?$/.test(v)&&Math.abs(+v)<=1000){a.earlyR=+v;er.textContent=''}else{a.earlyR=null;er.textContent='Zadaj číslo, napr. 2 alebo -0,5.'}}
+    else a[p[1]]=el.value}
   const nd=jDay(raw);nd.updated=new Date().toISOString();S.journal.days[k]=nd;
   if(box)jTrUpd(box,id);jSaveSoon()}
 
@@ -1072,7 +1170,9 @@ function jClick(e){const b=e.target.closest('[data-act]');if(!b)return;const a=b
   if(a==='open'){J.view='day';return jGo(b.dataset.d)}
   if(a==='wprev'){J.week=jAdd(J.week,-7);return jRender()}if(a==='wnext'){J.week=jAdd(J.week,7);return jRender()}if(a==='wthis'){J.week=jMon(jYmd(new Date()));return jRender()}
   if(a==='wopen'){const w=b.dataset.w,m=jWk2Mon(w);if(m){J.week=m;J.view='week';jRender()}return}
-  if(a==='save'){jEns(k).updated=new Date().toISOString();jFlush();jRender();jMsg('Uložené '+new Date().toLocaleTimeString('sk-SK'));return}
+  if(a==='skip'||a==='unskip'){const id=b.dataset.t,d=jEns(k);if(d.status==='done')return;if(a==='skip'&&jHas(d.an[id])&&!jArm(b,'Zadané poznámky sa skryjú. Klikni znova'))return;
+    const raw=JSON.parse(JSON.stringify(d)),x=raw.an[id]||(raw.an[id]=jTrade({}));x.skip=a==='skip';S.journal.days[k]=jDay(raw);S.journal.days[k].updated=new Date().toISOString();jFlush();jRender();return}
+  if(a==='save'){jEns(k).updated=new Date().toISOString();jFlush();jRender();if(!J.err)jMsg('Uložené '+new Date().toLocaleTimeString('sk-SK'));return}
   if(a==='finish'){const d=jEns(k);if($('jrerr')&&$('jrerr').textContent){jMsg('Oprav hodnotenie disciplíny (celé číslo 0–10) a skús znova.');return}
     d.status='done';d.done=new Date().toISOString();d.updated=d.done;jFlush();jRender();if(typeof scrollTo==='function')scrollTo({top:0,behavior:'smooth'});return}
   if(a==='edit'){const d=jEns(k);d.status='draft';d.done='';d.updated=new Date().toISOString();jFlush();jRender();return}
@@ -1080,13 +1180,15 @@ function jClick(e){const b=e.target.closest('[data-act]');if(!b)return;const a=b
   if(a==='delan'){if(!jArm(b,'Naozaj odstrániť? Klikni znova'))return;const d=jGet(k);if(d){const raw=JSON.parse(JSON.stringify(d));delete raw.an[b.dataset.t];S.journal.days[k]=jDay(raw);jFlush()}jRender()}}
 function jWk2Mon(key){const m=/^(\d{4})-T(\d{2})$/.exec(key);if(!m)return null;const y=+m[1],w=+m[2],j4=new Date(y,0,4);return jYmd(new Date(y,0,4-((j4.getDay()+6)%7)+(w-1)*7))}
 $('pg3').addEventListener('click',jClick);
-$('pg3').addEventListener('input',e=>{const el=e.target;if(el.dataset&&el.dataset.f&&(el.tagName==='TEXTAREA'||el.type==='number'))jEdit(el)});
+$('pg3').addEventListener('input',e=>{const el=e.target;if(el.dataset&&el.dataset.f&&(el.tagName==='TEXTAREA'||el.type==='number'||el.type==='text'))jEdit(el)});
 $('pg3').addEventListener('change',e=>{const el=e.target;
   if(el.id==='jdate'){if(okD(el.value))jGo(el.value);return}
+  if(el.id==='jgp'){J.gp=el.value;jRender();return}
   if(el.id==='jwdate'){if(okD(el.value)){J.week=jMon(el.value);jRender()}return}
-  if(el.dataset&&el.dataset.f&&el.tagName!=='TEXTAREA'&&el.type!=='number')jEdit(el)});
-['1','2','3'].forEach((n,i)=>{$('js'+n).dataset.act='view';$('js'+n).dataset.v=['day','week','hist'][i]});
+  if(el.dataset&&el.dataset.f&&el.tagName!=='TEXTAREA'&&el.type!=='number'&&el.type!=='text')jEdit(el)});
+['1','2','3','4'].forEach((n,i)=>{$('js'+n).dataset.act='view';$('js'+n).dataset.v=['day','week','hist','grow'][i]});
 addEventListener('pagehide',()=>{if(jT)jFlush()});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&jT)jFlush()});
 
 render();preview();showTab(UI.tab==='dash'?'dash':UI.tab==='diary'?'diary':'journal');
 </script>
