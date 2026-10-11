@@ -102,53 +102,93 @@ label.tl{grid-column:1/-1}
 .jsub{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
 .jsub button[aria-pressed=true]{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
 #pg3 .jstack,#pg3 .jfs,#pg3 .jv{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;min-width:0}
+#pg4 .jstack,#pg4 .jfs,#pg4 .jv{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;min-width:0}
 #jv1,#jv2,#jv3{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;min-width:0}
 #pg3 .jfs{border:0;margin:0;padding:0}
+#pg4 .jfs{border:0;margin:0;padding:0}
 #pg3 .jfs:disabled{opacity:.92}
+#pg4 .jfs:disabled{opacity:.92}
 #pg3 .jg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px}
+#pg4 .jg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px}
 #pg3 .jcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+#pg4 .jcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
 #pg3 .jdt{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}#pg3 .jdt label{flex:1 1 170px}
+#pg4 .jdt{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}#pg4 .jdt label{flex:1 1 170px}
 #pg3 .jbar{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+#pg4 .jbar{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
 #pg3 .bd{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600;background:var(--soft);border:1px solid var(--bd);color:var(--mut)}
+#pg4 .bd{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600;background:var(--soft);border:1px solid var(--bd);color:var(--mut)}
 #pg3 .bd.g{background:rgba(15,157,88,.15);border-color:var(--g);color:var(--g)}
+#pg4 .bd.g{background:rgba(15,157,88,.15);border-color:var(--g);color:var(--g)}
 #pg3 .bd.r{background:rgba(217,48,37,.13);border-color:var(--r);color:var(--r)}
+#pg4 .bd.r{background:rgba(217,48,37,.13);border-color:var(--r);color:var(--r)}
 #pg3 .bd.y{background:rgba(224,160,0,.16);border-color:#c98f00;color:var(--tx)}
+#pg4 .bd.y{background:rgba(224,160,0,.16);border-color:#c98f00;color:var(--tx)}
 #pg3 .bd.b{background:rgba(59,76,202,.12);border-color:var(--ac);color:var(--tx)}
+#pg4 .bd.b{background:rgba(59,76,202,.12);border-color:var(--ac);color:var(--tx)}
 #pg3 .jtr{border:1px solid var(--bd);border-left:4px solid var(--bd);border-radius:8px;padding:12px;background:var(--card);display:grid;gap:10px;min-width:0}
+#pg4 .jtr{border:1px solid var(--bd);border-left:4px solid var(--bd);border-radius:8px;padding:12px;background:var(--card);display:grid;gap:10px;min-width:0}
 #pg3 .jtr.w{border-left-color:var(--g)}#pg3 .jtr.l{border-left-color:var(--r)}
+#pg4 .jtr.w{border-left-color:var(--g)}#pg4 .jtr.l{border-left-color:var(--r)}
 #pg3 .jh3{font-size:13.5px;margin:6px 0 4px;font-weight:600}
+#pg4 .jh3{font-size:13.5px;margin:6px 0 4px;font-weight:600}
 #pg3 .jtr .jh3{margin:0}
+#pg4 .jtr .jh3{margin:0}
 #pg3 .jth{background:var(--soft);border-radius:8px;padding:8px 10px;font-size:13px;display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px 12px}
+#pg4 .jth{background:var(--soft);border-radius:8px;padding:8px 10px;font-size:13px;display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px 12px}
 #pg3 .jth span{color:var(--mut);font-size:11.5px;display:block}#pg3 .jth b{font-weight:600}
+#pg4 .jth span{color:var(--mut);font-size:11.5px;display:block}#pg4 .jth b{font-weight:600}
 #pg3 .jwarn{background:rgba(217,48,37,.1);border:1px solid var(--r);border-radius:8px;padding:8px 10px;font-size:13px}
+#pg4 .jwarn{background:rgba(217,48,37,.1);border:1px solid var(--r);border-radius:8px;padding:8px 10px;font-size:13px}
 #pg3 .jem{border:0;margin:0;padding:0;min-width:0}#pg3 .jem legend{font-size:12.5px;color:var(--mut);padding:0;margin-bottom:6px}
+#pg4 .jem{border:0;margin:0;padding:0;min-width:0}#pg4 .jem legend{font-size:12.5px;color:var(--mut);padding:0;margin-bottom:6px}
 #pg3 .jemo{display:flex;flex-wrap:wrap;gap:8px 16px}
+#pg4 .jemo{display:flex;flex-wrap:wrap;gap:8px 16px}
 #pg3 .jck{display:inline-flex;grid-template-columns:none;align-items:center;gap:6px;color:var(--tx);font-size:13.5px}
+#pg4 .jck{display:inline-flex;grid-template-columns:none;align-items:center;gap:6px;color:var(--tx);font-size:13.5px}
 #pg3 input[type=checkbox]{width:20px;height:20px;padding:0;margin:0;flex:none}
+#pg4 input[type=checkbox]{width:20px;height:20px;padding:0;margin:0;flex:none}
 #pg3 .jd{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;padding:8px 0;border-bottom:1px solid var(--bd)}
+#pg4 .jd{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;padding:8px 0;border-bottom:1px solid var(--bd)}
 #pg3 .jdl{flex:1 1 260px;font-size:13.5px}
+#pg4 .jdl{flex:1 1 260px;font-size:13.5px}
 #pg3 .jerr{color:var(--r);font-size:12.5px;min-height:1em}
+#pg4 .jerr{color:var(--r);font-size:12.5px;min-height:1em}
 #pg3 .jw2{margin-top:10px}
+#pg4 .jw2{margin-top:10px}
 #pg3 dl.jdl2{display:grid;grid-template-columns:minmax(0,1fr);gap:2px;margin:0}
+#pg4 dl.jdl2{display:grid;grid-template-columns:minmax(0,1fr);gap:2px;margin:0}
 #pg3 .jdl2 dt{color:var(--mut);font-size:12px;margin-top:8px}#pg3 .jdl2 dd{margin:0;overflow-wrap:anywhere}
+#pg4 .jdl2 dt{color:var(--mut);font-size:12px;margin-top:8px}#pg4 .jdl2 dd{margin:0;overflow-wrap:anywhere}
 #pg3 .jsum li,#pg3 .card li{margin:2px 0;overflow-wrap:anywhere}
+#pg4 .jsum li,#pg4 .card li{margin:2px 0;overflow-wrap:anywhere}
 #pg3 .jacts .row{margin:10px 0 4px}
+#pg4 .jacts .row{margin:10px 0 4px}
 #pg3 table.jt th,#pg3 table.jt td{text-align:right}
+#pg4 table.jt th,#pg4 table.jt td{text-align:right}
 #pg3 table.jt th:first-child,#pg3 table.jt td:first-child{text-align:left}
+#pg4 table.jt th:first-child,#pg4 table.jt td:first-child{text-align:left}
 #pg3 table.jt.l th,#pg3 table.jt.l td{text-align:left}
+#pg4 table.jt.l th,#pg4 table.jt.l td{text-align:left}
 #pg3 tr.jsec td{background:var(--soft);font-weight:600;font-size:12px;text-align:left!important;color:var(--mut)}
+#pg4 tr.jsec td{background:var(--soft);font-weight:600;font-size:12px;text-align:left!important;color:var(--mut)}
 #pg3 .jcb.g{border-top:3px solid var(--g)}#pg3 .jcb.r{border-top:3px solid var(--r)}#pg3 .jcb.y{border-top:3px solid #c98f00}#pg3 .jcb.b{border-top:3px solid var(--ac)}
+#pg4 .jcb.g{border-top:3px solid var(--g)}#pg4 .jcb.r{border-top:3px solid var(--r)}#pg4 .jcb.y{border-top:3px solid #c98f00}#pg4 .jcb.b{border-top:3px solid var(--ac)}
 #pg3 .jcb .card{box-shadow:none}
+#pg4 .jcb .card{box-shadow:none}
 @media(max-width:600px){#pg3 .jtr{padding:10px}}
 #pg3 .jg{align-items:start}#pg3 .jg>label{align-content:start}
+#pg4 .jg{align-items:start}#pg4 .jg>label{align-content:start}
 #pg3 .jtr.skip{opacity:.8;border-left-style:dashed;gap:6px}
+#pg4 .jtr.skip{opacity:.8;border-left-style:dashed;gap:6px}
+#pg4 .jtr.orph{border-left-style:dashed}#pg4 .jsub button[aria-pressed=true]{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
 </style>
 </head>
 <body>
 <header>
   <div><h1>Futures Trading Journal</h1><div class="sub">MNQ · MYM · MCL — zadaj obchod a štatistiky sa prepočítajú samé</div></div>
 </header>
-<nav class="tabs" role="tablist" aria-label="Stránky"><button id="tb1" role="tab" aria-selected="true">Žurnál</button><button id="tb2" role="tab" aria-selected="false">Trading Dashboard</button><button id="tb3" role="tab" aria-selected="false">DENNÍK</button></nav>
+<nav class="tabs" role="tablist" aria-label="Stránky"><button id="tb1" role="tab" aria-selected="true">Žurnál</button><button id="tb2" role="tab" aria-selected="false">Trading Dashboard</button><button id="tb3" role="tab" aria-selected="false">DENNÍK</button><button id="tb4" role="tab" aria-selected="false">Poznámkový blok</button></nav>
 <main id="pg1">
   <section class="stack">
     <div class="card">
@@ -248,6 +288,7 @@ label.tl{grid-column:1/-1}
   <div class="jsub" role="group" aria-label="Sekcie denníka"><button id="js1" aria-pressed="true">Denný záznam</button><button id="js2" aria-pressed="false">Týždenné vyhodnotenie</button><button id="js3" aria-pressed="false">História</button><button id="js4" aria-pressed="false">Analýza rastu</button></div>
   <div id="jv1"></div><div id="jv2" hidden></div><div id="jv3" hidden></div><div id="jv4" hidden></div>
 </div>
+<div id="pg4" class="dashpg" hidden></div>
 <div id="pg2" class="dashpg" hidden>
   <div class="card" style="margin-bottom:16px">
     <h2 style="font-size:18px;letter-spacing:.02em">TRADING DASHBOARD</h2>
@@ -301,12 +342,19 @@ function jDay(x){x=x&&typeof x==='object'?x:{};
   return{status:x.status==='done'?'done':'draft',updated:jstr(x.updated,40),done:jstr(x.done,40),prep:{ready:jopt(p.ready,J_ALLOW.ready),rule:jstr(p.rule)},an,disc,discWhy:jstr(x.discWhy),
     end:{big:jstr(en.big),best:jstr(en.best),lossPlan:jopt(en.lossPlan,J_ALLOW.lossPlan),learned:jstr(en.learned),improve:jstr(en.improve),rating:jrate(en.rating)}}}
 function jWeek(x){x=x&&typeof x==='object'?x:{};const w={};J_WK.forEach(k=>{w[k]=jstr(x[k])});w.rating=jrate(x.rating);return w}
-function normJ(j){const o={days:{},weeks:{}};
+function jNote(x){x=x&&typeof x==='object'?x:{};return{note:jstr(x.note),score:jrate(x.score),pot:(typeof x.pot==='number'&&isFinite(x.pot)&&Math.abs(x.pot)<=1000)?x.pot:null}}
+const J_MR=[['','— neuvedené —'],['late','Nestihol som'],['doubt','Pochyboval som'],['fear','Strach po predchádzajúcej strate'],['away','Nebol som pri počítači'],['limit','Dosiahnutý denný limit alebo risk'],['other','Iný dôvod']];
+function jMiss(x){x=x&&typeof x==='object'?x:{};const num=v=>typeof v==='number'&&isFinite(v)&&Math.abs(v)<1e7?v:null,tm=v=>typeof v==='string'&&/^([01]\d|2[0-3]):[0-5]\d$/.test(v)?v:'',q=Math.round(+x.qty);
+  return{date:okD(x.date)?x.date:'',tin:tm(x.tin),tout:tm(x.tout),sym:(typeof x.sym==='string'&&Object.prototype.hasOwnProperty.call(PV,x.sym))?x.sym:'',side:x.side==='Short'?'Short':'Long',qty:q>=1&&q<=1000?q:1,entry:num(x.entry),exit:num(x.exit),comm:(num(x.comm)!=null&&x.comm>=0)?x.comm:0,strat:jstr(x.strat,100),reason:jopt(x.reason,J_MR.map(a=>a[0])),note:jstr(x.note),rDirect:(num(x.rDirect)!=null&&Math.abs(x.rDirect)<=1000)?x.rDirect:null,cmp:jstr(x.cmp,200)}}
+const jMissOk=r=>!!r.date&&!!r.sym&&((r.entry!=null&&r.exit!=null)||r.rDirect!=null);
+function normJ(j){const o={days:{},weeks:{},notes:{},missed:{}};
   if(j&&typeof j==='object'){
     if(j.days&&typeof j.days==='object')Object.keys(j.days).forEach(k=>{if(okD(k))o.days[k]=jDay(j.days[k])});
-    if(j.weeks&&typeof j.weeks==='object')Object.keys(j.weeks).forEach(k=>{if(okW(k))o.weeks[k]=jWeek(j.weeks[k])})}
+    if(j.weeks&&typeof j.weeks==='object')Object.keys(j.weeks).forEach(k=>{if(okW(k))o.weeks[k]=jWeek(j.weeks[k])});
+    if(j.notes&&typeof j.notes==='object')Object.keys(j.notes).forEach(id=>{if(id!=='__proto__'&&id.length>0&&id.length<=200){const n=jNote(j.notes[id]);if(n.note||n.score!=null||n.pot!=null)o.notes[id]=n}});
+    if(j.missed&&typeof j.missed==='object')Object.keys(j.missed).forEach(id=>{if(id!=='__proto__'&&id.length>0&&id.length<=100){const m=jMiss(j.missed[id]);if(jMissOk(m))o.missed[id]=m}})}
   return o}
-const jMergeJ=(a,b)=>({days:Object.assign({},a.days,b.days),weeks:Object.assign({},a.weeks,b.weeks)});
+const jMergeJ=(a,b)=>({days:Object.assign({},a.days,b.days),weeks:Object.assign({},a.weeks,b.weeks),notes:Object.assign({},a.notes,b.notes),missed:Object.assign({},a.missed,b.missed)});
 
 function restoreS(o){const oj=S.journal;S=norm(o);S.journal=(o.journal&&typeof o.journal==='object')?jMergeJ(oj,S.journal):oj}
 function norm(o){
@@ -597,11 +645,11 @@ function drawDash(){
 }
 function showTab(t){
   if(typeof jT!=='undefined'&&jT)jFlush();
-  UI.tab=t==='dash'?'dash':t==='diary'?'diary':'journal';
-  $('pg1').hidden=UI.tab!=='journal';$('pg2').hidden=UI.tab!=='dash';$('pg3').hidden=UI.tab!=='diary';
-  $('tb1').setAttribute('aria-selected',String(UI.tab==='journal'));$('tb2').setAttribute('aria-selected',String(UI.tab==='dash'));$('tb3').setAttribute('aria-selected',String(UI.tab==='diary'));
+  UI.tab=t==='dash'?'dash':t==='diary'?'diary':t==='notes'?'notes':'journal';
+  $('pg1').hidden=UI.tab!=='journal';$('pg2').hidden=UI.tab!=='dash';$('pg3').hidden=UI.tab!=='diary';$('pg4').hidden=UI.tab!=='notes';
+  $('tb1').setAttribute('aria-selected',String(UI.tab==='journal'));$('tb2').setAttribute('aria-selected',String(UI.tab==='dash'));$('tb3').setAttribute('aria-selected',String(UI.tab==='diary'));$('tb4').setAttribute('aria-selected',String(UI.tab==='notes'));
   try{localStorage.setItem('tj1ui',JSON.stringify(UI))}catch(e){}
-  if(UI.tab==='dash')drawDash();else if(UI.tab==='diary')jRender();else{drawCharts();drawCal()}
+  if(UI.tab==='dash')drawDash();else if(UI.tab==='diary')jRender();else if(UI.tab==='notes')nRender();else{drawCharts();drawCal()}
 }
 let LAST={rs:[],eq:[0],w:0};
 function drawCharts(){
@@ -616,7 +664,7 @@ function drawCharts(){
   $('c5').innerHTML=hbars(groupSum(rs,r=>accN(r.t.acc)),W('c5'));
   const D=durData(rs);$('c6').innerHTML=rs.length?durChart(W('c6'),D):NOD;$('dsum').innerHTML=durSum(D);
 }
-let rzT;addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{if(UI.tab==='diary')return;if(UI.tab==='dash'){if(Math.abs($('d5').clientWidth-DW)>8)drawDash()}else if(Math.abs($('c1').clientWidth-LAST.w)>8){drawCharts();drawCal()}},150)});
+let rzT;addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{if(UI.tab==='diary'||UI.tab==='notes')return;if(UI.tab==='dash'){if(Math.abs($('d5').clientWidth-DW)>8)drawDash()}else if(Math.abs($('c1').clientWidth-LAST.w)>8){drawCharts();drawCal()}},150)});
 const F={a:'',p:'all',v:'',s:'',g:''};
 const isoWeek=d=>{d=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const n=d.getUTCDay()||7;d.setUTCDate(d.getUTCDate()+4-n);const y=d.getUTCFullYear();return y+'-T'+String(Math.ceil(((d-Date.UTC(y,0,1))/864e5+1)/7)).padStart(2,'0')};
 const pk=t=>F.p==='month'?t.tin.slice(0,7):F.p==='day'?t.tin.slice(0,10):isoWeek(new Date(t.tin));
@@ -726,7 +774,7 @@ $('cnext').onclick=()=>{CAL.m++;if(CAL.m>11){CAL.m=0;CAL.y++}drawCal()};
 $('ctoday').onclick=()=>{const d=new Date();CAL={y:d.getFullYear(),m:d.getMonth()};drawCal()};
 $('cal').addEventListener('click',e=>{const c=e.target.closest('[data-d]');if(!c)return;F.p='day';$('fp').value='day';F.v=c.dataset.d;render();if(typeof scrollTo==='function')scrollTo({top:0,behavior:'smooth'})});
 $('cal').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const c=e.target.closest('[data-d]');if(c){e.preventDefault();c.click()}}});
-$('tb1').onclick=()=>showTab('journal');$('tb2').onclick=()=>showTab('dash');$('tb3').onclick=()=>showTab('diary');
+$('tb1').onclick=()=>showTab('journal');$('tb2').onclick=()=>showTab('dash');$('tb3').onclick=()=>showTab('diary');$('tb4').onclick=()=>showTab('notes');
 $('da').onchange=()=>{F.a=$('da').value;render()};$('ds').onchange=()=>{F.s=$('ds').value;render()};$('dg').onchange=()=>{F.g=$('dg').value;render()};$('dy').onchange=()=>{DY=$('dy').value;drawDash()};
 $('fa').onchange=()=>{F.a=$('fa').value;render()};
 const dlf=(name,txt)=>{$('bt').value=txt.replace(/^\ufeff/,'');$('bm').textContent='Hotovo. Text je v poli vyššie, skopíruj ho.'};
@@ -833,7 +881,7 @@ const jGet=k=>S.journal.days[k]||null;
 const jTid=t=>String(t.id==null?'':t.id);
 function jEns(k){if(!S.journal.days[k])S.journal.days[k]=jDay({});return S.journal.days[k]}
 let jT=0;
-const jMsg=m=>{const e=$('jsave');if(e)e.textContent=m};
+const jMsg=m=>{['jsave','nsave'].forEach(i=>{const e=$(i);if(e)e.textContent=m})};
 function jSaveSoon(){clearTimeout(jT);jT=setTimeout(jFlush,500);jMsg('Ukladám…')}
 function jFlush(){clearTimeout(jT);jT=0;try{localStorage.setItem('tj1',JSON.stringify(S));J.err='';jMsg('Uložené '+new Date().toLocaleTimeString('sk-SK'))}catch(e){J.err='⚠ Nepodarilo sa uložiť (úložisko prehliadača je plné alebo zablokované). Hneď si stiahni zálohu, inak o zmeny môžeš prísť.';jMsg(J.err)}return !J.err}
 const jRes=p=>p>0?['WIN','pos']:p<0?['LOSS','neg']:['BREAK-EVEN',''];
@@ -1190,7 +1238,161 @@ $('pg3').addEventListener('change',e=>{const el=e.target;
 addEventListener('pagehide',()=>{if(jT)jFlush()});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&jT)jFlush()});
 
-render();preview();showTab(UI.tab==='dash'?'dash':UI.tab==='diary'?'diary':'journal');
+// ---- POZNÁMKOVÝ BLOK: osobné poznámky, skóre a "R dosiahnuté vs. R, ktoré obchod mohol dosiahnuť" k obchodom zo S.trades ----
+const N={mode:'week',date:null,lim:50,view:'notes'},M={edit:null,draft:null,last:{}};
+(()=>{const ds=S.trades.map(t=>String(t.tin).slice(0,10)).sort();N.date=ds.length?ds[ds.length-1]:jYmd(new Date())})();
+const nGet=id=>Object.prototype.hasOwnProperty.call(S.journal.notes,id)?S.journal.notes[id]:null;
+const nOk=t=>{const id=jTid(t);return id&&id!=='__proto__'&&id.length<=200};
+function nSel(){let a=S.trades.slice();
+  if(N.mode==='day')a=a.filter(t=>String(t.tin).slice(0,10)===N.date);
+  else if(N.mode==='week'){const m=jMon(N.date),e=jAdd(m,6);a=a.filter(t=>{const k=String(t.tin).slice(0,10);return k>=m&&k<=e})}
+  return a.sort((x,y)=>String(y.tin)<String(x.tin)?-1:String(y.tin)>String(x.tin)?1:0)}
+function nInfo(n,c){let x='Realizované R: '+jRs(c);
+  if(n&&n.pot!=null&&Number.isFinite(c.R)){const d=n.pot-c.R;x+=' · Mohol dosiahnuť: '+(n.pot>0?'+':'')+n.pot.toFixed(2)+' R · Rozdiel: '+(d>0?'+':'')+d.toFixed(2)+' R — '+(d>0.005?'cena išla ďalej tvojím smerom':d<-0.005?'výstup bol správny (cena sa otočila)':'bez rozdielu')}
+  return x}
+function nStatHtml(trs){const rows=trs.map(t=>({t,c:calc(t),n:nGet(jTid(t))})),MIN=5;
+  const sc=rows.filter(r=>r.n&&r.n.score!=null),nt=rows.filter(r=>r.n&&r.n.note.trim()),pt=rows.filter(r=>r.n&&r.n.pot!=null&&Number.isFinite(r.c.R));
+  const rg=v=>(v>0?'+':'')+v.toFixed(2)+' R',k=(l,v)=>`<div class="k"><span>${l}</span><b>${v}</b></div>`;
+  const pnl=Math.round(rows.reduce((a,r)=>a+r.c.pnl,0)*100)/100,rr=rows.reduce((a,r)=>a+(Number.isFinite(r.c.R)?r.c.R:0),0);
+  let h='<h2>Súhrn výberu</h2><div class="jg">'+k('Obchody vo výbere',rows.length)+k('Čistý P&amp;L (z obchodov)',`<span class="${cls(pnl)}">${esc(m$(pnl))}</span>`)+k('Realizované R spolu',`<span class="${cls(rr)}">${rg(rr)}</span>`)+k('S poznámkou',nt.length+' z '+rows.length)+k('S hodnotením (Ø skóre 0–10)',sc.length?sc.length+' z '+rows.length+' (Ø '+jNum(sc.reduce((a,r)=>a+r.n.score,0)/sc.length)+')':'—')+'</div>';
+  h+='<h3 class="jh3">Dosiahnuté R vs. R, ktoré obchod mohol dosiahnuť</h3>';
+  if(!pt.length)return h+'<p class="sub">Zatiaľ nie je pri žiadnom obchode vo výbere vyplnené „R, ktoré mohol dosiahnuť“.</p>';
+  const sr=pt.reduce((a,r)=>a+r.c.R,0),sp=pt.reduce((a,r)=>a+r.n.pot,0),f=pt.filter(r=>r.n.pot>r.c.R+0.005).length,b=pt.filter(r=>r.n.pot<r.c.R-0.005).length,tg=pt.filter(r=>r.n.pot>=(S.risk.target||2)).length,oneR=(S.risk&&S.risk.oneR>0)?S.risk.oneR:100;
+  h+='<div class="jg">'+k('Obchody s vyplneným potenciálnym R',pt.length)+k('Σ dosiahnuté → Σ mohol dosiahnuť',rg(sr)+' → '+rg(sp))+k('Ušlé R spolu / Ø na obchod',rg(sp-sr)+' / '+rg((sp-sr)/pt.length))+k('Cena išla ďalej tvojím smerom',f+' z '+pt.length+' ('+jPc(f/pt.length)+')')+k('Výstup bol správny (cena sa otočila)',b+' z '+pt.length)+k('Mohol dosiahnuť cieľ ('+(S.risk.target||2)+' R) alebo viac',tg+' z '+pt.length)+'</div>';
+  if(pt.length<MIN)h+=`<p class="sub">Na záver treba aspoň ${MIN} obchodov s vyplneným potenciálnym R (máš ${pt.length}).</p>`;
+  else{const r=f/pt.length,al=(sp-sr)/pt.length;h+=`<p>${r>=0.6&&al>0?`Cena išla ďalej v <b>${jPc(r)}</b> prípadov a v priemere si nechal na stole <b>${rg(al)}</b> na obchod (spolu ≈ ${esc(m$((sp-sr)*oneR))} pri 1R = ${esc(m$(oneR))}). Zváž držať takéto obchody dlhšie podľa plánu.`:r<=0.4?`Cena išla ďalej len v <b>${jPc(r)}</b> prípadov — predčasné ukončenie ti v tejto vzorke väčšinou neuškodilo.`:`Zmiešaný obraz: cena išla ďalej v <b>${jPc(r)}</b> prípadov (Ø ušlé ${rg(al)}).`}</p><p class="sub">Potenciálne R je tvoj odhad zo spätného pohľadu (bez poplatkov); malá vzorka je šum.</p>`}
+  return h}
+function nCard(t,i){const c=calc(t),id=jTid(t),n=nGet(id)||jNote({}),wl=c.pnl>0?' w':c.pnl<0?' l':'';
+  if(!nOk(t))return`<div class="jtr${wl}">${jTrHead(t,c)}<div class="jwarn">Tento obchod nemá platný identifikátor, preto k nemu nie je možné ukladať poznámky.</div></div>`;
+  return`<div class="jtr${wl}" data-tid="${esc(id)}">${jTrHead(t,c)}
+  <div class="jg"><label class="jw">Moje osobné poznámky${jTa('n.note',id,n.note,3)}</label>
+  <label>Celkové vyhodnotené skóre obchodu (0–10)<select data-f="n.score" data-t="${esc(id)}"><option value="">— nehodnotené —</option>${[0,1,2,3,4,5,6,7,8,9,10].map(v=>`<option value="${v}"${n.score===v?' selected':''}>${v}</option>`).join('')}</select></label>
+  <label>Koľko R mohol obchod dosiahnuť, keby som ho nechal bežať dlhšie? (môže byť aj záporné)<input type="text" inputmode="decimal" autocomplete="off" data-f="n.pot" data-t="${esc(id)}" value="${n.pot==null?'':esc(String(n.pot))}" placeholder="napr. 2 alebo -0,5"><span class="jerr" role="alert"></span></label></div>
+  <div class="sub nri">${esc(nInfo(n,c))}</div></div>`}
+function nRender(){const m=N.mode,trs=nSel(),mon=jMon(N.date);
+  const lab=m==='day'?jFmtD(N.date):m==='week'?'Týždeň '+isoWeek(jDt(mon))+' ('+jShortD(mon)+' – '+jShortD(jAdd(mon,6))+' '+jAdd(mon,6).slice(0,4)+')':'Všetky obchody';
+  const btn=(v,t)=>`<button data-act="nmode" data-v="${v}" aria-pressed="${m===v}">${t}</button>`;
+  const vb=(v,t)=>`<button data-act="nview" data-v="${v}" aria-pressed="${N.view===v}">${t}</button>`;
+  let h=`<section class="card"><h2>Poznámkový blok</h2><div class="jsub" role="group" aria-label="Sekcia bloku">${vb('notes','Poznámky k obchodom')}${vb('missed','Obchody, ktoré som nezobral')}</div><p class="sub">${N.view==='missed'?'Vyber deň alebo týždeň, pre ktorý chceš vidieť a zapisovať obchody, ktoré si nezobral. Zobrazia sa aj reálne obchody z toho istého výberu na porovnanie.':'Vyber deň alebo týždeň a ku každému obchodu z Žurnálu si napíš poznámky, skóre a koľko R mohol obchod dosiahnuť. Obchody sa berú živo z Žurnálu (nekopírujú sa).'}</p>
+  <div class="jsub" role="group" aria-label="Výber obchodov">${btn('day','Podľa dňa')}${btn('week','Podľa týždňa')}${btn('all','Všetky obchody')}</div>`;
+  if(m!=='all')h+=`<div class="jdt"><button data-act="nprev" aria-label="Predchádzajúce obdobie">‹</button><label>${m==='day'?'Dátum':'Ľubovoľný dátum v týždni'}<input type="date" id="ndate" value="${esc(N.date)}"></label><button data-act="nnext" aria-label="Nasledujúce obdobie">›</button><button data-act="ntoday">Dnes</button></div>`;
+  h+=`<div class="jbar"><span class="bd b">${esc(lab)}</span><span class="bd">${N.view==='missed'?'Nezobratých obchodov: '+mSel().length:'Obchodov: '+trs.length}</span></div></section>`;
+  if(N.view==='missed'){h+=mRender(trs);$('pg4').innerHTML=h;return}
+  h+=`<section class="card" id="nsum">${nStatHtml(trs)}</section>`;
+  const shown=trs.slice(0,N.lim);
+  h+=trs.length?'<div class="jstack">'+shown.map(nCard).join('')+'</div>'+(trs.length>shown.length?`<div class="row"><button data-act="nmore">Zobraziť ďalšie (${trs.length-shown.length})</button></div>`:''):'<section class="card"><div class="empty">V tomto výbere nie sú žiadne obchody.</div></section>';
+  if(m==='all'){const ids=new Set(S.trades.map(jTid)),orph=Object.keys(S.journal.notes).filter(id=>!ids.has(id));
+    if(orph.length)h+='<section class="card"><h2>Poznámky k obchodom, ktoré už nie sú dostupné</h2><p class="sub">Obchod bol odstránený z Žurnálu. Poznámky ostávajú zachované.</p>'+orph.map(id=>{const n=S.journal.notes[id];return`<div class="jtr orph"><div class="jwarn">Pôvodný obchod už nie je dostupný.</div><dl class="jdl2"><dt>Poznámka</dt><dd>${esc(n.note)||'—'}</dd><dt>Skóre</dt><dd>${n.score==null?'—':n.score}</dd><dt>Mohol dosiahnuť (R)</dt><dd>${n.pot==null?'—':n.pot}</dd></dl><button data-act="ndel" data-t="${esc(id)}">Odstrániť tieto poznámky</button></div>`}).join('')+'</section>'}
+  h+=`<section class="card"><span id="nsave" class="sub" role="status" aria-live="polite">${J.err?esc(J.err):'Zmeny sa ukladajú automaticky.'}</span></section>`;
+  $('pg4').innerHTML=h}
+function nEdit(el){const id=el.dataset.t,f=el.dataset.f,t=S.trades.find(x=>jTid(x)===id);if(!id||!t||!nOk(t))return;
+  const box=el.closest('.jtr'),raw=Object.assign({},nGet(id)||jNote({}));
+  if(f==='n.note')raw.note=el.value;
+  else if(f==='n.score')raw.score=el.value===''?null:+el.value;
+  else if(f==='n.pot'){const v=el.value.trim().replace(',','.'),er=box.querySelector('.jerr');
+    if(v===''){raw.pot=null;er.textContent=''}else if(/^-?\d+(\.\d+)?$/.test(v)&&Math.abs(+v)<=1000){raw.pot=+v;er.textContent=''}else{raw.pot=null;er.textContent='Zadaj číslo, napr. 2 alebo -0,5.'}}
+  const nn=jNote(raw);if(!nn.note&&nn.score==null&&nn.pot==null)delete S.journal.notes[id];else S.journal.notes[id]=nn;
+  box.querySelector('.nri').textContent=nInfo(nn,calc(t));$('nsum').innerHTML=nStatHtml(nSel());jSaveSoon()}
+$('pg4').addEventListener('input',e=>{const el=e.target;if(el.dataset&&el.dataset.f&&el.dataset.f.slice(0,2)==='n.'&&(el.tagName==='TEXTAREA'||el.type==='text'))nEdit(el)});
+$('pg4').addEventListener('change',e=>{const el=e.target;
+  if(el.id==='ndate'){if(okD(el.value)){mKeep();N.date=el.value;N.lim=50;nRender()}return}
+  if(el.dataset&&el.dataset.f==='m.cmp'){const id=el.dataset.t,r=S.journal.missed[id];if(!r)return;r.cmp=el.value;const card=el.closest('.jtr');card.querySelector('.mcmp').innerHTML=mCmp(r);$('msum').innerHTML=mSumHtml(mSel(),nSel());jSaveSoon();return}
+  if(el.dataset&&el.dataset.f&&el.dataset.f.slice(0,2)==='n.'&&el.tagName==='SELECT')nEdit(el)});
+$('pg4').addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act,st=N.mode==='week'?7:1;
+  if(a==='nview'){if(jT)jFlush();M.draft=null;N.view=b.dataset.v;return nRender()}
+  if(a==='nmode'){if(jT)jFlush();mKeep();N.mode=b.dataset.v;N.lim=50;return nRender()}
+  if(a==='msave')return mSave();if(a==='mcancel'){M.edit=null;M.draft=null;return nRender()}
+  if(a==='medit'){M.edit=b.dataset.t;M.draft=null;nRender();const f=document.querySelector('#pg4 [data-mf="date"]');if(f&&f.scrollIntoView)f.scrollIntoView({block:'center'});return}
+  if(a==='mdel'){if(!jArm(b,'Naozaj vymazať? Klikni znova'))return;delete S.journal.missed[b.dataset.t];if(M.edit===b.dataset.t)M.edit=null;jFlush();return nRender()}
+  if(a==='nprev'){mKeep();N.date=jAdd(N.date,-st);N.lim=50;return nRender()}if(a==='nnext'){mKeep();N.date=jAdd(N.date,st);N.lim=50;return nRender()}if(a==='ntoday'){mKeep();N.date=jYmd(new Date());N.lim=50;return nRender()}
+  if(a==='nmore'){N.lim+=50;return nRender()}
+  if(a==='ndel'){if(!jArm(b,'Naozaj odstrániť? Klikni znova'))return;delete S.journal.notes[b.dataset.t];jFlush();nRender()}});
+
+// ---- OBCHODY, KTORÉ SOM NEZOBRAL (backtest): nie sú v S.trades, nemenia Žurnál ani Dashboard; R sa počíta rovnako ako u reálnych obchodov ----
+function mCalc(r){const oneR=(S.risk&&S.risk.oneR>0)?S.risk.oneR:100;
+  if(r.entry!=null&&r.exit!=null){const c=calc({sym:r.sym,side:r.side,qty:r.qty,entry:r.entry,exit:r.exit,comm:r.comm,tin:r.date+'T'+(r.tin||'00:00')+':00',tout:r.date+'T'+(r.tout||r.tin||'00:00')+':00'});return{R:c.R,pnl:c.pnl,src:'ceny'}}
+  if(r.rDirect!=null)return{R:r.rDirect,pnl:r.rDirect*oneR,src:'R'};return null}
+function mSel(){return Object.keys(S.journal.missed).map(id=>({id,r:S.journal.missed[id]})).filter(x=>{const d=x.r.date;if(N.mode==='day')return d===N.date;if(N.mode==='week'){const m=jMon(N.date);return d>=m&&d<=jAdd(m,6)}return true}).sort((a,b)=>a.r.date===b.r.date?((b.r.tin||'')<(a.r.tin||'')?-1:1):(a.r.date<b.r.date?1:-1))}
+const mRs=v=>(v>0?'+':'')+v.toFixed(2)+' R';
+function mRecStr(v){const s=x=>x==null?'':String(x);return{date:v.date,tin:v.tin,tout:v.tout,sym:v.sym,side:v.side,qty:s(v.qty),entry:s(v.entry),exit:s(v.exit),comm:s(v.comm||''),strat:v.strat,reason:v.reason,note:v.note,rDirect:s(v.rDirect)}}
+function mKeep(){if(N.view==='missed'&&document.querySelector('#pg4 [data-mf]'))M.draft=mRead()}
+function mRead(){const o={};document.querySelectorAll('#pg4 [data-mf]').forEach(e=>{o[e.dataset.mf]=e.value});return o}
+function mRender(real){const sel=mSel();return mForm()+`<section class="card" id="msum">${mSumHtml(sel,real)}</section>`+(sel.length?'<div class="jstack">'+sel.map(mCard).join('')+'</div>':'')+`<section class="card"><span id="nsave" class="sub" role="status" aria-live="polite">${J.err?esc(J.err):'Záznamy sa ukladajú po kliknutí na „Pridať obchod“ alebo „Uložiť zmeny“; výber porovnania sa ukladá hneď.'}</span></section>`}
+function mForm(){const merr=M.err;M.err='';const e=M.edit&&S.journal.missed[M.edit]?S.journal.missed[M.edit]:null,fv=M.draft||mRecStr(e||{date:N.date,tin:'',tout:'',sym:M.last.sym||'MNQ',side:M.last.side||'Long',qty:1,entry:null,exit:null,comm:0,strat:'',reason:'',note:'',rDirect:null}),
+  names=Array.from(new Set([].concat(S.auto.w.map(w=>w.name),S.trades.map(t=>t.strat||'')).filter(Boolean)));
+  const inp=(f,t,ex)=>`<input type="${t||'text'}" data-mf="${f}" value="${esc(fv[f])}"${ex||''}>`,num=(f,ph)=>inp(f,'text',` inputmode="decimal" autocomplete="off" placeholder="${ph||''}"`);
+  return`<section class="card"><h2>${e?'Upraviť nezobratý obchod':'Pridať obchod, ktorý som nezobral'}</h2><p class="sub">Zapíš obchod, ktorý prebehol podľa tvojich pravidiel, ale neotvoril si ho. Nezapočíta sa do Žurnálu ani Dashboardu — slúži len na backtest. R sa počíta rovnako ako u reálnych obchodov (čistý P&amp;L ÷ 1R).</p>
+  <div class="jg"><label>Dátum${inp('date','date')}</label><label>Čas vstupu${inp('tin','time')}</label><label>Čas výstupu${inp('tout','time')}</label>
+  <label>Symbol<select data-mf="sym">${['MNQ','MYM','MCL'].map(x=>`<option${fv.sym===x?' selected':''}>${x}</option>`).join('')}</select></label>
+  <label>Smer<select data-mf="side"><option${fv.side==='Long'?' selected':''}>Long</option><option${fv.side==='Short'?' selected':''}>Short</option></select></label>
+  <label>Počet kontraktov${inp('qty','number',' min="1" step="1" inputmode="numeric"')}</label>
+  <label>Vstupná cena${num('entry')}</label><label>Výstupná cena${num('exit')}</label><label>Poplatky v USD (voliteľné)${num('comm','0')}</label>
+  <label>…alebo priamo R (ak nemáš ceny)${num('rDirect','napr. 2 alebo -1')}</label>
+  <label>Stratégia<input type="text" data-mf="strat" list="mstrats" value="${esc(fv.strat)}" placeholder="podľa času sa doplní sama"><datalist id="mstrats">${names.map(n=>`<option value="${esc(n)}">`).join('')}</datalist></label>
+  <label>Prečo som ho nezobral?<select data-mf="reason">${jOpt(J_MR,fv.reason)}</select></label>
+  <label class="jw">Poznámka${jTa('mnote',null,'',2).replace('data-f="mnote"','data-mf="note"').replace('></textarea>','>'+esc(fv.note)+'</textarea>')}</label></div>
+  <p class="jerr" id="merr" role="alert">${esc(merr||'')}</p>
+  <div class="row"><button class="pri" data-act="msave">${e?'Uložiť zmeny':'Pridať obchod'}</button>${e?'<button data-act="mcancel">Zrušiť úpravu</button>':''}</div>
+  <p class="sub">Ak zadáš ceny aj R, použijú sa ceny.</p></section>`}
+function mCmp(r){if(!r.cmp)return'<p class="sub">Vyber nižšie reálny obchod z Žurnálu, s ktorým chceš tento nezobratý obchod porovnať.</p>';
+  const t=S.trades.find(x=>jTid(x)===r.cmp);if(!t)return'<div class="jwarn" role="status">Porovnávaný obchod už nie je dostupný (bol odstránený z Žurnálu).</div>';
+  const ct=calc(t),mc=mCalc(r),d=mc.R-ct.R,oneR=(S.risk&&S.risk.oneR>0)?S.risk.oneR:100,cr=(a,b)=>`<tr><td>${a}</td>${b}</tr>`,fm=v=>Number.isFinite(v)?esc(mRs(v)):'—';
+  const row=(l,a,b)=>`<tr><td>${l}</td><td>${a}</td><td>${b}</td></tr>`;
+  return`<div class="tw"><table class="jt"><thead><tr><th></th><th>Zobraný (reálny)</th><th>Nezobraný</th></tr></thead><tbody>
+  ${row('Dátum a čas',esc(String(t.tin).slice(0,10)+' '+jTm(t.tin)+'–'+jTm(t.tout)),esc(r.date+(r.tin?' '+r.tin+(r.tout?'–'+r.tout:''):'')))}
+  ${row('Symbol / smer',esc(t.sym+' '+t.side),esc(r.sym+' '+r.side))}${row('Kontrakty',esc(t.qty),esc(r.qty))}
+  ${row('Vstup → výstup',esc(t.entry+' → '+t.exit),r.entry!=null?esc(r.entry+' → '+r.exit):'—')}
+  ${row('Stratégia',esc(t.strat||'—'),esc(r.strat||'—'))}${row('Čistý P&amp;L',`<span class="${cls(ct.pnl)}">${esc(m$(ct.pnl))}</span>`,`<span class="${cls(mc.pnl)}">${mc.src==='R'?'≈ ':''}${esc(m$(mc.pnl))}</span>`)}
+  ${row('<b>R</b>',`<b class="${cls(ct.R)}">${fm(ct.R)}</b>`,`<b class="${cls(mc.R)}">${fm(mc.R)}</b>`)}</tbody></table></div>
+  <p><b>Rozdiel:</b> <span class="${cls(d)}">${esc(mRs(d))}</span> (≈ ${esc(m$(d*oneR))}) — ${d>0.005?'nezobraný obchod dopadol lepšie než ten, ktorý si zobral. Keby si sa držal pravidiel, výsledok mohol byť lepší.':d<-0.005?'obchod, ktorý si zobral, dopadol lepšie než nezobraný.':'rovnaký výsledok.'}</p>`}
+function mCard(x){const r=x.r,c=mCalc(r),id=x.id,wl=c.R>0?' w':c.R<0?' l':'',res=c.R>0?['WIN','pos']:c.R<0?['LOSS','neg']:['BREAK-EVEN',''];
+  const same=S.trades.filter(t=>String(t.tin).slice(0,10)===r.date),other=S.trades.filter(t=>String(t.tin).slice(0,10)!==r.date).sort((a,b)=>String(b.tin)<String(a.tin)?-1:1).slice(0,60);
+  const lab=t=>String(t.tin).slice(0,10)+' '+jTm(t.tin)+' · '+t.sym+' '+t.side+' ×'+t.qty+' · '+m$(calc(t).pnl),opt=t=>`<option value="${esc(jTid(t))}"${r.cmp===jTid(t)?' selected':''}>${esc(lab(t))}</option>`;
+  const missing=r.cmp&&!S.trades.some(t=>jTid(t)===r.cmp)?`<option value="${esc(r.cmp)}" selected>(obchod už nie je dostupný)</option>`:'';
+  return`<div class="jtr${wl}" data-mid="${esc(id)}"><div class="jth"><div><span>Dátum a čas</span><b>${esc(r.date)} ${esc(r.tin)}${r.tout?'–'+esc(r.tout):''}</b></div><div><span>Symbol / smer</span><b>${esc(r.sym)} ${esc(r.side)}</b></div><div><span>Kontrakty</span><b>${esc(r.qty)}</b></div>
+  <div><span>Vstup → výstup</span><b>${r.entry!=null?esc(r.entry+' → '+r.exit):'zadané priamo ako R'}</b></div><div><span>Stratégia</span><b>${esc(r.strat||(r.tin?autoStrat(r.date+'T'+r.tin,true):'')||'—')}</b></div>
+  <div><span>Dôvod nezobratia</span><b>${esc((J_MR.find(o=>o[0]===r.reason)||[])[1]||'—')}</b></div>
+  <div><span>Čistý P&amp;L</span><b class="${cls(c.pnl)}">${c.src==='R'?'≈ ':''}${esc(m$(c.pnl))}</b></div><div><span>Výsledok</span><b class="${res[1]}">${res[0]}</b></div><div><span>R</span><b class="${cls(c.R)}">${esc(mRs(c.R))}</b></div></div>
+  ${r.note?`<p style="margin:0;overflow-wrap:anywhere">${esc(r.note)}</p>`:''}
+  <label>Porovnať so zobraným (reálnym) obchodom<select data-f="m.cmp" data-t="${esc(id)}"><option value="">— bez porovnania —</option>${missing}${same.length?'<optgroup label="Rovnaký deň">'+same.map(opt).join('')+'</optgroup>':''}${other.length?'<optgroup label="Iné dni (posledných 60)">'+other.map(opt).join('')+'</optgroup>':''}</select></label>
+  <div class="mcmp">${mCmp(r)}</div><div class="row"><button data-act="medit" data-t="${esc(id)}">Upraviť</button><button data-act="mdel" data-t="${esc(id)}">Vymazať</button></div></div>`}
+function mSumHtml(sel,real){const MIN=10,MINC=5,rs=sel.map(x=>({x,c:mCalc(x.r)})),n=rs.length,k=(l,v)=>`<div class="k"><span>${l}</span><b>${v}</b></div>`,oneR=(S.risk&&S.risk.oneR>0)?S.risk.oneR:100;
+  if(!n)return'<h2>Štatistika nezobratých obchodov</h2><p class="sub">Vo výbere zatiaľ nie sú žiadne nezobraté obchody.</p>';
+  const w=rs.filter(r=>r.c.R>0.005),l=rs.filter(r=>r.c.R<-0.005),sum=rs.reduce((a,r)=>a+r.c.R,0),gp=w.reduce((a,r)=>a+r.c.R,0),gl=-l.reduce((a,r)=>a+r.c.R,0),best=Math.max.apply(null,rs.map(r=>r.c.R)),worst=Math.min.apply(null,rs.map(r=>r.c.R));
+  const realR=real.reduce((a,t)=>a+(Number.isFinite(calc(t).R)?calc(t).R:0),0);
+  let h='<h2>Štatistika nezobratých obchodov (backtest)</h2><div class="jg">'+k('Počet obchodov',n)+k('Win rate',jPc(w.length/n)+' ('+w.length+' z '+n+')')+k('R spolu',`<span class="${cls(sum)}">${esc(mRs(sum))}</span>`)+k('Ø R na obchod (expektancia)',`<span class="${cls(sum)}">${esc(mRs(sum/n))}</span>`)+k('Profit factor',gl>0?(gp/gl).toFixed(2):(gp>0?'∞':'—'))+k('Najlepší / najhorší',esc(mRs(best))+' / '+esc(mRs(worst)))+'</div>';
+  h+='<h3 class="jh3">Reálne vs. keby si zobral aj nezobraté (vo výbere)</h3><div class="jg">'+k('Reálne R (Žurnál)',`<span class="${cls(realR)}">${esc(mRs(realR))}</span> (${real.length} obchodov)`)+k('Nezobraté R',`<span class="${cls(sum)}">${esc(mRs(sum))}</span>`)+k('R keby si zobral všetko',`<span class="${cls(realR+sum)}">${esc(mRs(realR+sum))}</span> ≈ ${esc(m$((realR+sum)*oneR))}`)+'</div>';
+  if(n<MIN)h+=`<p class="sub">Na záver o nezobratých obchodoch treba aspoň ${MIN} záznamov (máš ${n}).</p>`;
+  else h+=`<p>${sum>0?`Obchody podľa tvojich pravidiel, ktoré si nezobral, mali Ø <b>${esc(mRs(sum/n))}</b> — vynechávanie ťa v tomto výbere stálo <b>${esc(mRs(sum))}</b> (≈ ${esc(m$(sum*oneR))}).`:`Nezobraté obchody mali Ø <b>${esc(mRs(sum/n))}</b> — vynechanie ti v tomto výbere neuškodilo.`}</p>`;
+  const grp=(first,kf)=>{const m=new Map();rs.forEach(r=>{const key=kf(r);if(!m.has(key))m.set(key,[]);m.get(key).push(r)});
+    const rows=Array.from(m.entries()).sort((a,b)=>b[1].reduce((s,r)=>s+r.c.R,0)-a[1].reduce((s,r)=>s+r.c.R,0)).map(e=>{const a=e[1],s=a.reduce((q,r)=>q+r.c.R,0),ww=a.filter(r=>r.c.R>0.005).length;return`<tr><td>${esc(e[0])}</td><td>${a.length}</td><td>${jPc(ww/a.length)}</td><td class="${cls(s)}">${esc(mRs(s))}</td><td class="${cls(s)}">${esc(mRs(s/a.length))}</td></tr>`}).join('');
+    return`<h3 class="jh3">${first}</h3><div class="tw"><table class="jt"><thead><tr><th>${first}</th><th>Počet</th><th>Win rate</th><th>R spolu</th><th>Ø R</th></tr></thead><tbody>${rows}</tbody></table></div>`};
+  h+=grp('Podľa stratégie',r=>r.x.r.strat||(r.x.r.tin?autoStrat(r.x.r.date+'T'+r.x.r.tin,true):'')||'bez stratégie')+grp('Podľa symbolu',r=>r.x.r.sym)+grp('Podľa dôvodu nezobratia',r=>(J_MR.find(o=>o[0]===r.x.r.reason)||[])[1]||'neuvedené');
+  // porovnania
+  const cp=rs.map(r=>{const t=r.x.r.cmp&&S.trades.find(t=>jTid(t)===r.x.r.cmp);return t?{m:r.c.R,t:calc(t).R}:null}).filter(a=>a&&Number.isFinite(a.t));
+  h+='<h3 class="jh3">Porovnania so zobratými obchodmi</h3>';
+  if(!cp.length)h+='<p class="sub">Zatiaľ nie je žiadny nezobratý obchod porovnaný so zobratým.</p>';
+  else{const bt=cp.filter(a=>a.m>a.t+0.005).length,sm=cp.reduce((a,b)=>a+b.m,0),st=cp.reduce((a,b)=>a+b.t,0),d=(sm-st)/cp.length;
+    h+='<div class="jg">'+k('Počet porovnaní',cp.length)+k('Ø R zobraný → nezobraný',esc(mRs(st/cp.length))+' → '+esc(mRs(sm/cp.length)))+k('Ø rozdiel (nezobraný − zobraný)',`<span class="${cls(d)}">${esc(mRs(d))}</span>`)+k('Nezobraný dopadol lepšie',bt+' z '+cp.length+' ('+jPc(bt/cp.length)+')')+'</div>';
+    if(cp.length<MINC)h+=`<p class="sub">Na záver treba aspoň ${MINC} porovnaní (máš ${cp.length}).</p>`;
+    else{const q=bt/cp.length;h+=`<p>${q>=0.6?`Nezobraté obchody dopadli lepšie než tie, ktoré si zobral, v <b>${jPc(q)}</b> porovnaní (Ø rozdiel ${esc(mRs(d))}). Dodržiavanie pravidiel by ti v tejto vzorke pomohlo.`:q<=0.4?`Obchody, ktoré si zobral, dopadli lepšie než nezobraté v <b>${jPc(1-q)}</b> porovnaní — dodržiavanie pravidiel by ti v tejto vzorke neprinieslo viac.`:`Zmiešaný obraz: nezobraný obchod bol lepší v <b>${jPc(q)}</b> porovnaní (Ø rozdiel ${esc(mRs(d))}).`}</p><p class="sub">Je to vzorka tvojich vlastných záznamov, nie dôkaz; malý počet je šum.</p>`}}
+  return h}
+function mSave(){const o=mRead(),er=[],pn=s=>{s=String(s==null?'':s).trim().replace(',','.');return s===''?null:(/^-?\d+(\.\d+)?$/.test(s)?+s:NaN)};
+  const raw={date:o.date,tin:o.tin,tout:o.tout,sym:o.sym,side:o.side,qty:+o.qty,entry:pn(o.entry),exit:pn(o.exit),comm:pn(o.comm)==null?0:pn(o.comm),strat:o.strat.trim(),reason:o.reason,note:o.note,rDirect:pn(o.rDirect)};
+  if(!okD(raw.date))er.push('Zadaj dátum.');
+  if(!(raw.qty>=1&&raw.qty<=1000&&Number.isInteger(raw.qty)))er.push('Počet kontraktov musí byť celé číslo 1–1000.');
+  ['entry','exit','comm','rDirect'].forEach(f=>{if(Number.isNaN(raw[f]))er.push('Pole „'+({entry:'Vstupná cena',exit:'Výstupná cena',comm:'Poplatky',rDirect:'R'})[f]+'“ musí byť číslo.')});
+  if(raw.comm<0)er.push('Poplatky nemôžu byť záporné.');
+  if(!er.length&&!((raw.entry!=null&&raw.exit!=null)||raw.rDirect!=null))er.push('Zadaj vstupnú aj výstupnú cenu, alebo priamo R.');
+  if(!er.length&&(raw.entry!=null)!==(raw.exit!=null)&&raw.rDirect==null)er.push('Zadaj vstupnú aj výstupnú cenu.');
+  if(!raw.strat&&raw.tin)raw.strat=autoStrat(raw.date+'T'+raw.tin,true)||'';
+  if(er.length){M.err=er.join(' ');M.draft=o;return nRender()}
+  const old=M.edit&&S.journal.missed[M.edit],rec=jMiss(Object.assign(raw,{cmp:old?old.cmp:''}));
+  if(!jMissOk(rec)){M.err='Záznam sa nepodarilo uložiť, skontroluj údaje.';M.draft=o;return nRender()}
+  const id=M.edit||('m'+Date.now().toString(36)+Math.random().toString(36).slice(2,6));S.journal.missed[id]=rec;
+  M.last={sym:rec.sym,side:rec.side};M.edit=null;M.draft=null;M.err='';if(N.mode!=='all')N.date=rec.date;jFlush();nRender()}
+
+render();preview();showTab(UI.tab);
 </script>
 </body>
 </html>
