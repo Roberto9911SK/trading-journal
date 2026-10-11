@@ -1293,16 +1293,16 @@ function nEdit(el){const id=el.dataset.t,f=el.dataset.f,t=S.trades.find(x=>jTid(
     if(v===''){raw.pot=null;er.textContent=''}else if(/^-?\d+(\.\d+)?$/.test(v)&&Math.abs(+v)<=1000){raw.pot=+v;er.textContent=''}else{raw.pot=null;er.textContent='Zadaj číslo, napr. 2 alebo -0,5.'}}
   const nn=jNote(raw);if(!nn.note&&nn.score==null&&nn.pot==null)delete S.journal.notes[id];else S.journal.notes[id]=nn;
   box.querySelector('.nri').textContent=nInfo(nn,calc(t));$('nsum').innerHTML=nStatHtml(nSel());jSaveSoon()}
-$('pg4').addEventListener('input',e=>{const el=e.target;if(el.dataset&&el.dataset.f&&el.dataset.f.slice(0,2)==='n.'&&(el.tagName==='TEXTAREA'||el.type==='text'))nEdit(el)});
-$('pg4').addEventListener('change',e=>{const el=e.target;
+$('pg4').addEventListener('input',e=>{const el=e.target;if(el.dataset&&el.dataset.mf){mDrSave();return}if(el.dataset&&el.dataset.f&&el.dataset.f.slice(0,2)==='n.'&&(el.tagName==='TEXTAREA'||el.type==='text'))nEdit(el)});
+$('pg4').addEventListener('change',e=>{const el=e.target;if(el.dataset&&el.dataset.mf){mDrSave();return}
   if(el.id==='ndate'){if(okD(el.value)){mKeep();N.date=el.value;N.lim=50;nRender()}return}
   if(el.dataset&&el.dataset.f==='m.cmp'){const id=el.dataset.t,r=S.journal.missed[id];if(!r)return;r.cmp=el.value;const card=el.closest('.jtr');card.querySelector('.mcmp').innerHTML=mCmp(r);$('msum').innerHTML=mSumHtml(mSel(),nSel());jSaveSoon();return}
   if(el.dataset&&el.dataset.f&&el.dataset.f.slice(0,2)==='n.'&&el.tagName==='SELECT')nEdit(el)});
 $('pg4').addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act,st=N.mode==='week'?7:1;
-  if(a==='nview'){if(jT)jFlush();M.draft=null;N.view=b.dataset.v;return nRender()}
+  if(a==='nview'){if(jT)jFlush();mKeep();N.view=b.dataset.v;return nRender()}
   if(a==='nmode'){if(jT)jFlush();mKeep();N.mode=b.dataset.v;N.lim=50;return nRender()}
-  if(a==='msave')return mSave();if(a==='mcancel'){M.edit=null;M.draft=null;return nRender()}
-  if(a==='medit'){M.edit=b.dataset.t;M.draft=null;nRender();const f=document.querySelector('#pg4 [data-mf="date"]');if(f&&f.scrollIntoView)f.scrollIntoView({block:'center'});return}
+  if(a==='msave')return mSave();if(a==='mcancel'){M.edit=null;M.draft=null;mDrClear();return nRender()}
+  if(a==='medit'){M.edit=b.dataset.t;M.draft=null;mDrClear();nRender();const f=document.querySelector('#pg4 [data-mf="date"]');if(f&&f.scrollIntoView)f.scrollIntoView({block:'center'});return}
   if(a==='mdel'){if(!jArm(b,'Naozaj vymazať? Klikni znova'))return;delete S.journal.missed[b.dataset.t];if(M.edit===b.dataset.t)M.edit=null;jFlush();return nRender()}
   if(a==='nprev'){mKeep();N.date=jAdd(N.date,-st);N.lim=50;return nRender()}if(a==='nnext'){mKeep();N.date=jAdd(N.date,st);N.lim=50;return nRender()}if(a==='ntoday'){mKeep();N.date=jYmd(new Date());N.lim=50;return nRender()}
   if(a==='nmore'){N.lim+=50;return nRender()}
@@ -1315,9 +1315,17 @@ function mCalc(r){const oneR=(S.risk&&S.risk.oneR>0)?S.risk.oneR:100;
 function mSel(){return Object.keys(S.journal.missed).map(id=>({id,r:S.journal.missed[id]})).filter(x=>{const d=x.r.date;if(N.mode==='day')return d===N.date;if(N.mode==='week'){const m=jMon(N.date);return d>=m&&d<=jAdd(m,6)}return true}).sort((a,b)=>a.r.date===b.r.date?((b.r.tin||'')<(a.r.tin||'')?-1:1):(a.r.date<b.r.date?1:-1))}
 const mRs=v=>(v>0?'+':'')+v.toFixed(2)+' R';
 function mRecStr(v){const s=x=>x==null?'':String(x);return{date:v.date,tin:v.tin,tout:v.tout,sym:v.sym,side:v.side,qty:s(v.qty),entry:s(v.entry),exit:s(v.exit),comm:s(v.comm||''),strat:v.strat,reason:v.reason,note:v.note,rDirect:s(v.rDirect)}}
+const M_DK='tj1draft',M_KEYS=['date','tin','tout','sym','side','qty','entry','exit','comm','strat','reason','note','rDirect'];
+function mDrSave(){try{localStorage.setItem(M_DK,JSON.stringify({edit:M.edit||null,draft:mRead()}))}catch(e){}}
+function mDrClear(){try{localStorage.removeItem(M_DK)}catch(e){}}
+(()=>{try{const raw=localStorage.getItem(M_DK);if(!raw)return;const o=JSON.parse(raw);if(!o||typeof o!=='object'||!o.draft||typeof o.draft!=='object')return;
+  const d={};M_KEYS.forEach(k=>{const v=o.draft[k];d[k]=typeof v==='string'?v.slice(0,2000):''});
+  if(!d.sym)d.sym='MNQ';if(!d.side)d.side='Long';
+  if(!Object.keys(d).some(k=>d[k]&&k!=='sym'&&k!=='side'&&k!=='date'&&k!=='qty'))return;
+  M.draft=d;M.edit=(typeof o.edit==='string'&&Object.prototype.hasOwnProperty.call(S.journal.missed,o.edit))?o.edit:null;M.restored=true}catch(e){}})();
 function mKeep(){if(N.view==='missed'&&document.querySelector('#pg4 [data-mf]'))M.draft=mRead()}
 function mRead(){const o={};document.querySelectorAll('#pg4 [data-mf]').forEach(e=>{o[e.dataset.mf]=e.value});return o}
-function mRender(real){const sel=mSel();return mForm()+`<section class="card" id="msum">${mSumHtml(sel,real)}</section>`+(sel.length?'<div class="jstack">'+sel.map(mCard).join('')+'</div>':'')+`<section class="card"><span id="nsave" class="sub" role="status" aria-live="polite">${J.err?esc(J.err):'Záznamy sa ukladajú po kliknutí na „Pridať obchod“ alebo „Uložiť zmeny“; výber porovnania sa ukladá hneď.'}</span></section>`}
+function mRender(real){const sel=mSel();return mForm()+`<section class="card" id="msum">${mSumHtml(sel,real)}</section>`+(sel.length?'<div class="jstack">'+sel.map(mCard).join('')+'</div>':'')+`<section class="card"><span id="nsave" class="sub" role="status" aria-live="polite">${J.err?esc(J.err):'Rozpísaný záznam sa ukladá automaticky ako koncept; do zoznamu sa pridá po kliknutí na „Pridať obchod“ alebo „Uložiť zmeny“. Výber porovnania sa ukladá hneď.'}</span></section>`}
 function mForm(){const merr=M.err;M.err='';const e=M.edit&&S.journal.missed[M.edit]?S.journal.missed[M.edit]:null,fv=M.draft||mRecStr(e||{date:N.date,tin:'',tout:'',sym:M.last.sym||'MNQ',side:M.last.side||'Long',qty:1,entry:null,exit:null,comm:0,strat:'',reason:'',note:'',rDirect:null}),
   names=Array.from(new Set([].concat(S.auto.w.map(w=>w.name),S.trades.map(t=>t.strat||'')).filter(Boolean)));
   const inp=(f,t,ex)=>`<input type="${t||'text'}" data-mf="${f}" value="${esc(fv[f])}"${ex||''}>`,num=(f,ph)=>inp(f,'text',` inputmode="decimal" autocomplete="off" placeholder="${ph||''}"`);
@@ -1331,8 +1339,8 @@ function mForm(){const merr=M.err;M.err='';const e=M.edit&&S.journal.missed[M.ed
   <label>Stratégia<input type="text" data-mf="strat" list="mstrats" value="${esc(fv.strat)}" placeholder="podľa času sa doplní sama"><datalist id="mstrats">${names.map(n=>`<option value="${esc(n)}">`).join('')}</datalist></label>
   <label>Prečo som ho nezobral?<select data-mf="reason">${jOpt(J_MR,fv.reason)}</select></label>
   <label class="jw">Poznámka${jTa('mnote',null,'',2).replace('data-f="mnote"','data-mf="note"').replace('></textarea>','>'+esc(fv.note)+'</textarea>')}</label></div>
-  <p class="jerr" id="merr" role="alert">${esc(merr||'')}</p>
-  <div class="row"><button class="pri" data-act="msave">${e?'Uložiť zmeny':'Pridať obchod'}</button>${e?'<button data-act="mcancel">Zrušiť úpravu</button>':''}</div>
+  <p class="jerr" id="merr" role="alert">${esc(merr||'')}</p>${M.restored?'<p class="sub">Obnovený rozpísaný záznam (koncept). Dokonči ho a ulož, alebo klikni na Zrušiť.</p>':''}
+  <div class="row"><button class="pri" data-act="msave">${e?'Uložiť zmeny':'Pridať obchod'}</button>${e?'<button data-act="mcancel">Zrušiť úpravu</button>':(M.draft?'<button data-act="mcancel">Zahodiť koncept</button>':'')}</div>
   <p class="sub">Ak zadáš ceny aj R, použijú sa ceny.</p></section>`}
 function mCmp(r){if(!r.cmp)return'<p class="sub">Vyber nižšie reálny obchod z Žurnálu, s ktorým chceš tento nezobratý obchod porovnať.</p>';
   const t=S.trades.find(x=>jTid(x)===r.cmp);if(!t)return'<div class="jwarn" role="status">Porovnávaný obchod už nie je dostupný (bol odstránený z Žurnálu).</div>';
@@ -1390,7 +1398,7 @@ function mSave(){const o=mRead(),er=[],pn=s=>{s=String(s==null?'':s).trim().repl
   const old=M.edit&&S.journal.missed[M.edit],rec=jMiss(Object.assign(raw,{cmp:old?old.cmp:''}));
   if(!jMissOk(rec)){M.err='Záznam sa nepodarilo uložiť, skontroluj údaje.';M.draft=o;return nRender()}
   const id=M.edit||('m'+Date.now().toString(36)+Math.random().toString(36).slice(2,6));S.journal.missed[id]=rec;
-  M.last={sym:rec.sym,side:rec.side};M.edit=null;M.draft=null;M.err='';if(N.mode!=='all')N.date=rec.date;jFlush();nRender()}
+  M.last={sym:rec.sym,side:rec.side};M.edit=null;M.draft=null;M.restored=false;mDrClear();M.err='';if(N.mode!=='all')N.date=rec.date;jFlush();nRender()}
 
 render();preview();showTab(UI.tab);
 </script>
