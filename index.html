@@ -6,10 +6,10 @@
 <title>Futures Trading Journal</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
-:root{--bg:#eceff2;--card:#fff;--tx:#161b22;--mut:#667085;--bd:#dde1e6;--ac:#3b4cca;--g:#0f9d58;--r:#d93025;--soft:#f5f7f9;
+:root{--bg:#18181b;--card:#1c1c1f;--tx:#f5f5f6;--mut:#8e8f95;--bd:#2c2c2f;--ac:#796eef;--g:#5ec2ae;--r:#cb444a;--soft:#252528;color-scheme:dark;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1116;--card:#171b22;--tx:#e8ebf0;--mut:#8b94a3;--bd:#262c36;--ac:#7c8bff;--g:#34c37a;--r:#ff6b5f;--soft:#1d222b}}
-:root[data-theme="dark"]{--bg:#0e1116;--card:#171b22;--tx:#e8ebf0;--mut:#8b94a3;--bd:#262c36;--ac:#7c8bff;--g:#34c37a;--r:#ff6b5f;--soft:#1d222b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#18181b;--card:#1c1c1f;--tx:#f5f5f6;--mut:#8e8f95;--bd:#2c2c2f;--ac:#796eef;--g:#5ec2ae;--r:#cb444a;--soft:#252528}}
+:root[data-theme="dark"]{--bg:#18181b;--card:#1c1c1f;--tx:#f5f5f6;--mut:#8e8f95;--bd:#2c2c2f;--ac:#796eef;--g:#5ec2ae;--r:#cb444a;--soft:#252528}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
 html,body{overflow-x:hidden;-webkit-text-size-adjust:100%}
@@ -118,14 +118,14 @@ label.tl{grid-column:1/-1}
 #pg4 .jbar{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
 #pg3 .bd{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600;background:var(--soft);border:1px solid var(--bd);color:var(--mut)}
 #pg4 .bd{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600;background:var(--soft);border:1px solid var(--bd);color:var(--mut)}
-#pg3 .bd.g{background:rgba(15,157,88,.15);border-color:var(--g);color:var(--g)}
-#pg4 .bd.g{background:rgba(15,157,88,.15);border-color:var(--g);color:var(--g)}
-#pg3 .bd.r{background:rgba(217,48,37,.13);border-color:var(--r);color:var(--r)}
-#pg4 .bd.r{background:rgba(217,48,37,.13);border-color:var(--r);color:var(--r)}
+#pg3 .bd.g{background:rgba(94,194,174,.15);border-color:var(--g);color:var(--g)}
+#pg4 .bd.g{background:rgba(94,194,174,.15);border-color:var(--g);color:var(--g)}
+#pg3 .bd.r{background:rgba(203,68,74,.13);border-color:var(--r);color:var(--r)}
+#pg4 .bd.r{background:rgba(203,68,74,.13);border-color:var(--r);color:var(--r)}
 #pg3 .bd.y{background:rgba(224,160,0,.16);border-color:#c98f00;color:var(--tx)}
 #pg4 .bd.y{background:rgba(224,160,0,.16);border-color:#c98f00;color:var(--tx)}
-#pg3 .bd.b{background:rgba(59,76,202,.12);border-color:var(--ac);color:var(--tx)}
-#pg4 .bd.b{background:rgba(59,76,202,.12);border-color:var(--ac);color:var(--tx)}
+#pg3 .bd.b{background:rgba(121,110,239,.12);border-color:var(--ac);color:var(--tx)}
+#pg4 .bd.b{background:rgba(121,110,239,.12);border-color:var(--ac);color:var(--tx)}
 #pg3 .jtr{border:1px solid var(--bd);border-left:4px solid var(--bd);border-radius:8px;padding:12px;background:var(--card);display:grid;gap:10px;min-width:0}
 #pg4 .jtr{border:1px solid var(--bd);border-left:4px solid var(--bd);border-radius:8px;padding:12px;background:var(--card);display:grid;gap:10px;min-width:0}
 #pg3 .jtr.w{border-left-color:var(--g)}#pg3 .jtr.l{border-left-color:var(--r)}
@@ -138,8 +138,8 @@ label.tl{grid-column:1/-1}
 #pg4 .jth{background:var(--soft);border-radius:8px;padding:8px 10px;font-size:13px;display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px 12px}
 #pg3 .jth span{color:var(--mut);font-size:11.5px;display:block}#pg3 .jth b{font-weight:600}
 #pg4 .jth span{color:var(--mut);font-size:11.5px;display:block}#pg4 .jth b{font-weight:600}
-#pg3 .jwarn{background:rgba(217,48,37,.1);border:1px solid var(--r);border-radius:8px;padding:8px 10px;font-size:13px}
-#pg4 .jwarn{background:rgba(217,48,37,.1);border:1px solid var(--r);border-radius:8px;padding:8px 10px;font-size:13px}
+#pg3 .jwarn{background:rgba(203,68,74,.1);border:1px solid var(--r);border-radius:8px;padding:8px 10px;font-size:13px}
+#pg4 .jwarn{background:rgba(203,68,74,.1);border:1px solid var(--r);border-radius:8px;padding:8px 10px;font-size:13px}
 #pg3 .jem{border:0;margin:0;padding:0;min-width:0}#pg3 .jem legend{font-size:12.5px;color:var(--mut);padding:0;margin-bottom:6px}
 #pg4 .jem{border:0;margin:0;padding:0;min-width:0}#pg4 .jem legend{font-size:12.5px;color:var(--mut);padding:0;margin-bottom:6px}
 #pg3 .jemo{display:flex;flex-wrap:wrap;gap:8px 16px}
@@ -182,13 +182,75 @@ label.tl{grid-column:1/-1}
 #pg3 .jtr.skip{opacity:.8;border-left-style:dashed;gap:6px}
 #pg4 .jtr.skip{opacity:.8;border-left-style:dashed;gap:6px}
 #pg4 .jtr.orph{border-left-style:dashed}#pg4 .jsub button[aria-pressed=true]{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
+#pg5 .jstack,#pg5 .jfs,#pg5 .jv{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;min-width:0}
+#pg5 .jfs{border:0;margin:0;padding:0}
+#pg5 .jfs:disabled{opacity:.92}
+#pg5 .jg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px}
+#pg5 .jcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+#pg5 .jdt{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}#pg5 .jdt label{flex:1 1 170px}
+#pg5 .jbar{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+#pg5 .bd{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600;background:var(--soft);border:1px solid var(--bd);color:var(--mut)}
+#pg5 .bd.g{background:rgba(94,194,174,.15);border-color:var(--g);color:var(--g)}
+#pg5 .bd.r{background:rgba(203,68,74,.13);border-color:var(--r);color:var(--r)}
+#pg5 .bd.y{background:rgba(224,160,0,.16);border-color:#c98f00;color:var(--tx)}
+#pg5 .bd.b{background:rgba(121,110,239,.12);border-color:var(--ac);color:var(--tx)}
+#pg5 .jtr{border:1px solid var(--bd);border-left:4px solid var(--bd);border-radius:8px;padding:12px;background:var(--card);display:grid;gap:10px;min-width:0}
+#pg5 .jtr.w{border-left-color:var(--g)}#pg5 .jtr.l{border-left-color:var(--r)}
+#pg5 .jh3{font-size:13.5px;margin:6px 0 4px;font-weight:600}
+#pg5 .jtr .jh3{margin:0}
+#pg5 .jth{background:var(--soft);border-radius:8px;padding:8px 10px;font-size:13px;display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px 12px}
+#pg5 .jth span{color:var(--mut);font-size:11.5px;display:block}#pg5 .jth b{font-weight:600}
+#pg5 .jwarn{background:rgba(203,68,74,.1);border:1px solid var(--r);border-radius:8px;padding:8px 10px;font-size:13px}
+#pg5 .jem{border:0;margin:0;padding:0;min-width:0}#pg5 .jem legend{font-size:12.5px;color:var(--mut);padding:0;margin-bottom:6px}
+#pg5 .jemo{display:flex;flex-wrap:wrap;gap:8px 16px}
+#pg5 .jck{display:inline-flex;grid-template-columns:none;align-items:center;gap:6px;color:var(--tx);font-size:13.5px}
+#pg5 input[type=checkbox]{width:20px;height:20px;padding:0;margin:0;flex:none}
+#pg5 .jd{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;padding:8px 0;border-bottom:1px solid var(--bd)}
+#pg5 .jdl{flex:1 1 260px;font-size:13.5px}
+#pg5 .jerr{color:var(--r);font-size:12.5px;min-height:1em}
+#pg5 .jw2{margin-top:10px}
+#pg5 dl.jdl2{display:grid;grid-template-columns:minmax(0,1fr);gap:2px;margin:0}
+#pg5 .jdl2 dt{color:var(--mut);font-size:12px;margin-top:8px}#pg5 .jdl2 dd{margin:0;overflow-wrap:anywhere}
+#pg5 .jsum li,#pg5 .card li{margin:2px 0;overflow-wrap:anywhere}
+#pg5 .jacts .row{margin:10px 0 4px}
+#pg5 table.jt th,#pg5 table.jt td{text-align:right}
+#pg5 table.jt th:first-child,#pg5 table.jt td:first-child{text-align:left}
+#pg5 table.jt.l th,#pg5 table.jt.l td{text-align:left}
+#pg5 tr.jsec td{background:var(--soft);font-weight:600;font-size:12px;text-align:left!important;color:var(--mut)}
+#pg5 .jcb.g{border-top:3px solid var(--g)}#pg5 .jcb.r{border-top:3px solid var(--r)}#pg5 .jcb.y{border-top:3px solid #c98f00}#pg5 .jcb.b{border-top:3px solid var(--ac)}
+#pg5 .jcb .card{box-shadow:none}
+#pg5 .jg{align-items:start}#pg5 .jg>label{align-content:start}
+#pg5 .jtr.skip{opacity:.8;border-left-style:dashed;gap:6px}
+#pg5 .jtr.orph{border-left-style:dashed}#pg5 .jsub button[aria-pressed=true]{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
+#pg5 .bad{border-color:var(--r)!important}
+#pg5 .jth b{overflow-wrap:anywhere}
+/* ---- vzhľad: tmavá paleta (zinc + tyrkys + červená), kalendár ako v reportovacom nástroji ---- */
+:root:root:root{--gb:#334141;--rb:#523636;--gt:#3a5652;--rt:#f0807b;--oc:#202023}
+.bd.g,#pg3 .bd.g,#pg4 .bd.g,#pg5 .bd.g{background:rgba(94,194,174,.16)}
+.bd.r,#pg3 .bd.r,#pg4 .bd.r,#pg5 .bd.r{background:rgba(203,68,74,.18)}
+.cal{gap:0;border:1px solid var(--bd);border-radius:10px;overflow:hidden;margin-top:10px;background:var(--card)}
+.ch{padding:10px 0;color:var(--tx);font-weight:500;font-size:13px;border-bottom:1px solid var(--bd);background:var(--card)}
+.cd{min-height:104px;border:0;border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);border-radius:0;padding:8px 10px;background:var(--card);justify-content:space-between;gap:6px;font-size:12px}
+.cd .dn{color:var(--tx);font-size:13px;font-weight:600;text-align:left}
+.cd .dv{display:flex;flex-direction:column;gap:2px;min-width:0}
+.cd .dp{font-weight:700;font-size:17px;text-align:left;line-height:1.15;overflow-wrap:anywhere}
+.cd .dt{color:var(--mut);font-size:11.5px;text-align:left}
+.cd .dr{font-weight:600;font-size:12.5px;text-align:left}
+.cd .pos{color:var(--g)}.cd .neg{color:var(--rt)}
+.cd.w{background:var(--gb)}.cd.l{background:var(--rb)}
+.cd.o{opacity:1;background:var(--oc)}.cd.o .dn{color:#6b6b72}.cd.o.w,.cd.o.l{opacity:.6}
+.cd.t{outline:0;box-shadow:inset 0 0 0 2px var(--ac)}.cd.t.w{background:var(--gt)}
+.cd.wk{background:var(--card);border-right:0}.cd.wk .dn{color:var(--mut);font-weight:500;font-size:12px}
+.cd .mo{display:flex;flex-direction:column;gap:1px;border-top:1px solid var(--bd);padding-top:6px}
+.cd .mo b{font-size:15px}
+@media(max-width:560px){.cd{min-height:64px;padding:4px 3px;gap:3px}.cd .dn{font-size:10px}.cd .dp{font-size:10.5px;white-space:nowrap;overflow-wrap:normal}.cd .dt{font-size:9.5px}.cd .dr{font-size:10px}.cd .mo{display:none}.ch{font-size:11px}}
 </style>
 </head>
 <body>
 <header>
   <div><h1>Futures Trading Journal</h1><div class="sub">MNQ · MYM · MCL — zadaj obchod a štatistiky sa prepočítajú samé</div></div>
 </header>
-<nav class="tabs" role="tablist" aria-label="Stránky"><button id="tb1" role="tab" aria-selected="true">Žurnál</button><button id="tb2" role="tab" aria-selected="false">Trading Dashboard</button><button id="tb3" role="tab" aria-selected="false">DENNÍK</button><button id="tb4" role="tab" aria-selected="false">Poznámkový blok</button></nav>
+<nav class="tabs" role="tablist" aria-label="Stránky"><button id="tb1" role="tab" aria-selected="true">Žurnál</button><button id="tb2" role="tab" aria-selected="false">Trading Dashboard</button><button id="tb3" role="tab" aria-selected="false">DENNÍK</button><button id="tb4" role="tab" aria-selected="false">Poznámkový blok</button><button id="tb5" role="tab" aria-selected="false">Analýza trhu</button></nav>
 <main id="pg1">
   <section class="stack">
     <div class="card">
@@ -289,6 +351,7 @@ label.tl{grid-column:1/-1}
   <div id="jv1"></div><div id="jv2" hidden></div><div id="jv3" hidden></div><div id="jv4" hidden></div>
 </div>
 <div id="pg4" class="dashpg" hidden></div>
+<div id="pg5" class="dashpg" hidden></div>
 <div id="pg2" class="dashpg" hidden>
   <div class="card" style="margin-bottom:16px">
     <h2 style="font-size:18px;letter-spacing:.02em">TRADING DASHBOARD</h2>
@@ -347,14 +410,22 @@ const J_MR=[['','— neuvedené —'],['late','Nestihol som'],['doubt','Pochybov
 function jMiss(x){x=x&&typeof x==='object'?x:{};const num=v=>typeof v==='number'&&isFinite(v)&&Math.abs(v)<1e7?v:null,tm=v=>typeof v==='string'&&/^([01]\d|2[0-3]):[0-5]\d$/.test(v)?v:'',q=Math.round(+x.qty);
   return{date:okD(x.date)?x.date:'',tin:tm(x.tin),tout:tm(x.tout),sym:(typeof x.sym==='string'&&Object.prototype.hasOwnProperty.call(PV,x.sym))?x.sym:'',side:x.side==='Short'?'Short':'Long',qty:q>=1&&q<=1000?q:1,entry:num(x.entry),exit:num(x.exit),comm:(num(x.comm)!=null&&x.comm>=0)?x.comm:0,strat:jstr(x.strat,100),reason:jopt(x.reason,J_MR.map(a=>a[0])),note:jstr(x.note),rDirect:(num(x.rDirect)!=null&&Math.abs(x.rDirect)<=1000)?x.rDirect:null,cmp:jstr(x.cmp,200)}}
 const jMissOk=r=>!!r.date&&!!r.sym&&((r.entry!=null&&r.exit!=null)||r.rDirect!=null);
-function normJ(j){const o={days:{},weeks:{},notes:{},missed:{}};
+const J_MKS=['MNQ','MYM'],J_MKF=['prev','chg','open','high','low','last','vol','nr','nv'],J_MKV=['rs','rg','vol','px'];
+function jMk(x){x=x&&typeof x==='object'?x:{};const pn=v=>typeof v==='number'&&isFinite(v)&&v>=0&&v<1e9?v:null,sg=v=>typeof v==='number'&&isFinite(v)&&Math.abs(v)<=100?v:null,sy=v=>v==='MNQ'||v==='MYM'?v:'',o={};
+  J_MKS.forEach(s=>{const y=x[s]&&typeof x[s]==='object'?x[s]:{};o[s]={};J_MKF.forEach(f=>{o[s][f]=(f==='chg'?sg:pn)(y[f])})});
+  const v=x.votes&&typeof x.votes==='object'?x.votes:{};o.votes={};J_MKV.forEach(k=>{o.votes[k]=sy(v[k])});
+  o.tip=(x.tip==='MNQ'||x.tip==='MYM'||x.tip==='none')?x.tip:'';o.tipAt=jstr(x.tipAt,10);o.tipStr=x.tipStr===2?2:x.tipStr===1?1:0;
+  o.better=['MNQ','MYM','both','none'].indexOf(x.better)>=0?x.better:'';o.lead=['MNQ','MYM','swap'].indexOf(x.lead)>=0?x.lead:'';o.fake=x.fake==='yes'||x.fake==='no'?x.fake:'';o.both=x.both==='yes'||x.both==='no'?x.both:'';o.note=jstr(x.note);return o}
+const jMkHas=m=>J_MKS.some(s=>J_MKF.some(f=>m[s][f]!=null))||!!m.tip||!!m.better||!!m.lead||!!m.fake||!!m.both||!!m.note;
+function normJ(j){const o={days:{},weeks:{},notes:{},missed:{},market:{}};
   if(j&&typeof j==='object'){
     if(j.days&&typeof j.days==='object')Object.keys(j.days).forEach(k=>{if(okD(k))o.days[k]=jDay(j.days[k])});
     if(j.weeks&&typeof j.weeks==='object')Object.keys(j.weeks).forEach(k=>{if(okW(k))o.weeks[k]=jWeek(j.weeks[k])});
     if(j.notes&&typeof j.notes==='object')Object.keys(j.notes).forEach(id=>{if(id!=='__proto__'&&id.length>0&&id.length<=200){const n=jNote(j.notes[id]);if(n.note||n.score!=null||n.pot!=null)o.notes[id]=n}});
+    if(j.market&&typeof j.market==='object')Object.keys(j.market).forEach(k=>{if(okD(k)){const m=jMk(j.market[k]);if(jMkHas(m))o.market[k]=m}});
     if(j.missed&&typeof j.missed==='object')Object.keys(j.missed).forEach(id=>{if(id!=='__proto__'&&id.length>0&&id.length<=100){const m=jMiss(j.missed[id]);if(jMissOk(m))o.missed[id]=m}})}
   return o}
-const jMergeJ=(a,b)=>({days:Object.assign({},a.days,b.days),weeks:Object.assign({},a.weeks,b.weeks),notes:Object.assign({},a.notes,b.notes),missed:Object.assign({},a.missed,b.missed)});
+const jMergeJ=(a,b)=>({days:Object.assign({},a.days,b.days),weeks:Object.assign({},a.weeks,b.weeks),notes:Object.assign({},a.notes,b.notes),missed:Object.assign({},a.missed,b.missed),market:Object.assign({},a.market,b.market)});
 
 function restoreS(o){const oj=S.journal;S=norm(o);S.journal=(o.journal&&typeof o.journal==='object')?jMergeJ(oj,S.journal):oj}
 function norm(o){
@@ -545,19 +616,22 @@ function drawCal(){
   const all=rows().filter(r=>(!F.a||r.t.acc===F.a)&&(!F.s||r.t.sym===F.s)&&(!F.g||r.t.strat===F.g));
   const dm=new Map();all.forEach(r=>{const k=r.t.tin.slice(0,10),o=dm.get(k)||{p:0,n:0};o.p+=r.c.pnl;o.n++;dm.set(k,o)});
   if(!CAL){const ks=[...dm.keys()].sort(),k=ks[ks.length-1],d=k?new Date(+k.slice(0,4),+k.slice(5,7)-1,1):new Date();CAL={y:d.getFullYear(),m:d.getMonth()}}
-  const y=CAL.y,m=CAL.m,p2=n=>String(n).padStart(2,'0'),key=d=>d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate());
-  const nar=(typeof innerWidth!=='undefined'?innerWidth:1000)<560,off=(new Date(y,m,1).getDay()+6)%7,nd=new Date(y,m+1,0).getDate(),weeks=Math.ceil((off+nd)/7),today=key(new Date());
-  const fp=p=>(p>0?'+':'')+(nar?cf(p):fmt(p,2)),cl=p=>p>0?'w':p<0?'l':'';
+  const y=CAL.y,m=CAL.m,p2=n=>String(n).padStart(2,'0'),key=d=>d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate()),R1=S.risk.oneR>0?S.risk.oneR:100;
+  const off=(new Date(y,m,1).getDay()+6)%7,nd=new Date(y,m+1,0).getDate(),weeks=Math.ceil((off+nd)/7),today=key(new Date());
+  const nar=(typeof innerWidth!=='undefined'?innerWidth:1000)<560,dl=nar?'':'$';
+  const ck=v=>{const a=Math.abs(v),s=v>0?'+':v<0?'−':'';if(a>=1000)return s+dl+(a/1000).toFixed(1).replace('.',',')+'k';const d=a>0&&a<10&&!nar?2:0;return s+dl+a.toLocaleString('sk-SK',{minimumFractionDigits:d,maximumFractionDigits:d})};
+  const rr=v=>(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(2).replace('.',',')+' R',cl=p=>p>0?'w':p<0?'l':'';
   let h=['Po','Ut','St','Št','Pi','So','Ne'].map(x=>`<div class="ch">${x}</div>`).join('')+'<div class="ch">Týždeň</div>',mp=0,mn=0,md=0;
   for(let w=0;w<weeks;w++){let wp=0,wn=0;
     for(let i=0;i<7;i++){const d=new Date(y,m,1-off+w*7+i),k=key(d),o=dm.get(k),inM=d.getMonth()===m;
       if(o){wp+=o.p;wn+=o.n;if(inM){mp+=o.p;mn+=o.n;md++}}
-      h+=`<div class="cd${inM?'':' o'}${o?' '+cl(o.p):''}${k===today?' t':''}"${o?` data-d="${k}" role="button" tabindex="0" title="${k}: ${fmt(o.p,2)}, ${o.n} obch."`:''}><span class="dn">${d.getDate()}</span>${o?`<span class="dp ${cls(o.p)}">${fp(o.p)}</span><span class="dt">${o.n} obch.</span>`:'<span></span><span></span>'}</div>`}
-    h+=`<div class="cd wk"><span class="dn">Týždeň ${isoWeek(new Date(y,m,1-off+w*7)).slice(-2)}</span>${wn?`<span class="dp ${cls(wp)}">${fp(wp)}</span><span class="dt">${wn} obch.</span>`:'<span class="dp">—</span><span class="dt">0 obch.</span>'}</div>`}
+      h+=`<div class="cd${inM?'':' o'}${o?' '+cl(o.p):''}${k===today?' t':''}"${o?` data-d="${k}" role="button" tabindex="0" title="${k}: ${fmt(o.p,2)}, ${o.n} obch., ${rr(o.p/R1)}"`:''}><span class="dn">${d.getDate()}</span>${o?`<span class="dv"><span class="dp ${cls(o.p)}">${ck(o.p)}</span><span class="dt">${o.n} obch.</span></span>`:''}</div>`}
+    h+=`<div class="cd wk"><span class="dn">${nar?'T':'Týždeň '}${isoWeek(new Date(y,m,1-off+w*7)).slice(-2)}</span>${wn?`<span class="dv"><span class="dp ${cls(wp)}">${ck(wp)}</span><span class="dt">${wn} obch.</span><span class="dr ${cls(wp)}">${rr(wp/R1)}</span></span>`:'<span class="dv"><span class="dp">—</span><span class="dt">0 obch.</span></span>'}${w===weeks-1?`<span class="mo"><span class="dt">MESIAC</span><b class="${cls(mp)}">${ck(mp)}</b><span class="dr ${cls(mp)}">${rr(mp/R1)}</span></span>`:''}</div>`}
   $('cal').innerHTML=h;
   $('cmon').textContent=new Date(y,m,1).toLocaleDateString('sk-SK',{month:'long',year:'numeric'});
-  $('csum').innerHTML=`Mesiac: <b class="${cls(mp)}">${mp>0?'+':''}${fmt(mp,2)}</b> · ${mn} ${pl(mn,'obchod','obchody','obchodov')} · ${md} ${pl(md,'obchodný deň','obchodné dni','obchodných dní')}. Deň sa určuje podľa dátumu vstupu. Klikni na deň a zobrazí sa jeho filter.`;
+  $('csum').innerHTML=`Mesiac: <b class="${cls(mp)}">${mp>0?'+':''}${fmt(mp,2)}</b> (<span class="${cls(mp)}">${rr(mp/R1)}</span>) · ${mn} ${pl(mn,'obchod','obchody','obchodov')} · ${md} ${pl(md,'obchodný deň','obchodné dni','obchodných dní')}. Deň sa určuje podľa dátumu vstupu. Klikni na deň a zobrazí sa jeho filter. Riadok „Týždeň“ ukazuje zisk, počet obchodov a získané R (zisk ÷ ${fmt(R1,0)}).`;
 }
+
 const MN=['jan','feb','mar','apr','máj','jún','júl','aug','sep','okt','nov','dec'];
 let DY=null,DW=0;
 function dStats(R){
@@ -645,11 +719,11 @@ function drawDash(){
 }
 function showTab(t){
   if(typeof jT!=='undefined'&&jT)jFlush();
-  UI.tab=t==='dash'?'dash':t==='diary'?'diary':t==='notes'?'notes':'journal';
-  $('pg1').hidden=UI.tab!=='journal';$('pg2').hidden=UI.tab!=='dash';$('pg3').hidden=UI.tab!=='diary';$('pg4').hidden=UI.tab!=='notes';
-  $('tb1').setAttribute('aria-selected',String(UI.tab==='journal'));$('tb2').setAttribute('aria-selected',String(UI.tab==='dash'));$('tb3').setAttribute('aria-selected',String(UI.tab==='diary'));$('tb4').setAttribute('aria-selected',String(UI.tab==='notes'));
+  UI.tab=t==='dash'?'dash':t==='diary'?'diary':t==='notes'?'notes':t==='market'?'market':'journal';
+  $('pg1').hidden=UI.tab!=='journal';$('pg2').hidden=UI.tab!=='dash';$('pg3').hidden=UI.tab!=='diary';$('pg4').hidden=UI.tab!=='notes';$('pg5').hidden=UI.tab!=='market';
+  $('tb1').setAttribute('aria-selected',String(UI.tab==='journal'));$('tb2').setAttribute('aria-selected',String(UI.tab==='dash'));$('tb3').setAttribute('aria-selected',String(UI.tab==='diary'));$('tb4').setAttribute('aria-selected',String(UI.tab==='notes'));$('tb5').setAttribute('aria-selected',String(UI.tab==='market'));
   try{localStorage.setItem('tj1ui',JSON.stringify(UI))}catch(e){}
-  if(UI.tab==='dash')drawDash();else if(UI.tab==='diary')jRender();else if(UI.tab==='notes')nRender();else{drawCharts();drawCal()}
+  if(UI.tab==='dash')drawDash();else if(UI.tab==='diary')jRender();else if(UI.tab==='notes')nRender();else if(UI.tab==='market')aRender();else{drawCharts();drawCal()}
 }
 let LAST={rs:[],eq:[0],w:0};
 function drawCharts(){
@@ -664,7 +738,7 @@ function drawCharts(){
   $('c5').innerHTML=hbars(groupSum(rs,r=>accN(r.t.acc)),W('c5'));
   const D=durData(rs);$('c6').innerHTML=rs.length?durChart(W('c6'),D):NOD;$('dsum').innerHTML=durSum(D);
 }
-let rzT;addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{if(UI.tab==='diary'||UI.tab==='notes')return;if(UI.tab==='dash'){if(Math.abs($('d5').clientWidth-DW)>8)drawDash()}else if(Math.abs($('c1').clientWidth-LAST.w)>8){drawCharts();drawCal()}},150)});
+let rzT;addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{if(UI.tab==='diary'||UI.tab==='notes'||UI.tab==='market')return;if(UI.tab==='dash'){if(Math.abs($('d5').clientWidth-DW)>8)drawDash()}else if(Math.abs($('c1').clientWidth-LAST.w)>8){drawCharts();drawCal()}},150)});
 const F={a:'',p:'all',v:'',s:'',g:''};
 const isoWeek=d=>{d=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const n=d.getUTCDay()||7;d.setUTCDate(d.getUTCDate()+4-n);const y=d.getUTCFullYear();return y+'-T'+String(Math.ceil(((d-Date.UTC(y,0,1))/864e5+1)/7)).padStart(2,'0')};
 const pk=t=>F.p==='month'?t.tin.slice(0,7):F.p==='day'?t.tin.slice(0,10):isoWeek(new Date(t.tin));
@@ -774,7 +848,7 @@ $('cnext').onclick=()=>{CAL.m++;if(CAL.m>11){CAL.m=0;CAL.y++}drawCal()};
 $('ctoday').onclick=()=>{const d=new Date();CAL={y:d.getFullYear(),m:d.getMonth()};drawCal()};
 $('cal').addEventListener('click',e=>{const c=e.target.closest('[data-d]');if(!c)return;F.p='day';$('fp').value='day';F.v=c.dataset.d;render();if(typeof scrollTo==='function')scrollTo({top:0,behavior:'smooth'})});
 $('cal').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const c=e.target.closest('[data-d]');if(c){e.preventDefault();c.click()}}});
-$('tb1').onclick=()=>showTab('journal');$('tb2').onclick=()=>showTab('dash');$('tb3').onclick=()=>showTab('diary');$('tb4').onclick=()=>showTab('notes');
+$('tb1').onclick=()=>showTab('journal');$('tb2').onclick=()=>showTab('dash');$('tb3').onclick=()=>showTab('diary');$('tb4').onclick=()=>showTab('notes');$('tb5').onclick=()=>showTab('market');
 $('da').onchange=()=>{F.a=$('da').value;render()};$('ds').onchange=()=>{F.s=$('ds').value;render()};$('dg').onchange=()=>{F.g=$('dg').value;render()};$('dy').onchange=()=>{DY=$('dy').value;drawDash()};
 $('fa').onchange=()=>{F.a=$('fa').value;render()};
 const dlf=(name,txt)=>{$('bt').value=txt.replace(/^\ufeff/,'');$('bm').textContent='Hotovo. Text je v poli vyššie, skopíruj ho.'};
@@ -881,7 +955,7 @@ const jGet=k=>S.journal.days[k]||null;
 const jTid=t=>String(t.id==null?'':t.id);
 function jEns(k){if(!S.journal.days[k])S.journal.days[k]=jDay({});return S.journal.days[k]}
 let jT=0;
-const jMsg=m=>{['jsave','nsave'].forEach(i=>{const e=$(i);if(e)e.textContent=m})};
+const jMsg=m=>{['jsave','nsave','asave'].forEach(i=>{const e=$(i);if(e)e.textContent=m})};
 function jSaveSoon(){clearTimeout(jT);jT=setTimeout(jFlush,500);jMsg('Ukladám…')}
 function jFlush(){clearTimeout(jT);jT=0;try{localStorage.setItem('tj1',JSON.stringify(S));J.err='';jMsg('Uložené '+new Date().toLocaleTimeString('sk-SK'))}catch(e){J.err='⚠ Nepodarilo sa uložiť (úložisko prehliadača je plné alebo zablokované). Hneď si stiahni zálohu, inak o zmeny môžeš prísť.';jMsg(J.err)}return !J.err}
 const jRes=p=>p>0?['WIN','pos']:p<0?['LOSS','neg']:['BREAK-EVEN',''];
@@ -1399,6 +1473,156 @@ function mSave(){const o=mRead(),er=[],pn=s=>{s=String(s==null?'':s).trim().repl
   if(!jMissOk(rec)){M.err='Záznam sa nepodarilo uložiť, skontroluj údaje.';M.draft=o;return nRender()}
   const id=M.edit||('m'+Date.now().toString(36)+Math.random().toString(36).slice(2,6));S.journal.missed[id]=rec;
   M.last={sym:rec.sym,side:rec.side};M.edit=null;M.draft=null;M.restored=false;mDrClear();M.err='';if(N.mode!=='all')N.date=rec.date;jFlush();nRender()}
+
+// ---- ANALÝZA TRHU: porovnanie MNQ a MYM pred otvorením NY (sila, rozsah, objem, blízkosť prelomenia) a štatistika zhody tipov
+const A={date:jYmd(new Date()),lim:30,err:''};
+const A_LAB={rs:'Sila oproti predošlému zatvoreniu',rg:'Rozsah oproti norme',vol:'Relatívny objem',px:'Blízkosť prelomenia'};
+const A_FLD=[['prev','Predošlé zatvorenie'],['chg','Zmena dňa v % z platformy (napr. −2,06)'],['open','Otvorenie (Daily Open)'],['high','Overnight High'],['low','Overnight Low'],['last','Aktuálna cena'],['vol','Objem v okne (aj 3,03M alebo 132,34K)'],['nr','Norma rozsahu v % (nepovinné)'],['nv','Norma objemu (nepovinné)']];
+const A_BET=[['','— zatiaľ nevyplnené —'],['MNQ','MNQ mal čistejší breakout'],['MYM','MYM mal čistejší breakout'],['both','Oba rovnako'],['none','Žiadny, trhaný deň']];
+const A_YN=[['','— nevyplnené —'],['yes','Áno'],['no','Nie']];
+const A_LEAD=[['','— nevyplnené —'],['MNQ','Viedol MNQ'],['MYM','Viedol MYM'],['swap','Vedenie sa striedalo']];
+const aMk=()=>S.journal.market;
+function aGet(k,mk){const m=S.journal.market;if(!m[k]&&mk)m[k]=jMk({});return m[k]||null}
+const aPos=v=>typeof v==='number'&&v>0;
+const aNf=(v,d)=>v==null||!isFinite(v)?'—':v.toLocaleString('sk-SK',{minimumFractionDigits:d,maximumFractionDigits:d});
+const aPc=(v,d)=>v==null||!isFinite(v)?'—':(v>0?'+':'')+aNf(v,d==null?2:d)+' %';
+function aAuto(sym,date){const r=[],v=[];Object.keys(aMk()).filter(k=>k<date).sort().reverse().forEach(k=>{const x=aMk()[k][sym];if(!x)return;
+    if(r.length<20&&aPos(x.open)&&x.high!=null&&x.low!=null&&x.high>=x.low)r.push((x.high-x.low)/x.open*100);
+    if(v.length<20&&aPos(x.vol))v.push(x.vol)});
+  const av=a=>a.length>=3?a.reduce((p,c)=>p+c,0)/a.length:null;return{nr:av(r),nrN:r.length,nv:av(v),nvN:v.length}}
+function aM(sym,date,d){const x=d[sym],au=aAuto(sym,date),o={sym,vol:x.vol};
+  o.baseOpen=!(aPos(x.prev)&&aPos(x.last))&&x.chg==null&&aPos(x.open)&&aPos(x.last);
+  if(aPos(x.prev)&&aPos(x.last)){o.chg=(x.last-x.prev)/x.prev*100;o.chgSrc=''}
+  else if(x.chg!=null){o.chg=x.chg;o.chgSrc='zadaná z platformy'}
+  else if(aPos(x.last)&&aPos(x.open)){o.chg=(x.last-x.open)/x.open*100;o.chgSrc=''}
+  else{o.chg=null;o.chgSrc=''}
+  o.since=aPos(x.last)&&aPos(x.open)?(x.last-x.open)/x.open*100:null;
+  const okR=aPos(x.high)&&aPos(x.low)&&x.high>=x.low,ref=aPos(x.open)?x.open:okR?(x.high+x.low)/2:null;
+  o.rng=okR?x.high-x.low:null;o.rngPct=o.rng!=null&&ref?o.rng/ref*100:null;o.rngUsd=o.rng!=null?o.rng*PV[sym]:null;
+  o.nr=aPos(x.nr)?x.nr:au.nr;o.nrSrc=aPos(x.nr)?'zadaná ručne':au.nr!=null?'priemer z '+au.nrN+' uložených dní':'';o.nrAuto=au.nr;
+  o.rgX=o.rngPct!=null&&o.nr?o.rngPct/o.nr:null;
+  o.pos=okR&&aPos(x.last)&&x.high>x.low?Math.min(100,Math.max(0,(x.last-x.low)/(x.high-x.low)*100)):null;
+  if(okR&&aPos(x.last)){o.broke=x.last>x.high?'H':x.last<x.low?'L':'';const dh=Math.max(0,x.high-x.last),dl=Math.max(0,x.last-x.low);
+    o.near=dh<=dl?'H':'L';o.nearPts=Math.min(dh,dl);o.nearPct=o.nearPts/x.last*100}
+  o.nv=aPos(x.nv)?x.nv:au.nv;o.nvSrc=aPos(x.nv)?'zadaná ručne':au.nv!=null?'priemer z '+au.nvN+' uložených dní':'';o.nvAuto=au.nv;
+  o.vx=aPos(x.vol)&&o.nv?x.vol/o.nv:null;return o}
+function aCmp(a,b){const v={rs:'',rg:'',vol:'',px:''},av={rs:false,rg:false,vol:false,px:false};
+  const rat=(x,y)=>{const hi=Math.max(x,y),lo=Math.min(x,y);return hi/lo>=1.1?(x>y?'MNQ':'MYM'):''};
+  if(a.chg!=null&&b.chg!=null){av.rs=true;const d=Math.abs(a.chg)-Math.abs(b.chg);v.rs=Math.abs(d)>=0.1?(d>0?'MNQ':'MYM'):''}
+  if(a.rgX!=null&&b.rgX!=null){av.rg=true;v.rg=rat(a.rgX,b.rgX)}
+  if(a.vx!=null&&b.vx!=null){av.vol=true;v.vol=rat(a.vx,b.vx)}
+  if(a.nearPct!=null&&b.nearPct!=null){av.px=true;const d=a.nearPct-b.nearPct;v.px=Math.abs(d)>=0.03?(d<0?'MNQ':'MYM'):''}
+  const n=Object.keys(av).filter(k=>av[k]).length,cm=Object.keys(v).filter(k=>v[k]==='MNQ').length,cy=Object.keys(v).filter(k=>v[k]==='MYM').length,diff=cm-cy;
+  const tip=n<2?'none':diff>0?'MNQ':diff<0?'MYM':'none';
+  return{v,av,n,cm,cy,tip,str:n<2?0:Math.abs(diff)>=2?2:Math.abs(diff)===1?1:0,div:a.chg!=null&&b.chg!=null&&a.chg*b.chg<0}}
+function aWarn(date,d){const w=[];J_MKS.forEach(s=>{const x=d[s];
+    if(x.high!=null&&x.low!=null&&x.high<x.low)w.push(s+': High je menší ako Low, skontroluj hodnoty.');
+    if(aPos(x.open)&&x.high!=null&&x.low!=null&&x.high>=x.low&&(x.open>x.high||x.open<x.low))w.push(s+': Otvorenie je mimo rozsahu High až Low, skontroluj hodnoty.');
+    if(aPos(x.prev)&&aPos(x.last)&&Math.abs(x.last/x.prev-1)>0.05)w.push(s+': zmena oproti predošlému zatvoreniu je nad 5 %, skontroluj, či ide o ten istý kontrakt.');
+    if(aPos(x.last)&&x.high!=null&&x.low!=null&&x.high>=x.low&&x.last>x.high)w.push(s+': cena je nad zadaným High, čiže už ho prelomila.');
+    if(aPos(x.last)&&x.high!=null&&x.low!=null&&x.high>=x.low&&x.last<x.low)w.push(s+': cena je pod zadaným Low, čiže už ho prelomila.')});return w}
+const aWho=(v,txt)=>v?`<span class="bd g">${v}</span>`:`<span class="bd">${txt||'bez výhody'}</span>`;
+function aRows(a,b,c){const row=(l,f,vo,info)=>`<tr><td>${l}</td><td>${f(a)}</td><td>${f(b)}</td><td>${vo}</td></tr>`;
+  const nrT=m=>m.nr!=null?aNf(m.nr,2)+' %':'chýba';
+  const lead=(x,y,hi)=>x==null||y==null?'—':(Math.abs(x-y)<1e-12?'—':((hi?x>y:x<y)?'MNQ':'MYM'));
+  return row('Zmena oproti predošlému zatvoreniu'+(a.baseOpen||b.baseOpen?' (bez zatvorenia sa berie otvorenie)':''),m=>aPc(m.chg)+(m.chgSrc?'<div class="sub">'+m.chgSrc+'</div>':''),c.av.rs?aWho(c.v.rs,'rozdiel pod 0,1 b. b.'):'<span class="bd">chýbajú údaje</span>')
+   +row('Pohyb od otvorenia',m=>aPc(m.since),'<span class="sub">info</span>')
+   +row('Rozsah High až Low (body)',m=>aNf(m.rng,2),'<span class="sub">info</span>')
+   +row('Rozsah v %',m=>m.rngPct==null?'—':aNf(m.rngPct,2)+' %','<span class="sub">info</span>')
+   +row('Rozsah v $ na 1 kontrakt',m=>m.rngUsd==null?'—':aNf(m.rngUsd,0)+' $','<span class="sub">info</span>')
+   +row('Norma rozsahu v %',m=>nrT(m)+(m.nrSrc?'<div class="sub">'+m.nrSrc+'</div>':''),'<span class="sub">vstup</span>')
+   +row('Rozsah oproti norme (×)',m=>m.rgX==null?'chýba norma':aNf(m.rgX,2)+' ×',c.av.rg?aWho(c.v.rg,'rozdiel pod 10 %'):'<span class="bd">chýba norma</span>')
+   +row('Pozícia ceny v rozsahu',m=>m.pos==null?'—':aNf(m.pos,0)+' % od Low','<span class="sub">info</span>')
+   +row('Najbližší extrém',m=>m.near?(m.broke?'už prelomený '+(m.broke==='H'?'High':'Low'):(m.near==='H'?'High':'Low')+' o '+aNf(m.nearPts,2)+' b. ('+aNf(m.nearPct,2)+' %)'):'—',c.av.px?aWho(c.v.px,'rozdiel pod 0,03 b. b.'):'<span class="bd">chýbajú údaje</span>')
+   +row('Objem v okne',m=>m.vol==null?'—':aNf(m.vol,0),'<span class="sub">info</span>')
+   +row('Relatívny objem (×)',m=>m.vx==null?'chýba norma alebo objem':aNf(m.vx,2)+' ×'+(m.nvSrc?'<div class="sub">norma: '+m.nvSrc+'</div>':''),c.av.vol?aWho(c.v.vol,'rozdiel pod 10 %'):'<span class="bd">chýba</span>')}
+function aResHtml(){const d=aGet(A.date,0)||jMk({}),a=aM('MNQ',A.date,d),b=aM('MYM',A.date,d),c=aCmp(a,b),w=aWarn(A.date,d);
+  const err=A.err;A.err='';
+  let h='<h2>Výsledok porovnania</h2>';
+  if(w.length)h+='<div class="jwarn"><ul>'+w.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>';
+  const head=c.n<2?'<b>Zatiaľ nie je dosť údajov.</b> Doplň údaje aspoň pre dve kritériá (napríklad predošlé zatvorenie a aktuálnu cenu, High a Low).'
+    :c.tip==='none'?`<b>Bez jasného favorita</b> (MNQ ${c.cm} : ${c.cy} MYM z ${c.n} kritérií).`
+    :`<b>Silnejší na prelomenie: ${c.tip}</b> (${c.tip==='MNQ'?c.cm+' : '+c.cy:c.cy+' : '+c.cm} z ${c.n} kritérií, ${c.str===2?'jasnejší náskok':'slabý náskok'}).`;
+  h+=`<div class="jth" style="display:block">${head}${c.div?'<div class="sub">Indexy idú opačným smerom oproti predošlému zatvoreniu. Signál sily je preto slabší.</div>':''}</div>`;
+  h+=`<div class="tw"><table class="jt"><thead><tr><th>Ukazovateľ</th><th>MNQ</th><th>MYM</th><th>Výhoda</th></tr></thead><tbody>${aRows(a,b,c)}</tbody></table></div>`;
+  h+='<p class="sub">Výhoda sa počíta len pri kritériách s dostupnými údajmi a len keď je rozdiel zreteľný. Je to orientačný ukazovateľ, nie predpoveď. Skutočná zhoda sa overuje v štatistike nižšie.</p>';
+  const saved=d.tip?`<div class="jbar"><span class="bd b">Zapísaný tip: ${d.tip==='none'?'bez favorita':d.tip}${d.tipAt?' o '+esc(d.tipAt):''}</span></div>`:'';
+  h+=`${saved}<div class="row"><button class="pri" data-act="asave">${d.tip?'Prepísať tip aktuálnym výpočtom':'Zapísať tip pred otvorením'}</button></div>`;
+  if(err)h+=`<p class="jerr" role="alert">${esc(err)}</p>`;
+  return h}
+function aTrInfo(){const ts=S.trades.filter(t=>String(t.tin).slice(0,10)===A.date);if(!ts.length)return'<p class="sub">V Žurnáli nie sú k tomuto dňu žiadne obchody.</p>';
+  const by={};ts.forEach(t=>{const c=calc(t),k=t.sym||'?';(by[k]=by[k]||{n:0,r:0,p:0});by[k].n++;if(Number.isFinite(c.R))by[k].r+=c.R;by[k].p+=c.pnl});
+  return'<p class="sub">Tvoje obchody z Žurnálu v tento deň: '+Object.keys(by).map(k=>esc(k)+' '+by[k].n+'× ('+(by[k].r>0?'+':'')+aNf(by[k].r,2)+' R, '+aNf(by[k].p,2)+' $)').join('; ')+'.</p>'}
+function aStats(){const days=Object.keys(aMk()).sort();let nd=0,bm=0,n=0,h=0,ns=0,hs=0,pend=0;const per={rs:[0,0],rg:[0,0],vol:[0,0],px:[0,0]};
+  days.forEach(k=>{const d=aMk()[k],dec=d.better==='MNQ'||d.better==='MYM';
+    if(dec){nd++;if(d.better==='MNQ')bm++;J_MKV.forEach(q=>{if(d.votes[q]){per[q][0]++;if(d.votes[q]===d.better)per[q][1]++}})}
+    if(d.tip==='MNQ'||d.tip==='MYM'){if(dec){n++;if(d.tip===d.better)h++;if(d.tipStr===2){ns++;if(d.tip===d.better)hs++}}else pend++}});
+  return{nd,bm,n,h,ns,hs,pend,per}}
+function aFilt(){const g={yes:{n:0,fn:0,fk:0,tn:0,th:0},no:{n:0,fn:0,fk:0,tn:0,th:0}};let fn=0,fk=0;
+  Object.keys(aMk()).forEach(k=>{const d=aMk()[k];if(d.fake==='yes'||d.fake==='no'){fn++;if(d.fake==='yes')fk++}
+    const x=g[d.both];if(!x)return;x.n++;if(d.fake==='yes'||d.fake==='no'){x.fn++;if(d.fake==='yes')x.fk++}
+    if((d.tip==='MNQ'||d.tip==='MYM')&&(d.better==='MNQ'||d.better==='MYM')){x.tn++;if(d.tip===d.better)x.th++}});
+  return{g,fn,fk}}
+function aFiltHtml(){const f=aFilt(),p=(a,b)=>b?aNf(a/b*100,0)+' %':'—';if(!f.fn&&!f.g.yes.n&&!f.g.no.n)return'';
+  let h='<h3 class="jh3">Filter: oba indexy prerazili spolu</h3>';
+  const row=(l,x)=>`<tr><td>${l}</td><td>${x.n}</td><td>${p(x.fk,x.fn)}${x.fn?' (n '+x.fn+')':''}</td><td>${p(x.th,x.tn)}${x.tn?' (n '+x.tn+')':''}</td></tr>`;
+  h+='<div class="tw"><table class="jt"><thead><tr><th>Skupina</th><th>Dní</th><th>Falošný prvý breakout</th><th>Tip trafil</th></tr></thead><tbody>'+row('Oba prerazili spolu',f.g.yes)+row('Neprerazili spolu',f.g.no)+'</tbody></table></div>';
+  let vd;const y=f.g.yes,n=f.g.no;
+  if(y.fn<5||n.fn<5)vd='Zatiaľ málo dát. Na porovnanie treba aspoň 5 dní s vyplneným „falošný breakout“ v oboch skupinách.';
+  else{const d=n.fk/n.fn*100-y.fk/y.fn*100;vd=d>=15?'Filter zatiaľ pomáha: pri spoločnom prerazení bývalo falošných breakoutov menej.':d<=-15?'Zatiaľ je to opačne: pri spoločnom prerazení bolo falošných breakoutov viac.':'Zatiaľ bez zreteľného rozdielu medzi skupinami.';if(Math.min(y.fn,n.fn)<20)vd+=' Vzorka je ešte malá, ber záver s rezervou.'}
+  h+=`<p class="sub">Všetky dni s údajom: falošný prvý breakout ${p(f.fk,f.fn)} (n ${f.fn}). ${esc(vd)}</p>`;return h}
+function aStatHtml(){const s=aStats(),p=(a,b)=>b?aNf(a/b*100,0)+' %':'—';
+  let h='<h2>Štatistika zhody tipov</h2>';
+  if(!s.n&&!s.pend)return h+'<div class="empty">Zatiaľ nemáš žiadny zapísaný tip s vyplneným výsledkom. Pred otvorením zapíš tip a po seanse doplň, ktorý index mal čistejší breakout.</div>'+aFiltHtml();
+  const base=s.nd?Math.max(s.bm,s.nd-s.bm)/s.nd*100:null,rate=s.n?s.h/s.n*100:null;
+  let vd='';
+  if(s.n<10)vd='Zatiaľ málo dát (menej ako 10 vyhodnotených dní). Číslo ber len informatívne.';
+  else{const good=rate>=70&&rate-base>=10;vd=(good?'Tip je zatiaľ použiteľný filter.':rate>=55?'Slabý signál, použi ho len ako doplnok.':'Zatiaľ nie je lepší než hádanie.')+(s.n<30?' Vzorka je ešte malá (do 30 dní ber záver s rezervou).':'')}
+  h+=`<div class="jth"><div><span>Vyhodnotené dni s tipom</span><b>${s.n}</b></div><div><span>Zhoda tipu</span><b>${p(s.h,s.n)}</b></div><div><span>Zhoda pri jasnejšom náskoku</span><b>${s.ns?p(s.hs,s.ns)+' (n '+s.ns+')':'—'}</b></div><div><span>Keby si vždy vybral častejší index</span><b>${base==null?'—':aNf(base,0)+' %'}</b></div><div><span>Tipy čakajúce na výsledok</span><b>${s.pend}</b></div></div>`;
+  h+=`<p class="sub">${esc(vd)}</p>`;
+  h+='<h3 class="jh3">Zhoda podľa kritéria</h3><div class="tw"><table class="jt"><thead><tr><th>Kritérium</th><th>Dní s hlasom</th><th>Zhoda</th></tr></thead><tbody>'+J_MKV.map(q=>`<tr><td>${esc(A_LAB[q])}</td><td>${s.per[q][0]}</td><td>${p(s.per[q][1],s.per[q][0])}</td></tr>`).join('')+'</tbody></table></div>';
+  h+='<p class="sub">Kritérium ber vážne až po aspoň 10 dňoch. Ak žiadne nedosiahne približne 65 až 70 %, použi ho len ako doplnok.</p>';return h+aFiltHtml()}
+function aHistHtml(){const days=Object.keys(aMk()).sort().reverse(),shown=days.slice(0,A.lim);
+  let h='<h2>História</h2>';if(!days.length)return h+'<div class="empty">Zatiaľ nemáš uložený žiadny deň.</div>';
+  const tl=v=>v==='MNQ'||v==='MYM'?v:v==='none'?'bez favorita':'—',bl=v=>v==='MNQ'||v==='MYM'?v:v==='both'?'oba rovnako':v==='none'?'žiadny':'—';
+  h+='<div class="tw"><table class="jt l"><thead><tr><th>Dátum</th><th>Tip</th><th>Lepší breakout</th><th>Zhoda</th><th></th></tr></thead><tbody>'+shown.map(k=>{const d=aMk()[k],dec=d.better==='MNQ'||d.better==='MYM',tp=d.tip==='MNQ'||d.tip==='MYM';
+    const hit=tp&&dec?(d.tip===d.better?'<span class="bd g">Áno</span>':'<span class="bd r">Nie</span>'):'<span class="bd">—</span>';
+    return`<tr><td>${esc(jFmtD(k))}</td><td>${tl(d.tip)}${d.tip&&d.tip!=='none'?(d.tipStr===2?' (jasný)':' (slabý)'):''}</td><td>${bl(d.better)}</td><td>${hit}</td><td><button data-act="aopen" data-d="${k}">Otvoriť</button> <button data-act="adel" data-d="${k}">Zmazať</button></td></tr>`}).join('')+'</tbody></table></div>';
+  if(days.length>shown.length)h+=`<div class="row"><button data-act="amore">Zobraziť ďalšie (${days.length-shown.length})</button></div>`;return h}
+function aField(s,d,f,l){const v=d[s][f],au=aAuto(s,A.date),ph=f==='nr'&&au.nr!=null?'auto '+aNf(au.nr,2):f==='nv'&&au.nv!=null?'auto '+aNf(au.nv,0):'';
+  return`<label>${l}<input type="text" inputmode="decimal" autocomplete="off" data-a="${s}.${f}" value="${v==null?'':esc(String(v))}" placeholder="${esc(ph)}"></label>`}
+function aRender(){const d=aGet(A.date,0)||jMk({});
+  let h=`<section class="card"><h2>Analýza trhu</h2><p class="sub">Pred otvorením NY zadaj údaje z grafov MNQ a MYM za rovnaké okno (napríklad od otvorenia Globexu po 15:30 u nás). Program porovná silu, rozsah oproti norme, objem a blízkosť prelomenia a ukáže, ktorý index má väčšiu šancu na čistejší breakout. Tip si zapíš a po seanse doplň výsledok, aby si zistil, ako často to vychádza.</p>
+  <div class="jdt"><button data-act="aprev" aria-label="Predchádzajúci deň">‹</button><label>Dátum<input type="date" id="adate" value="${esc(A.date)}"></label><button data-act="anext" aria-label="Nasledujúci deň">›</button><button data-act="atoday">Dnes</button></div></section>`;
+  h+='<div class="jcols">'+J_MKS.map(s=>`<section class="card"><h2>${s}</h2><p class="sub">Bod = ${PV[s]} $ na kontrakt.</p><div class="jg">${A_FLD.map(f=>aField(s,d,f[0],f[1])).join('')}</div></section>`).join('')+'</div>';
+  h+=`<section class="card" id="ares">${aResHtml()}</section>`;
+  h+=`<section class="card"><h2>Po seanse</h2><p class="sub">Doplň, ako to dopadlo. Z toho sa počíta zhoda tipov.</p>${aTrInfo()}<div class="jg"><label>Na ktorom indexe bol breakout čistejší?<select data-a="better">${jOpt(A_BET,d.better)}</select></label><label>Kto viedol prvých 30 až 60 minút?<select data-a="lead">${jOpt(A_LEAD,d.lead)}</select></label><label>Prvý breakout bol falošný?<select data-a="fake">${jOpt(A_YN,d.fake)}</select></label><label>Oba indexy prerazili spolu?<select data-a="both">${jOpt(A_YN,d.both)}</select></label><label class="jw">Poznámka<textarea data-a="note" rows="3" maxlength="4000">${esc(d.note)}</textarea></label></div><p class="sub"><span id="asave" role="status" aria-live="polite">${J.err?esc(J.err):'Zmeny sa ukladajú automaticky.'}</span></p></section>`;
+  h+=`<section class="card" id="astat">${aStatHtml()}</section><section class="card" id="ahist">${aHistHtml()}</section>`;
+  $('pg5').innerHTML=h}
+function aUpdate(){if(!$('ares'))return;$('ares').innerHTML=aResHtml();$('astat').innerHTML=aStatHtml();$('ahist').innerHTML=aHistHtml()}
+function aSet(el){const k=A.date,ref=el.dataset.a,dot=ref.indexOf('.');
+  if(dot>0){const s=ref.slice(0,dot),f=ref.slice(dot+1);if(J_MKS.indexOf(s)<0||J_MKF.indexOf(f)<0)return;
+    let raw=el.value.trim().replace(/\s/g,'').replace(',','.');let v=null,bad=false;
+    if(f==='chg'){raw=raw.replace(/[−–]/g,'-').replace(/%$/,'');if(raw!==''){if(/^[+-]?\d+(\.\d+)?$/.test(raw)&&Math.abs(+raw)<=100)v=+raw;else bad=true}}
+    else if(raw!==''){const mm=/^(\d+(?:\.\d+)?)([kKmM])?$/.exec(raw);
+      if(mm&&(f==='vol'||f==='nv'||!mm[2])){const x=+mm[1]*(mm[2]?(/[kK]/.test(mm[2])?1e3:1e6):1);if(x<1e9)v=Math.round(x*100)/100;else bad=true}else bad=true}
+    el.classList.toggle('bad',bad);aGet(k,1)[s][f]=v}
+  else{const d=aGet(k,1);if(ref==='note')d.note=el.value.slice(0,4000);else if(ref==='better'){d.better=['MNQ','MYM','both','none'].indexOf(el.value)>=0?el.value:''}else if(ref==='lead'){d.lead=['MNQ','MYM','swap'].indexOf(el.value)>=0?el.value:''}else if(ref==='fake'||ref==='both'){d[ref]=['yes','no'].indexOf(el.value)>=0?el.value:''}else return}
+  const d=aMk()[k];if(d&&!jMkHas(d))delete aMk()[k];
+  aUpdate();jSaveSoon()}
+$('pg5').addEventListener('input',e=>{const el=e.target;if(el.dataset&&el.dataset.a&&(el.tagName==='INPUT'||el.tagName==='TEXTAREA'))aSet(el)});
+$('pg5').addEventListener('change',e=>{const el=e.target;
+  if(el.id==='adate'){if(okD(el.value)){if(jT)jFlush();A.date=el.value;aRender()}return}
+  if(el.dataset&&el.dataset.a&&el.tagName==='SELECT')aSet(el)});
+$('pg5').addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act;
+  const go=k=>{if(jT)jFlush();A.date=k;aRender()};
+  if(a==='aprev')return go(jAdd(A.date,-1));if(a==='anext')return go(jAdd(A.date,1));if(a==='atoday')return go(jYmd(new Date()));
+  if(a==='aopen'&&okD(b.dataset.d)){go(b.dataset.d);window.scrollTo(0,0);return}
+  if(a==='amore'){A.lim+=30;$('ahist').innerHTML=aHistHtml();return}
+  if(a==='adel'){const k=b.dataset.d;if(!okD(k)||!jArm(b,'Naozaj zmazať? Klikni znova'))return;delete aMk()[k];jFlush();aRender();return}
+  if(a==='asave'){const d=aGet(A.date,1),m1=aM('MNQ',A.date,d),m2=aM('MYM',A.date,d),c=aCmp(m1,m2);
+    if(c.n<2){A.err='Najprv doplň údaje aspoň pre dve kritériá, potom sa dá tip zapísať.';const x=aMk()[A.date];if(x&&!jMkHas(x))delete aMk()[A.date];aUpdate();return}
+    d.tip=c.tip;d.votes=c.v;d.tipStr=c.str;d.tipAt=new Date().toLocaleTimeString('sk-SK',{hour:'2-digit',minute:'2-digit'});jFlush();aUpdate()}});
 
 render();preview();showTab(UI.tab);
 </script>
