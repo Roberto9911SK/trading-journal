@@ -285,8 +285,8 @@ label.tl{grid-column:1/-1}
       <h2>Import z Tradovate</h2>
       <p class="sub" style="margin:0 0 10px">Tradovate: Account Reports → Fills → Download CSV. TopstepX: v platforme záložka Trades → Export. Formát sa rozpozná sám. Už importované obchody sa preskočia.</p>
       <label style="margin-bottom:10px">Účet pre TopstepX súbory (nemajú číslo účtu)<select id="tsa"></select></label>
-      <button id="imp">Vybrať súbor (Fills alebo TopstepX)</button>
-      <input type="file" id="fim" accept=".csv,text/csv" hidden>
+      <button id="imp">Vybrať súbory (Fills alebo TopstepX, aj viac naraz)</button>
+      <input type="file" id="fim" accept=".csv,text/csv" multiple hidden>
       <div class="sub" id="im" style="margin-top:8px"></div>
     </div>
     <div class="card">
@@ -923,18 +923,39 @@ function fromTopstep(txt){
 }
 /*END*/
 $('imp').onclick=()=>$('fim').click();
-$('fim').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(x=>{
-  let r;try{r=/ContractName/.test(x.slice(0,x.indexOf('\n')))?fromTopstep(x):fromFills(x)}catch(er){r={err:'Súbor sa nepodarilo spracovať.'}}
-  if(r.err){$('im').textContent=r.err;return}
-  const known=new Set(S.trades.flatMap(t=>t.fids||[]));let add=0,dup=0,ns=0;const created=[],fresh=!S.trades.length;
+$('fim').onchange=e=>{const files=[...e.target.files];e.target.value='';if(!files.length)return;
+  Promise.all(files.map(f=>f.text().then(x=>({name:f.name,x}),()=>({name:f.name,x:null})))).then(list=>{
+  const known=new Set(S.trades.flatMap(t=>t.fids||[]));const created=[],fresh=!S.trades.length;
   const idOf=nm=>{nm=nm||'Tradovate';let a=S.accounts.find(x=>x.tvName===nm||x.name===nm);
     if(!a&&fresh&&S.accounts.length===1&&!S.accounts[0].tvName){a=S.accounts[0];a.name=nm}
     if(!a){a={id:'a'+Date.now().toString(36)+Math.random().toString(36).slice(2,4),name:nm,start:50000};S.accounts.push(a);created.push(nm)}
     if(!a.tvName)a.tvName=nm;return a.id};
-  r.trades.forEach(t=>{if(t.fids.some(i=>known.has(i)))dup++;else{t.acc=(t.ts&&$('tsa').value)?$('tsa').value:idOf(t.accName);delete t.accName;delete t.ts;{const as=autoStrat(t.tin);if(as)t.strat=as;else ns++}S.trades.push(t);add++}});
-  save();render();
-  $('im').textContent='Pridaných obchodov: '+add+(dup?', preskočených (už importované): '+dup:'')+(r.open?', otvorených pozícií (neimportované): '+r.open:'')+(r.skipped.length?', nepodporované produkty: '+r.skipped.join(', '):'')+(created.length?'. Nové účty: '+created.join(', ')+' (premenuj ich a nastav zostatok v karte Účty)':'')+(add?'. Stratégie sa priradili podľa času vstupu'+(ns?' (mimo časových okien: '+ns+', bez stratégie)':'')+'. R = čistý P&L ÷ 1R (karta Risk management).':'.');
-});e.target.value=''};
+  const nz=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+  const byName=fn=>{const n=nz(fn.replace(/\.[^.]*$/,''));if(!n)return null;const a=S.accounts.find(x=>[x.name,x.tvName].some(v=>nz(v).length>=3&&n.includes(nz(v))));return a?a.id:null};
+  let tAdd=0,tDup=0,tNs=0,tOpen=0,tsFiles=0,tsSel=0;const lines=[],skipped=new Set();
+  list.forEach(f=>{
+    if(f.x==null){lines.push(f.name+': súbor sa nepodarilo prečítať.');return}
+    const isTs=/ContractName/.test(f.x.slice(0,f.x.indexOf('\n')));
+    let r;try{r=isTs?fromTopstep(f.x):fromFills(f.x)}catch(er){r={err:'Súbor sa nepodarilo spracovať.'}}
+    if(r.err){lines.push(f.name+': '+r.err);return}
+    let accId=null;
+    if(isTs){tsFiles++;accId=byName(f.name);if(!accId){accId=$('tsa').value||null;tsSel++}}
+    let add=0,dup=0,ns=0;
+    r.trades.forEach(t=>{
+      if(t.fids.some(i=>known.has(i))){dup++;return}
+      t.acc=(t.ts&&accId)?accId:idOf(t.accName);delete t.accName;delete t.ts;
+      const as=autoStrat(t.tin);if(as)t.strat=as;else ns++;
+      S.trades.push(t);t.fids.forEach(i=>known.add(i));add++});
+    tAdd+=add;tDup+=dup;tNs+=ns;tOpen+=r.open||0;(r.skipped||[]).forEach(x=>skipped.add(x));
+    lines.push(f.name+' ('+(isTs?'TopstepX':'Tradovate')+'): pridaných '+add+(dup?', duplicít '+dup:'')+(r.open?', otvorených pozícií '+r.open:''));
+  });
+  if(tAdd||created.length){save();render()}
+  const multi=list.length>1;
+  let msg='Pridaných obchodov: '+tAdd+(tDup?', preskočených (už importované): '+tDup:'')+(tOpen?', otvorených pozícií (neimportované): '+tOpen:'')+(skipped.size?', nepodporované produkty: '+[...skipped].join(', '):'')+(created.length?'. Nové účty: '+created.join(', ')+' (premenuj ich a nastav zostatok v karte Účty)':'')+(tAdd?'. Stratégie sa priradili podľa času vstupu'+(tNs?' (mimo časových okien: '+tNs+', bez stratégie)':'')+'. R = čistý P&L ÷ 1R (karta Risk management).':'.');
+  if(multi)msg=lines.join('\n')+'\n— Spolu: '+msg;else if(lines.length&&/^[^:]+: (Súbor|súbor)/.test(lines[0])&&!tAdd&&!tDup)msg=lines[0].replace(/^[^:]+: /,'');
+  if(tsFiles>1&&tsSel>1)msg+='\nUpozornenie: '+tsSel+' súborov TopstepX bolo priradených k účtu vybranému v zozname. Ak patria k rôznym účtom, pomenuj súbory názvom účtu alebo ich nahraj po jednom.';
+  $('im').style.whiteSpace='pre-line';$('im').textContent=msg;
+  })};
 const now=new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,16);
 $('tin').value=now;$('tout').value=now;
 // ----- DENNÍK: logika a vykresľovanie (obchody sa berú živo zo S.trades, v S.journal sú len odpovede používateľa) -----
