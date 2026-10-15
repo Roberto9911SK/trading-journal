@@ -355,7 +355,7 @@ label.tl{grid-column:1/-1}
   </section>
 </main>
 <div id="pg3" class="dashpg" hidden>
-  <div class="jsub" role="group" aria-label="Sekcie denníka"><button id="js1" aria-pressed="true">Denný záznam</button><button id="js2" aria-pressed="false">Týždenné vyhodnotenie</button><button id="js3" aria-pressed="false">História</button><button id="js4" aria-pressed="false">Analýza rastu</button></div>
+  <div id="jleadbox"></div><div class="jsub" role="group" aria-label="Sekcie denníka"><button id="js1" aria-pressed="true">Denný záznam</button><button id="js2" aria-pressed="false">Týždenné vyhodnotenie</button><button id="js3" aria-pressed="false">História</button><button id="js4" aria-pressed="false">Analýza rastu</button></div>
   <div id="jv1"></div><div id="jv2" hidden></div><div id="jv3" hidden></div><div id="jv4" hidden></div>
 </div>
 <div id="pg4" class="dashpg" hidden></div>
@@ -427,13 +427,14 @@ function jMk(x){x=x&&typeof x==='object'?x:{};const pn=v=>typeof v==='number'&&i
 const jMkHas=m=>J_MKS.some(s=>J_MKF.some(f=>m[s][f]!=null))||!!m.tip||!!m.better||!!m.lead||!!m.fake||!!m.both||!!m.note;
 function normJ(j){const o={days:{},weeks:{},notes:{},missed:{},market:{}};
   if(j&&typeof j==='object'){
+    if(typeof j.lead==='string'&&j.lead.length<=100&&j.lead!=='__proto__')o.lead=j.lead;
     if(j.days&&typeof j.days==='object')Object.keys(j.days).forEach(k=>{if(okD(k))o.days[k]=jDay(j.days[k])});
     if(j.weeks&&typeof j.weeks==='object')Object.keys(j.weeks).forEach(k=>{if(okW(k))o.weeks[k]=jWeek(j.weeks[k])});
     if(j.notes&&typeof j.notes==='object')Object.keys(j.notes).forEach(id=>{if(id!=='__proto__'&&id.length>0&&id.length<=200){const n=jNote(j.notes[id]);if(n.note||n.score!=null||n.pot!=null)o.notes[id]=n}});
     if(j.market&&typeof j.market==='object')Object.keys(j.market).forEach(k=>{if(okD(k)){const m=jMk(j.market[k]);if(jMkHas(m))o.market[k]=m}});
     if(j.missed&&typeof j.missed==='object')Object.keys(j.missed).forEach(id=>{if(id!=='__proto__'&&id.length>0&&id.length<=100){const m=jMiss(j.missed[id]);if(jMissOk(m))o.missed[id]=m}})}
   return o}
-const jMergeJ=(a,b)=>({days:Object.assign({},a.days,b.days),weeks:Object.assign({},a.weeks,b.weeks),notes:Object.assign({},a.notes,b.notes),missed:Object.assign({},a.missed,b.missed),market:Object.assign({},a.market,b.market)});
+const jMergeJ=(a,b)=>({days:Object.assign({},a.days,b.days),weeks:Object.assign({},a.weeks,b.weeks),notes:Object.assign({},a.notes,b.notes),missed:Object.assign({},a.missed,b.missed),market:Object.assign({},a.market,b.market),...((b.lead!==undefined?b.lead:a.lead)!==undefined?{lead:b.lead!==undefined?b.lead:a.lead}:{})});
 
 function restoreS(o){const oj=S.journal;S=norm(o);S.journal=(o.journal&&typeof o.journal==='object')?jMergeJ(oj,S.journal):oj}
 function norm(o){
@@ -979,7 +980,18 @@ const jWkKey=k=>isoWeek(jDt(jMon(k)));
 const jDefDate=()=>{let k=jYmd(new Date());const w=jDt(k).getDay();if(w===5)k=jAdd(k,-1);else if(w===6)k=jAdd(k,-2);else if(w===0)k=jAdd(k,-3);return k};
 let J={view:'day',date:null,week:null,err:''};
 J.date=(UI.jd&&okD(UI.jd))?UI.jd:jDefDate();J.week=jMon(J.date);
-const jTr=k=>S.trades.filter(t=>String(t.tin).slice(0,10)===k).sort((a,b)=>String(a.tin)<String(b.tin)?-1:String(a.tin)>String(b.tin)?1:0);
+// hlavný účet Denníka: Denník a Poznámky ukazujú len jeho obchody (ostatné účty len kopírujú). Žurnál, Dashboard a kalendár ostávajú na všetkých účtoch.
+const J_LEAD_DEF='PAAPEX4631340000002';
+function jLeadId(){let l=S.journal.lead;
+  if(l===undefined){const a=S.accounts.find(x=>x.tvName===J_LEAD_DEF||x.name===J_LEAD_DEF);return a?a.id:''}
+  return l&&S.accounts.some(x=>x.id===l)?l:''}
+const jVis=t=>{const l=jLeadId();return !l||t.acc===l};
+const jAllT=()=>S.trades.filter(jVis);
+function jLeadBar(){const l=jLeadId(),hid=S.trades.length-jAllT().length;
+  return `<section class="card jlead"><label>Hlavný účet pre Denník a Poznámky<select data-jlead="1"><option value=""${l?'':' selected'}>Všetky účty</option>${S.accounts.map(a=>`<option value="${esc(a.id)}"${a.id===l?' selected':''}>${esc(a.name)}</option>`).join('')}</select></label><p class="sub" style="margin:6px 0 0">${l?'Denník a Poznámky ukazujú len obchody tohto účtu (skryté obchody z ostatných účtov: '+hid+'). Žurnál, Dashboard a kalendár počítajú všetky účty.':'Ukazujú sa obchody zo všetkých účtov. Ak obchoduješ cez kopírku, vyber hlavný účet, aby sa obchody nezapisovali viackrát.'}</p></section>`}
+document.addEventListener('change',e=>{const el=e.target;if(!el||!el.dataset||!el.dataset.jlead)return;
+  S.journal.lead=el.value;save();if(UI.tab==='notes')nRender();else jRender()});
+const jTr=k=>jAllT().filter(t=>String(t.tin).slice(0,10)===k).sort((a,b)=>String(a.tin)<String(b.tin)?-1:String(a.tin)>String(b.tin)?1:0);
 const jGet=k=>S.journal.days[k]||null;
 const jTid=t=>String(t.id==null?'':t.id);
 function jEns(k){if(!S.journal.days[k])S.journal.days[k]=jDay({});return S.journal.days[k]}
@@ -1092,7 +1104,7 @@ function jSummary(k){const s=jStat(k),e=s.e,en=e?e.end:{},c=s.cat;
 
 // ---- denný pohľad ----
 function jDayHtml(){const k=J.date,e=jGet(k),d=e||jDay({}),st=jState(k),dis=d.status==='done',trs=jTr(k),wd=jDt(k).getDay();
-  const ids=new Set(trs.map(jTid)),orph=Object.keys(d.an).filter(id=>!ids.has(id)&&jHas(d.an[id]));
+  const ids=new Set(trs.map(jTid)),hid=new Set(S.trades.filter(t=>!jVis(t)).map(jTid)),orph=Object.keys(d.an).filter(id=>!ids.has(id)&&!hid.has(id)&&jHas(d.an[id]));
   let h=`<section class="card"><h2>Denný záznam</h2><div class="jdt"><button data-act="prev" aria-label="Predchádzajúci deň">‹</button><label>Dátum<input type="date" id="jdate" value="${esc(k)}"></label><button data-act="next" aria-label="Nasledujúci deň">›</button><button data-act="today">Dnes / posledný obchodný deň</button></div>
   <div class="jbar"><span class="bd b">${esc(J_DAYS[wd])}</span>${jBadge(st.d[0],st.d[1])}${jBadge(st.t[0],st.t[1])}</div>
   ${wd===0||wd>=5?'<p class="sub">Tento dátum nepatrí do obchodných dní pondelok–štvrtok. Záznam sa dá viesť, no do týždennej analýzy Po–Št sa nezapočíta.</p>':''}</section>`;
@@ -1204,7 +1216,7 @@ function jGAgg(a){const o={n:a.length,pnl:0,w:0,r:0};a.forEach(x=>{o.pnl+=x.c.pn
 const jPc=v=>v==null?'—':Math.round(v*100)+' %',jMn=v=>v==null?'—':`<span class="${cls(v)}">${esc(m$(v))}</span>`,jRr=v=>v==null?'—':(v>0?'+':'')+v.toFixed(2)+' R';
 const jCat=x=>x.a&&x.a.cls||'none';
 function jGData(){const wk=+J.gp,since=wk?jAdd(jMon(jYmd(new Date())),-(wk-1)*7):'';
-  const al=S.trades.filter(t=>!since||String(t.tin).slice(0,10)>=since).map(t=>{const k=String(t.tin).slice(0,10),e=S.journal.days[k],id=jTid(t);return{t,k,c:calc(t),a:(e&&id&&e.an[id])||null}});
+  const al=jAllT().filter(t=>!since||String(t.tin).slice(0,10)>=since).map(t=>{const k=String(t.tin).slice(0,10),e=S.journal.days[k],id=jTid(t);return{t,k,c:calc(t),a:(e&&id&&e.an[id])||null}});
   const tr=al.filter(x=>!(x.a&&x.a.skip)),sk=al.filter(x=>x.a&&x.a.skip);
   const days=Object.keys(S.journal.days).filter(k=>!since||k>=since).sort().map(k=>({k,e:S.journal.days[k]}));
   return{tr,days,since,sk}}
@@ -1285,7 +1297,7 @@ function jGrowHtml(){const D=jGData(),tr=D.tr,MINV=3,MINS=5;
   return sel+skn+head+'</section>'+sec1+sec1b+sec2+sec3+jEarlyHtml(tr)}
 
 // ---- vykresľovanie a udalosti ----
-function jRender(){const v=J.view;
+function jRender(){const v=J.view;const lb=$('jleadbox');if(lb)lb.innerHTML=jLeadBar();
   ['1','2','3','4'].forEach((n,i)=>{if(['day','week','hist','grow'][i]!==v)$('jv'+n).innerHTML=''});
   ['1','2','3','4'].forEach((n,i)=>{const on=['day','week','hist','grow'][i]===v;$('js'+n).setAttribute('aria-pressed',String(on));$('jv'+n).hidden=!on});
   if(v==='day')$('jv1').innerHTML=jDayHtml();else if(v==='week')$('jv2').innerHTML=jWeekHtml();else if(v==='hist')$('jv3').innerHTML=jHistHtml();else $('jv4').innerHTML=jGrowHtml()}
@@ -1343,10 +1355,10 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden&&jT)jFlush(
 
 // ---- POZNÁMKOVÝ BLOK: osobné poznámky, skóre a "R dosiahnuté vs. R, ktoré obchod mohol dosiahnuť" k obchodom zo S.trades ----
 const N={mode:'week',date:null,lim:50,view:'notes'},M={edit:null,draft:null,last:{}};
-(()=>{const ds=S.trades.map(t=>String(t.tin).slice(0,10)).sort();N.date=ds.length?ds[ds.length-1]:jYmd(new Date())})();
+(()=>{const ds=jAllT().map(t=>String(t.tin).slice(0,10)).sort();N.date=ds.length?ds[ds.length-1]:jYmd(new Date())})();
 const nGet=id=>Object.prototype.hasOwnProperty.call(S.journal.notes,id)?S.journal.notes[id]:null;
 const nOk=t=>{const id=jTid(t);return id&&id!=='__proto__'&&id.length<=200};
-function nSel(){let a=S.trades.slice();
+function nSel(){let a=jAllT();
   if(N.mode==='day')a=a.filter(t=>String(t.tin).slice(0,10)===N.date);
   else if(N.mode==='week'){const m=jMon(N.date),e=jAdd(m,6);a=a.filter(t=>{const k=String(t.tin).slice(0,10);return k>=m&&k<=e})}
   return a.sort((x,y)=>String(y.tin)<String(x.tin)?-1:String(y.tin)>String(x.tin)?1:0)}
@@ -1376,7 +1388,7 @@ function nRender(){const m=N.mode,trs=nSel(),mon=jMon(N.date);
   const lab=m==='day'?jFmtD(N.date):m==='week'?'Týždeň '+isoWeek(jDt(mon))+' ('+jShortD(mon)+' – '+jShortD(jAdd(mon,6))+' '+jAdd(mon,6).slice(0,4)+')':'Všetky obchody';
   const btn=(v,t)=>`<button data-act="nmode" data-v="${v}" aria-pressed="${m===v}">${t}</button>`;
   const vb=(v,t)=>`<button data-act="nview" data-v="${v}" aria-pressed="${N.view===v}">${t}</button>`;
-  let h=`<section class="card"><h2>Poznámkový blok</h2><div class="jsub" role="group" aria-label="Sekcia bloku">${vb('notes','Poznámky k obchodom')}${vb('missed','Obchody, ktoré som nezobral')}</div><p class="sub">${N.view==='missed'?'Vyber deň alebo týždeň, pre ktorý chceš vidieť a zapisovať obchody, ktoré si nezobral. Zobrazia sa aj reálne obchody z toho istého výberu na porovnanie.':'Vyber deň alebo týždeň a ku každému obchodu z Žurnálu si napíš poznámky, skóre a koľko R mohol obchod dosiahnuť. Obchody sa berú živo z Žurnálu (nekopírujú sa).'}</p>
+  let h=jLeadBar()+`<section class="card"><h2>Poznámkový blok</h2><div class="jsub" role="group" aria-label="Sekcia bloku">${vb('notes','Poznámky k obchodom')}${vb('missed','Obchody, ktoré som nezobral')}</div><p class="sub">${N.view==='missed'?'Vyber deň alebo týždeň, pre ktorý chceš vidieť a zapisovať obchody, ktoré si nezobral. Zobrazia sa aj reálne obchody z toho istého výberu na porovnanie.':'Vyber deň alebo týždeň a ku každému obchodu z Žurnálu si napíš poznámky, skóre a koľko R mohol obchod dosiahnuť. Obchody sa berú živo z Žurnálu (nekopírujú sa).'}</p>
   <div class="jsub" role="group" aria-label="Výber obchodov">${btn('day','Podľa dňa')}${btn('week','Podľa týždňa')}${btn('all','Všetky obchody')}</div>`;
   if(m!=='all')h+=`<div class="jdt"><button data-act="nprev" aria-label="Predchádzajúce obdobie">‹</button><label>${m==='day'?'Dátum':'Ľubovoľný dátum v týždni'}<input type="date" id="ndate" value="${esc(N.date)}"></label><button data-act="nnext" aria-label="Nasledujúce obdobie">›</button><button data-act="ntoday">Dnes</button></div>`;
   h+=`<div class="jbar"><span class="bd b">${esc(lab)}</span><span class="bd">${N.view==='missed'?'Nezobratých obchodov: '+mSel().length:'Obchodov: '+trs.length}</span></div></section>`;
@@ -1457,7 +1469,7 @@ function mCmp(r){if(!r.cmp)return'<p class="sub">Vyber nižšie reálny obchod z
   ${row('<b>R</b>',`<b class="${cls(ct.R)}">${fm(ct.R)}</b>`,`<b class="${cls(mc.R)}">${fm(mc.R)}</b>`)}</tbody></table></div>
   <p><b>Rozdiel:</b> <span class="${cls(d)}">${esc(mRs(d))}</span> (≈ ${esc(m$(d*oneR))}) — ${d>0.005?'nezobraný obchod dopadol lepšie než ten, ktorý si zobral. Keby si sa držal pravidiel, výsledok mohol byť lepší.':d<-0.005?'obchod, ktorý si zobral, dopadol lepšie než nezobraný.':'rovnaký výsledok.'}</p>`}
 function mCard(x){const r=x.r,c=mCalc(r),id=x.id,wl=c.R>0?' w':c.R<0?' l':'',res=c.R>0?['WIN','pos']:c.R<0?['LOSS','neg']:['BREAK-EVEN',''];
-  const same=S.trades.filter(t=>String(t.tin).slice(0,10)===r.date),other=S.trades.filter(t=>String(t.tin).slice(0,10)!==r.date).sort((a,b)=>String(b.tin)<String(a.tin)?-1:1).slice(0,60);
+  const same=jAllT().filter(t=>String(t.tin).slice(0,10)===r.date),other=jAllT().filter(t=>String(t.tin).slice(0,10)!==r.date).sort((a,b)=>String(b.tin)<String(a.tin)?-1:1).slice(0,60);
   const lab=t=>String(t.tin).slice(0,10)+' '+jTm(t.tin)+' · '+t.sym+' '+t.side+' ×'+t.qty+' · '+m$(calc(t).pnl),opt=t=>`<option value="${esc(jTid(t))}"${r.cmp===jTid(t)?' selected':''}>${esc(lab(t))}</option>`;
   const missing=r.cmp&&!S.trades.some(t=>jTid(t)===r.cmp)?`<option value="${esc(r.cmp)}" selected>(obchod už nie je dostupný)</option>`:'';
   return`<div class="jtr${wl}" data-mid="${esc(id)}"><div class="jth"><div><span>Dátum a čas</span><b>${esc(r.date)} ${esc(r.tin)}${r.tout?'–'+esc(r.tout):''}</b></div><div><span>Symbol / smer</span><b>${esc(r.sym)} ${esc(r.side)}</b></div><div><span>Kontrakty</span><b>${esc(r.qty)}</b></div>
@@ -1579,7 +1591,7 @@ function aResHtml(){const d=aGet(A.date,0)||jMk({}),a=aM('MNQ',A.date,d),b=aM('M
   h+=`${saved}<div class="row"><button class="pri" data-act="asave">${d.tip?'Prepísať tip aktuálnym výpočtom':'Zapísať tip pred otvorením'}</button></div>`;
   if(err)h+=`<p class="jerr" role="alert">${esc(err)}</p>`;
   return h}
-function aTrInfo(){const ts=S.trades.filter(t=>String(t.tin).slice(0,10)===A.date);if(!ts.length)return'<p class="sub">V Žurnáli nie sú k tomuto dňu žiadne obchody.</p>';
+function aTrInfo(){const ts=jAllT().filter(t=>String(t.tin).slice(0,10)===A.date);if(!ts.length)return'<p class="sub">V Žurnáli nie sú k tomuto dňu žiadne obchody.</p>';
   const by={};ts.forEach(t=>{const c=calc(t),k=t.sym||'?';(by[k]=by[k]||{n:0,r:0,p:0});by[k].n++;if(Number.isFinite(c.R))by[k].r+=c.R;by[k].p+=c.pnl});
   return'<p class="sub">Tvoje obchody z Žurnálu v tento deň: '+Object.keys(by).map(k=>esc(k)+' '+by[k].n+'× ('+(by[k].r>0?'+':'')+aNf(by[k].r,2)+' R, '+aNf(by[k].p,2)+' $)').join('; ')+'.</p>'}
 function aStats(){const days=Object.keys(aMk()).sort();let nd=0,bm=0,n=0,h=0,ns=0,hs=0,pend=0;const per={rs:[0,0],rg:[0,0],vol:[0,0],px:[0,0]};
