@@ -3,6 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#18181b">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Trading Journal">
 <title>Futures Trading Journal</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
@@ -329,7 +336,8 @@ label.tl{grid-column:1/-1}
     <div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px"><h2 style="margin:0">Obchody</h2><button id="tv" aria-pressed="true">Rozbaliť tabuľku</button></div><div class="tw" id="tbl"></div></div>
     <div class="card">
       <details open><summary>Záloha dát</summary>
-        <p class="sub">Dáta sú uložené len v tomto prehliadači na tomto zariadení. Vytvor zálohu, skopíruj ju a ulož (napr. do Poznámok). Neskôr ju vlož späť do poľa a načítaj.</p>
+        <p class="sub">Dáta sú uložené len v tomto prehliadači na tomto zariadení. Zálohu pošli do druhého zariadenia tlačidlom Zdieľať zálohu (na iPhone aj cez AirDrop). V druhom zariadení klikni na Načítať zo súboru. Text zálohu môžeš použiť aj ručne cez polia nižšie.</p>
+        <div class="row"><button class="pri" id="bshare">Zdieľať zálohu</button><button id="bfile">Načítať zo súboru</button><input type="file" id="bfi" accept=".json,application/json" hidden></div>
         <div class="row"><button id="dl">Vytvoriť zálohu</button><button id="ul">Načítať zo zálohy</button><button id="csv">Zobraziť CSV</button></div>
         <textarea id="bt" placeholder="Tu sa zobrazí záloha alebo CSV. Pre obnovu sem vlož zálohu."></textarea>
         <div class="sub" id="bm"></div>
@@ -1624,7 +1632,28 @@ $('pg5').addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(
     if(c.n<2){A.err='Najprv doplň údaje aspoň pre dve kritériá, potom sa dá tip zapísať.';const x=aMk()[A.date];if(x&&!jMkHas(x))delete aMk()[A.date];aUpdate();return}
     d.tip=c.tip;d.votes=c.v;d.tipStr=c.str;d.tipAt=new Date().toLocaleTimeString('sk-SK',{hour:'2-digit',minute:'2-digit'});jFlush();aUpdate()}});
 
+// ---- ZDIEĽANIE A NAČÍTANIE ZÁLOHY (systémové zdieľanie, AirDrop, súbor zo zariadenia)
+const BK={pending:null};
+const bkMsg=t=>{const m=$('bm');if(m)m.textContent=t};
+const bkName=()=>'trading-journal-zaloha-'+new Date().toISOString().slice(0,10)+'.json';
+function bkDownload(txt,name){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'application/json'}));a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
+async function bkShare(){if(typeof jT!=='undefined'&&jT)jFlush();const txt=JSON.stringify(S),name=bkName();
+  try{const f=new File([txt],name,{type:'application/json'});
+    if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'Záloha Trading Journal'});bkMsg('Záloha odoslaná cez zdieľanie. Obchodov: '+S.trades.length);return}}
+  catch(e){if(e&&e.name==='AbortError'){bkMsg('Zdieľanie bolo zrušené.');return}}
+  bkDownload(txt,name);bkMsg('Zdieľanie nie je v tomto prehliadači dostupné. Záloha sa stiahla ako súbor.')}
+function bkPick(file){file.text().then(x=>{try{const o=JSON.parse(x);if(!o||!Array.isArray(o.trades))throw 0;const n=norm(o);BK.pending=o;
+  const dj=Object.keys(n.journal.days).length+Object.keys(n.journal.notes).length+Object.keys(n.journal.market).length;
+  $('bm').innerHTML=`Súbor obsahuje ${n.trades.length} obchodov (teraz máš ${S.trades.length}). Obchody sa nahradia obchodmi zo súboru, denník, poznámky a analýza trhu sa zlúčia (záznamov v súbore: ${dj}). <span class="row" style="margin-top:8px"><button id="bkok" class="pri">Načítať</button><button id="bkno">Zrušiť</button></span>`}
+  catch(er){BK.pending=null;bkMsg('Súbor nie je platná záloha.')}}).catch(()=>bkMsg('Súbor sa nepodarilo prečítať.'))}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('#bkok,#bkno');if(!b)return;
+  if(b.id==='bkno'){BK.pending=null;bkMsg('Načítanie bolo zrušené.');return}
+  const o=BK.pending;BK.pending=null;if(!o)return;restoreS(o);save();render();showTab(UI.tab);bkMsg('Načítané. Obchodov: '+S.trades.length)});
+if($('bshare'))$('bshare').onclick=bkShare;
+if($('bfile')&&$('bfi')){$('bfile').onclick=()=>$('bfi').click();$('bfi').onchange=e=>{const f=e.target.files[0];if(f)bkPick(f);e.target.value=''}}
+
 render();preview();showTab(UI.tab);
 </script>
+<script>if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}</script>
 </body>
 </html>
