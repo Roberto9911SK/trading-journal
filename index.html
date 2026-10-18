@@ -1643,7 +1643,7 @@ function aRender(){const d=aGet(A.date,0)||jMk({});
 function aUpdate(){if(!$('ares'))return;$('ares').innerHTML=aResHtml();$('astat').innerHTML=aStatHtml();$('ahist').innerHTML=aHistHtml()}
 function aSet(el){const k=A.date,ref=el.dataset.a,dot=ref.indexOf('.');
   if(dot>0){const s=ref.slice(0,dot),f=ref.slice(dot+1);if(J_MKS.indexOf(s)<0||J_MKF.indexOf(f)<0)return;
-    let raw=el.value.trim().replace(/\s/g,'').replace(',','.');let v=null,bad=false;
+    let raw=el.value.trim().replace(/\s/g,'');if(f!=='chg'&&/^\d{1,3}(,\d{3})+(\.\d+)?$/.test(raw))raw=raw.replace(/,/g,'');else raw=raw.replace(',','.');let v=null,bad=false;
     if(f==='chg'){raw=raw.replace(/[−–]/g,'-').replace(/%$/,'');if(raw!==''){if(/^[+-]?\d+(\.\d+)?$/.test(raw)&&Math.abs(+raw)<=100)v=+raw;else bad=true}}
     else if(raw!==''){const mm=/^(\d+(?:\.\d+)?)([kKmM])?$/.exec(raw);
       if(mm&&(f==='vol'||f==='nv'||!mm[2])){const x=+mm[1]*(mm[2]?(/[kK]/.test(mm[2])?1e3:1e6):1);if(x<1e9)v=Math.round(x*100)/100;else bad=true}else bad=true}
