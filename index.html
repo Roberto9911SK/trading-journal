@@ -189,6 +189,7 @@ label.tl{grid-column:1/-1}
 #pg3 .jtr.skip{opacity:.8;border-left-style:dashed;gap:6px}
 #pg4 .jtr.skip{opacity:.8;border-left-style:dashed;gap:6px}
 #pg4 .jtr.orph{border-left-style:dashed}#pg4 .jsub button[aria-pressed=true]{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
+#apaste{width:100%;box-sizing:border-box;min-height:96px;font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;margin:8px 0}
 #pg5 .jstack,#pg5 .jfs,#pg5 .jv{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;min-width:0}
 #pg5 .jfs{border:0;margin:0;padding:0}
 #pg5 .jfs:disabled{opacity:.92}
@@ -1632,9 +1633,70 @@ function aHistHtml(){const days=Object.keys(aMk()).sort().reverse(),shown=days.s
   if(days.length>shown.length)h+=`<div class="row"><button data-act="amore">Zobraziť ďalšie (${days.length-shown.length})</button></div>`;return h}
 function aField(s,d,f,l){const v=d[s][f],au=aAuto(s,A.date),ph=f==='nr'&&au.nr!=null?'auto '+aNf(au.nr,2):f==='nv'&&au.nv!=null?'auto '+aNf(au.nv,0):'';
   return`<label>${l}<input type="text" inputmode="decimal" autocomplete="off" data-a="${s}.${f}" value="${v==null?'':esc(String(v))}" placeholder="${esc(ph)}"></label>`}
+// ---- Vloženie dát z TradingView (indikátor Analýza trhu): riadky AMT|SYM|dátum|... z Pine Logs alebo riadky tabuľky
+const AF6=[['prev','Prev close'],['open','Daily Open'],['high','High'],['low','Low'],['last','Posledná'],['vol','Objem']];
+function aPN(t){let r=String(t).trim().replace(/\s/g,'').replace(/[−–]/g,'-');
+  if(/^-?\d{1,3}(,\d{3})+(\.\d+)?$/.test(r))r=r.replace(/,/g,'');else r=r.replace(',','.');
+  const m=/^(-?\d+(?:\.\d+)?)([kKmM])?$/.exec(r);if(!m)return null;
+  return +m[1]*(m[2]?(/[kK]/.test(m[2])?1e3:1e6):1)}
+function aParsePaste(txt,defSym){
+  const rows={},skip=[],ign={};
+  const add=(sym0,iso,s,live)=>{const sym=String(sym0).toUpperCase().replace(/\d*!$/,'');
+    if(J_MKS.indexOf(sym)<0){ign[sym0]=1;return}
+    const v=s.map(aPN);
+    if(!okD(iso)||isNaN(jDt(iso).getTime())){skip.push({sym,date:iso,why:'neplatný dátum'});return}
+    if(v.some(x=>x==null)||v.slice(0,5).some(x=>!(x>0))||v[5]<0){skip.push({sym,date:iso,why:'nečitateľné číslo'});return}
+    const[prev,open,high,low,last,vol]=v;
+    if(!(high>=low&&open>=low&&open<=high&&last>=low&&last<=high)){skip.push({sym,date:iso,why:'High a Low nesedia s Open alebo Poslednou'});return}
+    rows[sym+'|'+iso]={sym,date:iso,prev,open,high,low,last,vol:Math.round(vol*100)/100,live:!!live}};
+  String(txt).split(/\r?\n/).forEach(line=>{
+    const re=/AMT\|([A-Za-z0-9._!-]+)\|(\d{4}-\d{2}-\d{2})\|([^|\s]+)\|([^|\s]+)\|([^|\s]+)\|([^|\s]+)\|([^|\s]+)\|([^|\s]+)(\|L)?/g;let m,found=false;
+    while((m=re.exec(line))){found=true;add(m[1],m[2],m.slice(3,9),!!m[9])}
+    if(found)return;
+    const dm=/(\d{1,2})\.(\d{1,2})\.(\d{4})/.exec(line);if(!dm)return;
+    const t=line.slice(dm.index+dm[0].length).trim().split(/\s+/);if(t.length<8||t[0]==='')return;
+    const iso=dm[3]+'-'+('0'+dm[2]).slice(-2)+'-'+('0'+dm[1]).slice(-2);
+    add(defSym,iso,[t[0],t[1],t[2],t[3],t[4],t[7]],false)});
+  const list=Object.keys(rows).map(k=>rows[k]).sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:a.sym<b.sym?-1:1);
+  return{rows:list,skip,ign:Object.keys(ign)}}
+function aDiff(r){const ex=(aMk()[r.date]||{})[r.sym],diffs=[];let any=false,same=true;
+  AF6.forEach(f=>{const k=f[0],o=ex?ex[k]:null,dg=k==='vol'?0:2;
+    if(o==null){same=false;return}any=true;
+    if(Math.abs(o-r[k])>(k==='vol'?1.5:0.005)){same=false;diffs.push(f[1]+' '+aNf(o,dg)+' → '+aNf(r[k],dg))}});
+  return{st:!any?'new':same?'same':'chg',diffs}}
+function aPasteHtml(){const pr=A.pr;let h='';
+  if(A.pmsg)h+=`<p class="sub" role="status"><b>${esc(A.pmsg)}</b></p>`;
+  if(!pr)return h;
+  if(!pr.rows.length)h+='<div class="empty">V texte som nenašiel žiadny použiteľný riadok. Skopíruj celý obsah Pine Logs (Cmd+A, Cmd+C) alebo riadky tabuľky s dátumom.</div>';
+  else{let nn=0,nc=0,ns=0;
+    const body=pr.rows.map(r=>{const d=aDiff(r),chg=(r.last-r.prev)/r.prev*100,rg=(r.high-r.low)/r.open*100;
+      if(d.st==='new')nn++;else if(d.st==='chg')nc++;else ns++;
+      const stat=d.st==='new'?'<span class="bd g">nový</span>':d.st==='same'?'<span class="bd">rovnaké</span>':'<span class="bd r">líši sa</span> '+esc(d.diffs.join('; ')||'doplní prázdne polia');
+      return`<tr><td>${esc(jFmtD(r.date))}${r.live?' <span class="bd">naživo</span>':''}</td><td>${r.sym}</td><td>${aNf(r.prev,2)}</td><td>${aNf(r.open,2)}</td><td>${aNf(r.high,2)}</td><td>${aNf(r.low,2)}</td><td>${aNf(r.last,2)}</td><td>${aPc(chg,2)}</td><td>${aNf(rg,2)} %</td><td>${aNf(r.vol,0)}</td><td class="l">${stat}</td></tr>`}).join('');
+    h+=`<p class="sub">Našiel som ${pr.rows.length} riadkov: ${nn} nových, ${nc} s rozdielom oproti tomu, čo máš zapísané, ${ns} rovnakých.</p>`;
+    h+='<div class="tw"><table class="jt"><thead><tr><th>Dátum</th><th>Symbol</th><th>Prev close</th><th>Daily Open</th><th>High</th><th>Low</th><th>Posledná</th><th>Zmena</th><th>Rozsah</th><th>Objem</th><th class="l">Stav</th></tr></thead><tbody>'+body+'</tbody></table></div>';
+    if(pr.rows.some(r=>r.live))h+='<p class="sub">Riadky označené „naživo“ sa ešte menia. Po 15:30 ich vlož znova, doplnia sa konečné čísla.</p>';
+    h+=`<div class="row"><label><input type="checkbox" id="apov"${A.pov===false?'':' checked'}> Prepísať už vyplnené hodnoty, ktoré sa líšia</label><button class="pri" data-act="pwr">Zapísať do programu</button></div>`}
+  if(pr.skip.length)h+='<p class="sub">Preskočené: '+pr.skip.slice(0,6).map(s=>esc(s.sym+' '+s.date+' ('+s.why+')')).join('; ')+(pr.skip.length>6?' a ďalšie '+(pr.skip.length-6):'')+'.</p>';
+  if(pr.ign.length)h+='<p class="sub">Ignorované symboly, ktoré program nepozná: '+esc(pr.ign.join(', '))+'. Funguje len MNQ a MYM.</p>';
+  return h}
+function aPasteCard(){return`<section class="card"><h2>Vložiť z TradingView</h2><p class="sub">V TradingView otvor Pine Logs indikátora Analýza trhu, označ všetko (Cmd+A), skopíruj (Cmd+C) a vlož sem. Môžeš vložiť aj naraz MNQ a MYM a viac dní. Program doplní polia, ukáže rozdiely oproti tomu, čo už máš zapísané, a po zapísaní otvorí posledný deň s porovnaním.</p>
+  <textarea id="apaste" rows="5" spellcheck="false" placeholder="Sem vlož text z TradingView">${esc(A.paste||'')}</textarea>
+  <div class="row"><label>Symbol pre riadky bez označenia<select id="apsym"><option value="MNQ"${A.psym==='MYM'?'':' selected'}>MNQ</option><option value="MYM"${A.psym==='MYM'?' selected':''}>MYM</option></select></label><button class="pri" data-act="ppar">Spracovať</button><button data-act="pclr">Vyčistiť</button></div>
+  <div id="apv">${aPasteHtml()}</div></section>`}
+function aPasteRun(){A.paste=$('apaste')?$('apaste').value:A.paste||'';A.pmsg='';A.pr=A.paste.trim()?aParsePaste(A.paste,A.psym||'MNQ'):null;if($('apv'))$('apv').innerHTML=aPasteHtml()}
+function aPasteWrite(){const pr=A.pr;if(!pr||!pr.rows.length)return;let nn=0,nc=0,ns=0,newest='';
+  pr.rows.forEach(r=>{const st=aDiff(r);if(r.date>newest)newest=r.date;
+    if(st.st==='same'){ns++;return}
+    const o=aGet(r.date,1)[r.sym];let ch=false;
+    AF6.forEach(f=>{const k=f[0];if((o[k]==null||A.pov!==false)&&o[k]!==r[k]){o[k]=r[k];ch=true}});
+    if(ch){if(st.st==='new')nn++;else nc++}else ns++});
+  A.pmsg='Zapísané: '+nn+' nových, '+nc+' opravených, '+ns+' bez zmeny. Nižšie je porovnanie pre '+jFmtD(newest)+'.';
+  A.pr=null;A.paste='';if(jT)jFlush();A.date=newest;aRender();jSaveSoon()}
 function aRender(){const d=aGet(A.date,0)||jMk({});
   let h=`<section class="card"><h2>Analýza trhu</h2><p class="sub">Pred otvorením NY zadaj údaje z grafov MNQ a MYM za rovnaké okno (napríklad od otvorenia Globexu po 15:30 u nás). Program porovná silu, rozsah oproti norme, objem a blízkosť prelomenia a ukáže, ktorý index má väčšiu šancu na čistejší breakout. Tip si zapíš a po seanse doplň výsledok, aby si zistil, ako často to vychádza.</p>
   <div class="jdt"><button data-act="aprev" aria-label="Predchádzajúci deň">‹</button><label>Dátum<input type="date" id="adate" value="${esc(A.date)}"></label><button data-act="anext" aria-label="Nasledujúci deň">›</button><button data-act="atoday">Dnes</button></div></section>`;
+  h+=aPasteCard();
   h+='<div class="jcols">'+J_MKS.map(s=>`<section class="card"><h2>${s}</h2><p class="sub">Bod = ${PV[s]} $ na kontrakt.</p><div class="jg">${A_FLD.map(f=>aField(s,d,f[0],f[1])).join('')}</div></section>`).join('')+'</div>';
   h+=`<section class="card" id="ares">${aResHtml()}</section>`;
   h+=`<section class="card"><h2>Po seanse</h2><p class="sub">Doplň, ako to dopadlo. Z toho sa počíta zhoda tipov.</p>${aTrInfo()}<div class="jg"><label>Na ktorom indexe bol breakout čistejší?<select data-a="better">${jOpt(A_BET,d.better)}</select></label><label>Kto viedol prvých 30 až 60 minút?<select data-a="lead">${jOpt(A_LEAD,d.lead)}</select></label><label>Prvý breakout bol falošný?<select data-a="fake">${jOpt(A_YN,d.fake)}</select></label><label>Oba indexy prerazili spolu?<select data-a="both">${jOpt(A_YN,d.both)}</select></label><label class="jw">Poznámka<textarea data-a="note" rows="3" maxlength="4000">${esc(d.note)}</textarea></label></div><p class="sub"><span id="asave" role="status" aria-live="polite">${J.err?esc(J.err):'Zmeny sa ukladajú automaticky.'}</span></p></section>`;
@@ -1651,12 +1713,18 @@ function aSet(el){const k=A.date,ref=el.dataset.a,dot=ref.indexOf('.');
   else{const d=aGet(k,1);if(ref==='note')d.note=el.value.slice(0,4000);else if(ref==='better'){d.better=['MNQ','MYM','both','none'].indexOf(el.value)>=0?el.value:''}else if(ref==='lead'){d.lead=['MNQ','MYM','swap'].indexOf(el.value)>=0?el.value:''}else if(ref==='fake'||ref==='both'){d[ref]=['yes','no'].indexOf(el.value)>=0?el.value:''}else return}
   const d=aMk()[k];if(d&&!jMkHas(d))delete aMk()[k];
   aUpdate();jSaveSoon()}
-$('pg5').addEventListener('input',e=>{const el=e.target;if(el.dataset&&el.dataset.a&&(el.tagName==='INPUT'||el.tagName==='TEXTAREA'))aSet(el)});
+$('pg5').addEventListener('input',e=>{const el=e.target;if(el.id==='apaste'){A.paste=el.value;return}if(el.dataset&&el.dataset.a&&(el.tagName==='INPUT'||el.tagName==='TEXTAREA'))aSet(el)});
 $('pg5').addEventListener('change',e=>{const el=e.target;
+  if(el.id==='apsym'){A.psym=el.value==='MYM'?'MYM':'MNQ';if(A.paste&&A.paste.trim())aPasteRun();return}
+  if(el.id==='apov'){A.pov=el.checked;return}
   if(el.id==='adate'){if(okD(el.value)){if(jT)jFlush();A.date=el.value;aRender()}return}
   if(el.dataset&&el.dataset.a&&el.tagName==='SELECT')aSet(el)});
+$('pg5').addEventListener('paste',e=>{if(e.target&&e.target.id==='apaste')setTimeout(aPasteRun,0)});
 $('pg5').addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act;
   const go=k=>{if(jT)jFlush();A.date=k;aRender()};
+  if(a==='ppar')return aPasteRun();
+  if(a==='pclr'){A.paste='';A.pr=null;A.pmsg='';return aRender()}
+  if(a==='pwr')return aPasteWrite();
   if(a==='aprev')return go(jAdd(A.date,-1));if(a==='anext')return go(jAdd(A.date,1));if(a==='atoday')return go(jYmd(new Date()));
   if(a==='aopen'&&okD(b.dataset.d)){go(b.dataset.d);window.scrollTo(0,0);return}
   if(a==='amore'){A.lim+=30;$('ahist').innerHTML=aHistHtml();return}
