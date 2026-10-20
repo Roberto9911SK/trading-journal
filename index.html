@@ -435,7 +435,18 @@ function normJ(j){const o={days:{},weeks:{},notes:{},missed:{},market:{}};
     if(j.market&&typeof j.market==='object')Object.keys(j.market).forEach(k=>{if(okD(k)){const m=jMk(j.market[k]);if(jMkHas(m))o.market[k]=m}});
     if(j.missed&&typeof j.missed==='object')Object.keys(j.missed).forEach(id=>{if(id!=='__proto__'&&id.length>0&&id.length<=100){const m=jMiss(j.missed[id]);if(jMissOk(m))o.missed[id]=m}})}
   return o}
-const jMergeJ=(a,b)=>({days:Object.assign({},a.days,b.days),weeks:Object.assign({},a.weeks,b.weeks),notes:Object.assign({},a.notes,b.notes),missed:Object.assign({},a.missed,b.missed),market:Object.assign({},a.market,b.market),...((b.lead!==undefined?b.lead:a.lead)!==undefined?{lead:b.lead!==undefined?b.lead:a.lead}:{})});
+// Zlúčenie pri načítaní zálohy: vyplnené údaje v programe sa nikdy neprepíšu prázdnymi zo súboru, súbor iba dopĺňa chýbajúce.
+const jEmpty=v=>v==null||v===''||v===false||(Array.isArray(v)&&!v.length);
+function jFill(a,b){if(a&&b&&typeof a==='object'&&typeof b==='object'&&!Array.isArray(a)&&!Array.isArray(b)){const o={};
+    new Set([...Object.keys(a),...Object.keys(b)]).forEach(k=>{if(k!=='__proto__')o[k]=jFill(a[k],b[k])});return o}
+  return jEmpty(a)?b:a}
+function jFillDay(a,b){const o=jFill(a,b);o.status=a.status==='done'||b.status==='done'?'done':'draft';
+  o.updated=(a.updated||'')>(b.updated||'')?a.updated:b.updated;o.done=a.done||b.done||'';return o}
+function jFillMk(a,b){const o=jMk({});J_MKS.forEach(s=>J_MKF.forEach(f=>{o[s][f]=a[s][f]!=null?a[s][f]:b[s][f]}));
+  const t=a.tip?a:b;o.tip=t.tip;o.votes=Object.assign({},t.votes);o.tipStr=t.tipStr;o.tipAt=t.tipAt;
+  ['better','lead','fake','both','note'].forEach(k=>{o[k]=a[k]||b[k]||''});return o}
+const jMergeMap=(a,b,f)=>{const o=Object.assign({},b,a);Object.keys(a).forEach(k=>{if(b[k])o[k]=f(a[k],b[k])});return o};
+const jMergeJ=(a,b)=>({days:jMergeMap(a.days,b.days,jFillDay),weeks:jMergeMap(a.weeks,b.weeks,jFill),notes:jMergeMap(a.notes,b.notes,jFill),missed:Object.assign({},b.missed,a.missed),market:jMergeMap(a.market,b.market,jFillMk),...((b.lead!==undefined?b.lead:a.lead)!==undefined?{lead:b.lead!==undefined?b.lead:a.lead}:{})});
 
 function restoreS(o){const oj=S.journal;S=norm(o);S.journal=(o.journal&&typeof o.journal==='object')?jMergeJ(oj,S.journal):oj}
 function norm(o){
@@ -1674,6 +1685,9 @@ function aPasteHtml(){const pr=A.pr;let h='';
       const stat=d.st==='new'?'<span class="bd g">nový</span>':d.st==='same'?'<span class="bd">rovnaké</span>':'<span class="bd r">líši sa</span> '+esc(d.diffs.join('; ')||'doplní prázdne polia');
       return`<tr><td>${esc(jFmtD(r.date))}${r.live?' <span class="bd">naživo</span>':''}</td><td>${r.sym}</td><td>${aNf(r.prev,2)}</td><td>${aNf(r.open,2)}</td><td>${aNf(r.high,2)}</td><td>${aNf(r.low,2)}</td><td>${aNf(r.last,2)}</td><td>${aPc(chg,2)}</td><td>${aNf(rg,2)} %</td><td>${aNf(r.vol,0)}</td><td class="l">${stat}</td></tr>`}).join('');
     h+=`<p class="sub">Našiel som ${pr.rows.length} riadkov: ${nn} nových, ${nc} s rozdielom oproti tomu, čo máš zapísané, ${ns} rovnakých.</p>`;
+    {const nw=pr.rows[0].date,od=pr.rows[pr.rows.length-1].date,age=Math.round((jDt(jYmd(new Date())).getTime()-jDt(nw).getTime())/864e5);
+     h+=`<p class="sub">Dni od ${esc(jFmtD(od))} do ${esc(jFmtD(nw))}.</p>`;
+     if(age>4)h+='<p class="sub"><b>Pozor:</b> najnovší riadok je starší ako 4 dni. V Pine Logs rolluj úplne dole (najnovšie dni sú naspodku), potom označ všetko (Cmd+A) a skopíruj znova.</p>'}
     h+='<div class="tw"><table class="jt"><thead><tr><th>Dátum</th><th>Symbol</th><th>Prev close</th><th>Daily Open</th><th>High</th><th>Low</th><th>Posledná</th><th>Zmena</th><th>Rozsah</th><th>Objem</th><th class="l">Stav</th></tr></thead><tbody>'+body+'</tbody></table></div>';
     if(pr.rows.some(r=>r.live))h+='<p class="sub">Riadky označené „naživo“ sa ešte menia. Po 15:30 ich vlož znova, doplnia sa konečné čísla.</p>';
     h+=`<div class="row"><label><input type="checkbox" id="apov"${A.pov===false?'':' checked'}> Prepísať už vyplnené hodnoty, ktoré sa líšia</label><button class="pri" data-act="pwr">Zapísať do programu</button></div>`}
@@ -1745,11 +1759,17 @@ async function bkShare(){if(typeof jT!=='undefined'&&jT)jFlush();const txt=JSON.
   bkDownload(txt,name);bkMsg('Zdieľanie nie je v tomto prehliadači dostupné. Záloha sa stiahla ako súbor.')}
 function bkPick(file){file.text().then(x=>{try{const o=JSON.parse(x);if(!o||!Array.isArray(o.trades))throw 0;const n=norm(o);BK.pending=o;
   const dj=Object.keys(n.journal.days).length+Object.keys(n.journal.notes).length+Object.keys(n.journal.market).length;
-  $('bm').innerHTML=`Súbor obsahuje ${n.trades.length} obchodov (teraz máš ${S.trades.length}). Obchody sa nahradia obchodmi zo súboru, denník, poznámky a analýza trhu sa zlúčia (záznamov v súbore: ${dj}). <span class="row" style="margin-top:8px"><button id="bkok" class="pri">Načítať</button><button id="bkno">Zrušiť</button></span>`}
+  $('bm').innerHTML=`Súbor obsahuje ${n.trades.length} obchodov (teraz máš ${S.trades.length}). Obchody sa nahradia obchodmi zo súboru, denník, poznámky a analýza trhu sa zlúčia (záznamov v súbore: ${dj}). Údaje, ktoré už máš vyplnené, sa neprepíšu. Program si pred načítaním odloží aktuálny stav, takže sa to dá vrátiť. <span class="row" style="margin-top:8px"><button id="bkok" class="pri">Načítať</button><button id="bkno">Zrušiť</button></span>`}
   catch(er){BK.pending=null;bkMsg('Súbor nie je platná záloha.')}}).catch(()=>bkMsg('Súbor sa nepodarilo prečítať.'))}
-document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('#bkok,#bkno');if(!b)return;
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('#bkok,#bkno,#bkundo');if(!b)return;
   if(b.id==='bkno'){BK.pending=null;bkMsg('Načítanie bolo zrušené.');return}
-  const o=BK.pending;BK.pending=null;if(!o)return;restoreS(o);save();render();showTab(UI.tab);bkMsg('Načítané. Obchodov: '+S.trades.length)});
+  if(b.id==='bkundo'){let r=null;try{r=JSON.parse(localStorage.getItem('tj1undo')||'null')}catch(er){}
+    if(!r||!Array.isArray(r.trades)){bkMsg('Stav pred načítaním už nie je k dispozícii.');return}
+    S=norm(r);S.journal=normJ(r.journal);save();try{localStorage.removeItem('tj1undo')}catch(er){}render();showTab(UI.tab);bkMsg('Vrátené do stavu pred načítaním zálohy.');return}
+  const o=BK.pending;BK.pending=null;if(!o)return;if(typeof jT!=='undefined'&&jT)jFlush();
+  let undo=false;try{localStorage.setItem('tj1undo',JSON.stringify(S));undo=true}catch(er){}
+  restoreS(o);save();render();showTab(UI.tab);
+  $('bm').innerHTML='Načítané. Obchodov: '+S.trades.length+'. Vyplnené údaje v denníku a analýze trhu ostali zachované, súbor iba doplnil chýbajúce.'+(undo?' <span class="row" style="margin-top:8px"><button id="bkundo">Vrátiť späť</button></span>':'')});
 if($('bshare'))$('bshare').onclick=bkShare;
 if($('bfile')&&$('bfi')){$('bfile').onclick=()=>$('bfi').click();$('bfi').onchange=e=>{const f=e.target.files[0];if(f)bkPick(f);e.target.value=''}}
 
