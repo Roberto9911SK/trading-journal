@@ -232,6 +232,83 @@ label.tl{grid-column:1/-1}
 #pg5 .jtr.orph{border-left-style:dashed}#pg5 .jsub button[aria-pressed=true]{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
 #pg5 .bad{border-color:var(--r)!important}
 #pg5 .jth b{overflow-wrap:anywhere}
+#pg6 .jstack,#pg6 .jfs,#pg6 .jv{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;min-width:0}
+#pg6 .jfs{border:0;margin:0;padding:0}
+#pg6 .jfs:disabled{opacity:.92}
+#pg6 .jg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px}
+#pg6 .jcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+#pg6 .jdt{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}#pg6 .jdt label{flex:1 1 170px}
+#pg6 .jbar{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+#pg6 .bd{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600;background:var(--soft);border:1px solid var(--bd);color:var(--mut)}
+#pg6 .bd.g{background:rgba(94,194,174,.15);border-color:var(--g);color:var(--g)}
+#pg6 .bd.r{background:rgba(203,68,74,.13);border-color:var(--r);color:var(--r)}
+#pg6 .bd.y{background:rgba(224,160,0,.16);border-color:#c98f00;color:var(--tx)}
+#pg6 .bd.b{background:rgba(121,110,239,.12);border-color:var(--ac);color:var(--tx)}
+#pg6 .jtr{border:1px solid var(--bd);border-left:4px solid var(--bd);border-radius:8px;padding:12px;background:var(--card);display:grid;gap:10px;min-width:0}
+#pg6 .jtr.w{border-left-color:var(--g)}#pg6 .jtr.l{border-left-color:var(--r)}
+#pg6 .jh3{font-size:13.5px;margin:6px 0 4px;font-weight:600}
+#pg6 .jtr .jh3{margin:0}
+#pg6 .jth{background:var(--soft);border-radius:8px;padding:8px 10px;font-size:13px;display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px 12px}
+#pg6 .jth span{color:var(--mut);font-size:11.5px;display:block}#pg6 .jth b{font-weight:600}
+#pg6 .jwarn{background:rgba(203,68,74,.1);border:1px solid var(--r);border-radius:8px;padding:8px 10px;font-size:13px}
+#pg6 .jem{border:0;margin:0;padding:0;min-width:0}#pg6 .jem legend{font-size:12.5px;color:var(--mut);padding:0;margin-bottom:6px}
+#pg6 .jemo{display:flex;flex-wrap:wrap;gap:8px 16px}
+#pg6 .jck{display:inline-flex;grid-template-columns:none;align-items:center;gap:6px;color:var(--tx);font-size:13.5px}
+#pg6 input[type=checkbox]{width:20px;height:20px;padding:0;margin:0;flex:none}
+#pg6 .jd{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;padding:8px 0;border-bottom:1px solid var(--bd)}
+#pg6 .jdl{flex:1 1 260px;font-size:13.5px}
+#pg6 .jerr{color:var(--r);font-size:12.5px;min-height:1em}
+#pg6 .jw2{margin-top:10px}
+#pg6 dl.jdl2{display:grid;grid-template-columns:minmax(0,1fr);gap:2px;margin:0}
+#pg6 .jdl2 dt{color:var(--mut);font-size:12px;margin-top:8px}#pg6 .jdl2 dd{margin:0;overflow-wrap:anywhere}
+#pg6 .jsum li,#pg6 .card li{margin:2px 0;overflow-wrap:anywhere}
+#pg6 .jacts .row{margin:10px 0 4px}
+#pg6 table.jt th,#pg6 table.jt td{text-align:right}
+#pg6 table.jt th:first-child,#pg6 table.jt td:first-child{text-align:left}
+#pg6 table.jt.l th,#pg6 table.jt.l td{text-align:left}
+#pg6 tr.jsec td{background:var(--soft);font-weight:600;font-size:12px;text-align:left!important;color:var(--mut)}
+#pg6 .jcb.g{border-top:3px solid var(--g)}#pg6 .jcb.r{border-top:3px solid var(--r)}#pg6 .jcb.y{border-top:3px solid #c98f00}#pg6 .jcb.b{border-top:3px solid var(--ac)}
+#pg6 .jcb .card{box-shadow:none}
+#pg6 .jg{align-items:start}#pg6 .jg>label{align-content:start}
+#pg6 .jtr.skip{opacity:.8;border-left-style:dashed;gap:6px}
+#pg6 .jtr.orph{border-left-style:dashed}#pg6 .jsub button[aria-pressed=true]{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
+/* ---- Backtesting: MNQ vs MYM ---- */
+#pg6{--c1:var(--ac);--c2:var(--g)}
+#pg6 .card{min-width:0}
+#pg6 .m1t{color:var(--c1);font-weight:700}#pg6 .m2t{color:var(--c2);font-weight:700}
+.btsc{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:stretch;margin:12px 0}
+.btvs{align-self:center;color:var(--mut);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em}
+.btt{position:relative;border:1px solid var(--bd);border-top:5px solid var(--bd);border-radius:12px;padding:16px 14px 14px;background:var(--soft);min-width:0}
+.btt.m1{border-top-color:var(--c1)}.btt.m2{border-top-color:var(--c2)}
+.btt.win.m1{box-shadow:0 0 0 2px var(--c1);background:rgba(121,110,239,.12)}.btt.win.m2{box-shadow:0 0 0 2px var(--c2);background:rgba(94,194,174,.12)}
+.btv{position:absolute;top:-13px;right:12px;font-size:11px;font-weight:800;letter-spacing:.08em;padding:3px 10px;border-radius:99px}
+.btt.m1 .btv{background:var(--c1);color:#fff}.btt.m2 .btv{background:var(--c2);color:#10211d}
+.btn{font-size:15px;font-weight:700;color:var(--mut);letter-spacing:.04em}
+.btb{font-size:clamp(40px,7vw,64px);font-weight:800;line-height:1.05}
+.btt.m1 .btb{color:var(--c1)}.btt.m2 .btb{color:var(--c2)}
+.bts{font-size:12.5px;color:var(--mut);margin-bottom:10px}
+.btm{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 10px;border-top:1px solid var(--bd);padding-top:10px}
+.btm span{display:block;font-size:11.5px;color:var(--mut)}.btm b{font-size:15px;font-weight:700}
+.bvd{border:1px solid var(--bd);border-left:6px solid var(--bd);border-radius:10px;padding:12px 16px;margin:6px 0 14px;background:var(--soft)}
+.bvd.m1{border-left-color:var(--c1)}.bvd.m2{border-left-color:var(--c2)}
+.bvd b{font-size:19px}.bvd p{margin:6px 0 0;font-size:14px}.bvd .bw{color:var(--tx);opacity:.85;font-size:13px}
+.bbr{margin:12px 0}.bbl{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin-bottom:5px}.bbl span{font-size:12px;color:var(--mut)}
+.bbk{display:flex;height:34px;border-radius:8px;overflow:hidden;background:var(--soft);border:1px solid var(--bd)}
+.bbk.e{align-items:center;justify-content:center;font-size:12.5px;color:var(--mut)}
+.bsg{display:flex;align-items:center;justify-content:center;min-width:30px}.bsg i{font-style:normal;font-weight:800;font-size:15px}
+.bsg.m1{background:var(--c1);color:#fff}.bsg.m2{background:var(--c2);color:#10211d}.bsg.eq{background:#3a3a40;color:var(--tx)}
+.bbn{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:12.5px;color:var(--mut);margin-top:4px}
+.bsv{width:100%;height:auto;max-height:260px;display:block}
+.bsv .bl{fill:none;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}.bsv .bl.m1{stroke:var(--c1)}.bsv .bl.m2{stroke:var(--c2)}
+.bsv .bg{stroke:var(--bd);stroke-width:1}.bsv .bz{stroke:var(--mut);stroke-width:1.2;stroke-dasharray:4 4}
+.bsv .ba{fill:var(--mut);font-size:11px}.bsv .bt{font-size:12px;font-weight:700}.bsv .bt.m1{fill:var(--c1)}.bsv .bt.m2{fill:var(--c2)}
+.bleg{display:flex;gap:6px 18px;flex-wrap:wrap;align-items:center;margin-top:6px;font-size:13px}
+.bwk{display:flex;flex-direction:column;align-items:center;min-width:170px;flex:1 1 auto;text-align:center}.bwk span{font-size:12px;color:var(--mut)}
+#pg6 .jdt{margin:4px 0 12px;justify-content:center}
+#pg6 table.jt tr.cur td{background:rgba(121,110,239,.12)}
+#pg6 small{font-size:10.5px;opacity:.75}#pg6 label small{display:block;margin-top:3px}
+#pg6 .jsub button{min-height:38px}
+@media(max-width:620px){.btsc{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.btvs{display:none}.btt{padding:14px 10px 12px}.btm b{font-size:13.5px}.bvd b{font-size:17px}}
 /* ---- vzhľad: tmavá paleta (zinc + tyrkys + červená), kalendár ako v reportovacom nástroji ---- */
 :root:root:root{--gb:#334141;--rb:#523636;--gt:#3a5652;--rt:#f0807b;--oc:#202023}
 .bd.g,#pg3 .bd.g,#pg4 .bd.g,#pg5 .bd.g{background:rgba(94,194,174,.16)}
@@ -258,7 +335,7 @@ label.tl{grid-column:1/-1}
 <header>
   <div><h1>Futures Trading Journal</h1><div class="sub">MNQ · MYM · MCL — zadaj obchod a štatistiky sa prepočítajú samé</div></div>
 </header>
-<nav class="tabs" role="tablist" aria-label="Stránky"><button id="tb1" role="tab" aria-selected="true">Žurnál</button><button id="tb2" role="tab" aria-selected="false">Trading Dashboard</button><button id="tb3" role="tab" aria-selected="false">DENNÍK</button><button id="tb4" role="tab" aria-selected="false">Poznámkový blok</button><button id="tb5" role="tab" aria-selected="false">Analýza trhu</button></nav>
+<nav class="tabs" role="tablist" aria-label="Stránky"><button id="tb1" role="tab" aria-selected="true">Žurnál</button><button id="tb2" role="tab" aria-selected="false">Trading Dashboard</button><button id="tb3" role="tab" aria-selected="false">DENNÍK</button><button id="tb4" role="tab" aria-selected="false">Poznámkový blok</button><button id="tb5" role="tab" aria-selected="false">Analýza trhu</button><button id="tb6" role="tab" aria-selected="false">Backtesting</button></nav>
 <main id="pg1">
   <section class="stack">
     <div class="card">
@@ -361,6 +438,7 @@ label.tl{grid-column:1/-1}
 </div>
 <div id="pg4" class="dashpg" hidden></div>
 <div id="pg5" class="dashpg" hidden></div>
+<div id="pg6" class="dashpg" hidden></div>
 <div id="pg2" class="dashpg" hidden>
   <div class="card" style="margin-bottom:16px">
     <h2 style="font-size:18px;letter-spacing:.02em">TRADING DASHBOARD</h2>
@@ -426,27 +504,25 @@ function jMk(x){x=x&&typeof x==='object'?x:{};const pn=v=>typeof v==='number'&&i
   o.tip=(x.tip==='MNQ'||x.tip==='MYM'||x.tip==='none')?x.tip:'';o.tipAt=jstr(x.tipAt,10);o.tipStr=x.tipStr===2?2:x.tipStr===1?1:0;
   o.better=['MNQ','MYM','both','none'].indexOf(x.better)>=0?x.better:'';o.lead=['MNQ','MYM','swap'].indexOf(x.lead)>=0?x.lead:'';o.fake=x.fake==='yes'||x.fake==='no'?x.fake:'';o.both=x.both==='yes'||x.both==='no'?x.both:'';o.note=jstr(x.note);return o}
 const jMkHas=m=>J_MKS.some(s=>J_MKF.some(f=>m[s][f]!=null))||!!m.tip||!!m.better||!!m.lead||!!m.fake||!!m.both||!!m.note;
-function normJ(j){const o={days:{},weeks:{},notes:{},missed:{},market:{}};
+const B_MV=['','MNQ','MYM','both'],B_MF=['lead','moreR','clean','pts'];
+function jBtRec(x){x=x&&typeof x==='object'?x:{};const num=v=>typeof v==='number'&&isFinite(v)&&Math.abs(v)<1e7?v:null,tm=v=>typeof v==='string'&&/^([01]\d|2[0-3]):[0-5]\d$/.test(v)?v:'',q=Math.round(+x.qty);
+  return{date:okD(x.date)?x.date:'',tin:tm(x.tin),tout:tm(x.tout),sym:(typeof x.sym==='string'&&Object.prototype.hasOwnProperty.call(PV,x.sym))?x.sym:'',side:x.side==='Short'?'Short':'Long',qty:q>=1&&q<=1000?q:1,entry:num(x.entry),exit:num(x.exit),comm:(num(x.comm)!=null&&x.comm>=0)?x.comm:0,rDirect:(num(x.rDirect)!=null&&Math.abs(x.rDirect)<=1000)?x.rDirect:null,strat:jstr(x.strat,100),clean:jopt(x.clean,['','yes','no']),note:jstr(x.note)}}
+const jBtOk=r=>!!r.date&&!!r.sym&&((r.entry!=null&&r.exit!=null)||r.rDirect!=null);
+function jBtWeek(x){x=x&&typeof x==='object'?x:{};const w={};B_MF.forEach(k=>{w[k]=jopt(x[k],B_MV)});w.note=jstr(x.note);return w}
+const jBtWeekHas=w=>B_MF.some(k=>!!w[k])||!!w.note;
+function normJ(j){const o={days:{},weeks:{},notes:{},missed:{},market:{},bt:{trades:{},weeks:{}}};
   if(j&&typeof j==='object'){
     if(typeof j.lead==='string'&&j.lead.length<=100&&j.lead!=='__proto__')o.lead=j.lead;
     if(j.days&&typeof j.days==='object')Object.keys(j.days).forEach(k=>{if(okD(k))o.days[k]=jDay(j.days[k])});
     if(j.weeks&&typeof j.weeks==='object')Object.keys(j.weeks).forEach(k=>{if(okW(k))o.weeks[k]=jWeek(j.weeks[k])});
     if(j.notes&&typeof j.notes==='object')Object.keys(j.notes).forEach(id=>{if(id!=='__proto__'&&id.length>0&&id.length<=200){const n=jNote(j.notes[id]);if(n.note||n.score!=null||n.pot!=null)o.notes[id]=n}});
     if(j.market&&typeof j.market==='object')Object.keys(j.market).forEach(k=>{if(okD(k)){const m=jMk(j.market[k]);if(jMkHas(m))o.market[k]=m}});
-    if(j.missed&&typeof j.missed==='object')Object.keys(j.missed).forEach(id=>{if(id!=='__proto__'&&id.length>0&&id.length<=100){const m=jMiss(j.missed[id]);if(jMissOk(m))o.missed[id]=m}})}
+    if(j.missed&&typeof j.missed==='object')Object.keys(j.missed).forEach(id=>{if(id!=='__proto__'&&id.length>0&&id.length<=100){const m=jMiss(j.missed[id]);if(jMissOk(m))o.missed[id]=m}});
+    const bt=j.bt&&typeof j.bt==='object'?j.bt:{};
+    if(bt.trades&&typeof bt.trades==='object')Object.keys(bt.trades).forEach(id=>{if(id!=='__proto__'&&id.length>0&&id.length<=100){const m=jBtRec(bt.trades[id]);if(jBtOk(m))o.bt.trades[id]=m}});
+    if(bt.weeks&&typeof bt.weeks==='object')Object.keys(bt.weeks).forEach(k=>{if(okD(k)){const w=jBtWeek(bt.weeks[k]);if(jBtWeekHas(w))o.bt.weeks[k]=w}})}
   return o}
-// Zlúčenie pri načítaní zálohy: vyplnené údaje v programe sa nikdy neprepíšu prázdnymi zo súboru, súbor iba dopĺňa chýbajúce.
-const jEmpty=v=>v==null||v===''||v===false||(Array.isArray(v)&&!v.length);
-function jFill(a,b){if(a&&b&&typeof a==='object'&&typeof b==='object'&&!Array.isArray(a)&&!Array.isArray(b)){const o={};
-    new Set([...Object.keys(a),...Object.keys(b)]).forEach(k=>{if(k!=='__proto__')o[k]=jFill(a[k],b[k])});return o}
-  return jEmpty(a)?b:a}
-function jFillDay(a,b){const o=jFill(a,b);o.status=a.status==='done'||b.status==='done'?'done':'draft';
-  o.updated=(a.updated||'')>(b.updated||'')?a.updated:b.updated;o.done=a.done||b.done||'';return o}
-function jFillMk(a,b){const o=jMk({});J_MKS.forEach(s=>J_MKF.forEach(f=>{o[s][f]=a[s][f]!=null?a[s][f]:b[s][f]}));
-  const t=a.tip?a:b;o.tip=t.tip;o.votes=Object.assign({},t.votes);o.tipStr=t.tipStr;o.tipAt=t.tipAt;
-  ['better','lead','fake','both','note'].forEach(k=>{o[k]=a[k]||b[k]||''});return o}
-const jMergeMap=(a,b,f)=>{const o=Object.assign({},b,a);Object.keys(a).forEach(k=>{if(b[k])o[k]=f(a[k],b[k])});return o};
-const jMergeJ=(a,b)=>({days:jMergeMap(a.days,b.days,jFillDay),weeks:jMergeMap(a.weeks,b.weeks,jFill),notes:jMergeMap(a.notes,b.notes,jFill),missed:Object.assign({},b.missed,a.missed),market:jMergeMap(a.market,b.market,jFillMk),...((b.lead!==undefined?b.lead:a.lead)!==undefined?{lead:b.lead!==undefined?b.lead:a.lead}:{})});
+const jMergeJ=(a,b)=>({days:Object.assign({},a.days,b.days),weeks:Object.assign({},a.weeks,b.weeks),notes:Object.assign({},a.notes,b.notes),missed:Object.assign({},a.missed,b.missed),market:Object.assign({},a.market,b.market),bt:{trades:Object.assign({},(a.bt||{}).trades,(b.bt||{}).trades),weeks:Object.assign({},(a.bt||{}).weeks,(b.bt||{}).weeks)},...((b.lead!==undefined?b.lead:a.lead)!==undefined?{lead:b.lead!==undefined?b.lead:a.lead}:{})});
 
 function restoreS(o){const oj=S.journal;S=norm(o);S.journal=(o.journal&&typeof o.journal==='object')?jMergeJ(oj,S.journal):oj}
 function norm(o){
@@ -740,11 +816,11 @@ function drawDash(){
 }
 function showTab(t){
   if(typeof jT!=='undefined'&&jT)jFlush();
-  UI.tab=t==='dash'?'dash':t==='diary'?'diary':t==='notes'?'notes':t==='market'?'market':'journal';
-  $('pg1').hidden=UI.tab!=='journal';$('pg2').hidden=UI.tab!=='dash';$('pg3').hidden=UI.tab!=='diary';$('pg4').hidden=UI.tab!=='notes';$('pg5').hidden=UI.tab!=='market';
-  $('tb1').setAttribute('aria-selected',String(UI.tab==='journal'));$('tb2').setAttribute('aria-selected',String(UI.tab==='dash'));$('tb3').setAttribute('aria-selected',String(UI.tab==='diary'));$('tb4').setAttribute('aria-selected',String(UI.tab==='notes'));$('tb5').setAttribute('aria-selected',String(UI.tab==='market'));
+  UI.tab=t==='dash'?'dash':t==='diary'?'diary':t==='notes'?'notes':t==='market'?'market':t==='bt'?'bt':'journal';
+  $('pg1').hidden=UI.tab!=='journal';$('pg2').hidden=UI.tab!=='dash';$('pg3').hidden=UI.tab!=='diary';$('pg4').hidden=UI.tab!=='notes';$('pg5').hidden=UI.tab!=='market';$('pg6').hidden=UI.tab!=='bt';
+  $('tb1').setAttribute('aria-selected',String(UI.tab==='journal'));$('tb2').setAttribute('aria-selected',String(UI.tab==='dash'));$('tb3').setAttribute('aria-selected',String(UI.tab==='diary'));$('tb4').setAttribute('aria-selected',String(UI.tab==='notes'));$('tb5').setAttribute('aria-selected',String(UI.tab==='market'));$('tb6').setAttribute('aria-selected',String(UI.tab==='bt'));
   try{localStorage.setItem('tj1ui',JSON.stringify(UI))}catch(e){}
-  if(UI.tab==='dash')drawDash();else if(UI.tab==='diary')jRender();else if(UI.tab==='notes')nRender();else if(UI.tab==='market')aRender();else{drawCharts();drawCal()}
+  if(UI.tab==='dash')drawDash();else if(UI.tab==='diary')jRender();else if(UI.tab==='notes')nRender();else if(UI.tab==='market')aRender();else if(UI.tab==='bt')bRender(true);else{drawCharts();drawCal()}
 }
 let LAST={rs:[],eq:[0],w:0};
 function drawCharts(){
@@ -759,7 +835,7 @@ function drawCharts(){
   $('c5').innerHTML=hbars(groupSum(rs,r=>accN(r.t.acc)),W('c5'));
   const D=durData(rs);$('c6').innerHTML=rs.length?durChart(W('c6'),D):NOD;$('dsum').innerHTML=durSum(D);
 }
-let rzT;addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{if(UI.tab==='diary'||UI.tab==='notes'||UI.tab==='market')return;if(UI.tab==='dash'){if(Math.abs($('d5').clientWidth-DW)>8)drawDash()}else if(Math.abs($('c1').clientWidth-LAST.w)>8){drawCharts();drawCal()}},150)});
+let rzT;addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{if(UI.tab==='diary'||UI.tab==='notes'||UI.tab==='market'||UI.tab==='bt')return;if(UI.tab==='dash'){if(Math.abs($('d5').clientWidth-DW)>8)drawDash()}else if(Math.abs($('c1').clientWidth-LAST.w)>8){drawCharts();drawCal()}},150)});
 const F={a:'',p:'all',v:'',s:'',g:''};
 const isoWeek=d=>{d=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const n=d.getUTCDay()||7;d.setUTCDate(d.getUTCDate()+4-n);const y=d.getUTCFullYear();return y+'-T'+String(Math.ceil(((d-Date.UTC(y,0,1))/864e5+1)/7)).padStart(2,'0')};
 const pk=t=>F.p==='month'?t.tin.slice(0,7):F.p==='day'?t.tin.slice(0,10):isoWeek(new Date(t.tin));
@@ -869,7 +945,7 @@ $('cnext').onclick=()=>{CAL.m++;if(CAL.m>11){CAL.m=0;CAL.y++}drawCal()};
 $('ctoday').onclick=()=>{const d=new Date();CAL={y:d.getFullYear(),m:d.getMonth()};drawCal()};
 $('cal').addEventListener('click',e=>{const c=e.target.closest('[data-d]');if(!c)return;F.p='day';$('fp').value='day';F.v=c.dataset.d;render();if(typeof scrollTo==='function')scrollTo({top:0,behavior:'smooth'})});
 $('cal').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const c=e.target.closest('[data-d]');if(c){e.preventDefault();c.click()}}});
-$('tb1').onclick=()=>showTab('journal');$('tb2').onclick=()=>showTab('dash');$('tb3').onclick=()=>showTab('diary');$('tb4').onclick=()=>showTab('notes');$('tb5').onclick=()=>showTab('market');
+$('tb1').onclick=()=>showTab('journal');$('tb2').onclick=()=>showTab('dash');$('tb3').onclick=()=>showTab('diary');$('tb4').onclick=()=>showTab('notes');$('tb5').onclick=()=>showTab('market');$('tb6').onclick=()=>showTab('bt');
 $('da').onchange=()=>{F.a=$('da').value;render()};$('ds').onchange=()=>{F.s=$('ds').value;render()};$('dg').onchange=()=>{F.g=$('dg').value;render()};$('dy').onchange=()=>{DY=$('dy').value;drawDash()};
 $('fa').onchange=()=>{F.a=$('fa').value;render()};
 const dlf=(name,txt)=>{$('bt').value=txt.replace(/^\ufeff/,'');$('bm').textContent='Hotovo. Text je v poli vyššie, skopíruj ho.'};
@@ -1008,7 +1084,7 @@ const jGet=k=>S.journal.days[k]||null;
 const jTid=t=>String(t.id==null?'':t.id);
 function jEns(k){if(!S.journal.days[k])S.journal.days[k]=jDay({});return S.journal.days[k]}
 let jT=0;
-const jMsg=m=>{['jsave','nsave','asave'].forEach(i=>{const e=$(i);if(e)e.textContent=m})};
+const jMsg=m=>{['jsave','nsave','asave','bsave'].forEach(i=>{const e=$(i);if(e)e.textContent=m})};
 function jSaveSoon(){clearTimeout(jT);jT=setTimeout(jFlush,500);jMsg('Ukladám…')}
 function jFlush(){clearTimeout(jT);jT=0;try{localStorage.setItem('tj1',JSON.stringify(S));J.err='';jMsg('Uložené '+new Date().toLocaleTimeString('sk-SK'))}catch(e){J.err='⚠ Nepodarilo sa uložiť (úložisko prehliadača je plné alebo zablokované). Hneď si stiahni zálohu, inak o zmeny môžeš prísť.';jMsg(J.err)}return !J.err}
 const jRes=p=>p>0?['WIN','pos']:p<0?['LOSS','neg']:['BREAK-EVEN',''];
@@ -1747,6 +1823,162 @@ $('pg5').addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(
     if(c.n<2){A.err='Najprv doplň údaje aspoň pre dve kritériá, potom sa dá tip zapísať.';const x=aMk()[A.date];if(x&&!jMkHas(x))delete aMk()[A.date];aUpdate();return}
     d.tip=c.tip;d.votes=c.v;d.tipStr=c.str;d.tipAt=new Date().toLocaleTimeString('sk-SK',{hour:'2-digit',minute:'2-digit'});jFlush();aUpdate()}});
 
+// ---- BACKTESTING: ktorý inštrument (MNQ alebo MYM) robí po týždňoch lepšie výsledky. Obchody sú len backtest: nie sú v S.trades, nemenia Žurnál ani Dashboard. ----
+const B={wk:jMon(jYmd(new Date())),per:'all',err:'',edit:null,draft:null,last:{sym:'MNQ',side:'Long'},lim:60};
+const B_CMP=['MNQ','MYM'];
+const B_PER=[['all','Všetko'],['4','4 týždne'],['8','8 týždňov'],['13','13 týždňov'],['26','26 týždňov']];
+const B_OPT=[['','— nevyplnené —'],['MNQ','MNQ'],['MYM','MYM'],['both','Rovnako']];
+const B_CL=[['','— nevyplnené —'],['yes','Áno, čistý prieraz'],['no','Nie (trhaný alebo falošný)']];
+const B_MET=[['moreR','Viac R','Kto zarobil viac R (hlavné kritérium)'],['clean','Čistejší prieraz','Na ktorom bol prieraz čistejší'],['pts','Viac bodov','Kto spravil viac bodov (hrubé body indexu)'],['lead','Viedol lepšie','Kto viedol celkovo lepšie']];
+const B_K=['date','tin','tout','sym','side','qty','entry','exit','comm','rDirect','strat','clean','note'];
+const bTr=()=>S.journal.bt.trades,bWk=()=>S.journal.bt.weeks;
+const bRs=v=>v==null||!Number.isFinite(v)?'—':(v>0?'+':'')+v.toFixed(2).replace('.',',')+' R';
+const bNf=(v,d)=>v==null||!Number.isFinite(v)?'—':v.toLocaleString('sk-SK',{minimumFractionDigits:d,maximumFractionDigits:d});
+const bW=n=>n===1?'týždeň':n>=2&&n<=4?'týždne':'týždňov';
+const bCls=v=>v==='MNQ'?'m1':v==='MYM'?'m2':'';
+const bPn=s=>{s=String(s==null?'':s).trim().replace(/\s/g,'').replace(/[−–]/g,'-');if(s==='')return null;
+  if(/^-?\d{1,3}(,\d{3})+(\.\d+)?$/.test(s))s=s.replace(/,/g,'');else s=s.replace(',','.');return /^-?\d+(\.\d+)?$/.test(s)?+s:NaN};
+function bCalc(r){const c=mCalc(r);if(!c||!Number.isFinite(c.R))return null;let pts=null,pct=null;
+  if(r.entry!=null&&r.exit!=null){const d=r.side==='Short'?-1:1;pts=(r.exit-r.entry)*d;pct=r.entry?pts/r.entry*100:null}
+  return{R:c.R,pnl:c.pnl,pts,pct,src:c.src}}
+function bAgg(list){const o={};['MNQ','MYM','MCL'].forEach(s=>{o[s]={n:0,w:0,R:0,gp:0,gl:0,pts:0,pct:0,np:0,cy:0,cn:0,pnl:0}});
+  list.forEach(x=>{const a=o[x.r.sym];if(!a)return;a.n++;a.R+=x.c.R;a.pnl+=x.c.pnl;if(x.c.R>0.005){a.w++;a.gp+=x.c.R}else if(x.c.R<-0.005)a.gl-=x.c.R;
+    if(x.c.pts!=null){a.pts+=x.c.pts;a.np++}if(x.c.pct!=null)a.pct+=x.c.pct;if(x.r.clean==='yes')a.cy++;else if(x.r.clean==='no')a.cn++});return o}
+const bList=()=>Object.keys(bTr()).map(id=>{const r=bTr()[id];return{id,r,c:bCalc(r)}}).filter(x=>x.c);
+const bMonOf=d=>jMon(d);
+function bAuto(a){const o={moreR:'',pts:'',clean:''},m=a.MNQ,y=a.MYM;
+  if(m.n&&y.n){const d=m.R-y.R;o.moreR=Math.abs(d)<=0.005?'both':d>0?'MNQ':'MYM'}
+  if(m.np&&y.np){const d=m.pts-y.pts;o.pts=Math.abs(d)<=0.005?'both':d>0?'MNQ':'MYM'}
+  if(m.cy+m.cn&&y.cy+y.cn){const p=m.cy/(m.cy+m.cn),q=y.cy/(y.cy+y.cn);o.clean=Math.abs(p-q)<1e-9?'both':p>q?'MNQ':'MYM'}
+  return o}
+function bWeeks(){const all=bList(),by={};
+  all.forEach(x=>{const k=bMonOf(x.r.date);(by[k]=by[k]||[]).push(x)});
+  Object.keys(bWk()).forEach(k=>{if(!by[k])by[k]=[]});
+  return Object.keys(by).sort().map(k=>{const rec=bWk()[k]||{},ag=bAgg(by[k]),au=bAuto(ag),eff={},src={};
+    B_MET.forEach(m=>{const f=m[0],man=rec[f];if(man){eff[f]=man;src[f]='man'}else if(au[f]){eff[f]=au[f];src[f]='auto'}else{eff[f]='';src[f]=''}});
+    return{mon:k,list:by[k],ag,au,rec,eff,src}})}
+function bPerCut(){if(B.per==='all')return'';const n=+B.per;return jAdd(jMon(jYmd(new Date())),-7*(n-1))}
+const bInPer=w=>{const c=bPerCut();return !c||w.mon>=c};
+function bCount(ws,f){const o={MNQ:0,MYM:0,both:0,n:0};ws.forEach(w=>{const v=w.eff[f];if(v){o[v]++;o.n++}});return o}
+// ---- vizuály ----
+function bTeam(s,ws,agg,lead,strong){const a=agg[s],cnt=bCount(ws,'moreR')[s],win=lead===s;
+  return`<div class="btt ${bCls(s)}${win?' win':''}">${win?`<span class="btv">${strong?'VÍŤAZ':'VEDIE'}</span>`:''}<div class="btn">${s}</div><div class="btb">${cnt}</div><div class="bts">${bW(cnt)} s viac R</div>
+  <div class="btm"><div><span>R spolu</span><b class="${cls(a.R)}">${esc(bRs(a.R))}</b></div><div><span>Ø R na obchod</span><b class="${cls(a.n?a.R/a.n:0)}">${a.n?esc(bRs(a.R/a.n)):'—'}</b></div><div><span>Win rate</span><b>${a.n?Math.round(a.w/a.n*100)+' %':'—'}</b></div><div><span>Obchodov</span><b>${a.n}</b></div></div></div>`}
+function bBar(label,hint,c){const t=c.MNQ+c.MYM+c.both;
+  if(!t)return`<div class="bbr"><div class="bbl"><b>${label}</b><span>${hint}</span></div><div class="bbk e">zatiaľ bez údajov</div></div>`;
+  const seg=(k,n,cl)=>n?`<div class="bsg ${cl}" style="flex:${n} 1 0" title="${k}: ${n}"><i>${n}</i></div>`:'';
+  return`<div class="bbr"><div class="bbl"><b>${label}</b><span>${hint}</span></div><div class="bbk" role="img" aria-label="MNQ ${c.MNQ}, rovnako ${c.both}, MYM ${c.MYM}">${seg('MNQ',c.MNQ,'m1')}${seg('Rovnako',c.both,'eq')}${seg('MYM',c.MYM,'m2')}</div>
+  <div class="bbn"><span class="m1t">MNQ ${c.MNQ} (${Math.round(c.MNQ/t*100)} %)</span><span>rovnako ${c.both}</span><span class="m2t">MYM ${c.MYM} (${Math.round(c.MYM/t*100)} %)</span></div></div>`}
+function bVerdict(ws,agg){const MIN=8,c=bCount(ws,'moreR'),dec=c.MNQ+c.MYM;
+  const totM=agg.MNQ.R,totY=agg.MYM.R,haveR=agg.MNQ.n>0&&agg.MYM.n>0;
+  if(!c.n&&!haveR)return{lead:'',strong:false,html:'<div class="bvd"><b>Zatiaľ nie je z čoho vyhodnotiť</b><p>Pridaj obchody (alebo vyplň týždenné hodnotenie) pre MNQ aj MYM. Výsledok sa tu ukáže hneď.</p></div>'};
+  let lead='',txt='';
+  if(c.MNQ!==c.MYM)lead=c.MNQ>c.MYM?'MNQ':'MYM';else if(haveR&&Math.abs(totM-totY)>0.005)lead=totM>totY?'MNQ':'MYM';
+  const oth=lead==='MNQ'?'MYM':'MNQ';
+  if(!lead)return{lead:'',strong:false,html:`<div class="bvd"><b>Vyrovnané</b><p>V R sa inštrumenty zatiaľ nelíšia (týždne: MNQ ${c.MNQ}, MYM ${c.MYM}, rovnako ${c.both}).</p></div>`};
+  const lw=c[lead],ow=c[oth],share=dec?Math.round(lw/dec*100):null,strong=dec>=MIN&&lw>=ow+2&&lw/dec>=0.6;
+  const byR=haveR?(lead==='MNQ'?totM>totY:totY>totM):null,tot=haveR?`Celkovo ${lead} ${esc(bRs(agg[lead].R))} oproti ${oth} ${esc(bRs(agg[oth].R))}.`:'';
+  const warn=byR===false&&haveR?`<p class="bw">Pozor: podľa týždňov vedie ${lead}, ale podľa celkového R ${oth}. O výsledku rozhodlo pár veľkých týždňov.</p>`:'';
+  const small=dec<MIN?`<p class="bw">Zatiaľ málo údajov: rozhodnutých týždňov ${dec} z ${MIN}. Ber to len orientačne.</p>`:'';
+  const tie=c.MNQ===c.MYM;
+  txt=tie?`<b>V týždňoch vyrovnané, v celkovom R vedie ${lead}</b><p>Týždne s viac R: MNQ ${c.MNQ}, MYM ${c.MYM}${c.both?', s rovnakým výsledkom '+c.both:''}. ${tot}</p>${small}`
+    :`<b>${strong?'Viac sa ti oplatí otvárať spätne':'Mierne vedie'} ${lead}</b><p>${lead} mal viac R v ${lw} z ${dec} rozhodnutých týždňov${share!=null?' ('+share+' %)':''}${c.both?', týždňov s rovnakým výsledkom: '+c.both:''}. ${tot}</p>${warn}${small}`;
+  return{lead,strong:strong&&!tie,html:`<div class="bvd ${bCls(lead)}">${txt}</div>`}}
+function bChart(ws){const rows=ws.filter(w=>w.list.length);if(rows.length<2)return'<p class="sub">Graf sa zobrazí, keď budeš mať obchody aspoň z dvoch týždňov.</p>';
+  const W=640,H=210,pl=44,pr=64,pt=14,pb=26,pts={MNQ:[],MYM:[]};let cm=0,cy=0;
+  rows.forEach(w=>{cm+=w.ag.MNQ.R;cy+=w.ag.MYM.R;pts.MNQ.push(cm);pts.MYM.push(cy)});
+  const all=pts.MNQ.concat(pts.MYM,[0]),mn=Math.min.apply(null,all),mx=Math.max.apply(null,all),sp=(mx-mn)||1,n=rows.length;
+  const X=i=>pl+(n===1?0:i*(W-pl-pr)/(n-1)),Y=v=>pt+(mx-v)/sp*(H-pt-pb);
+  const line=(s,c)=>`<polyline class="bl ${c}" points="${pts[s].map((v,i)=>X(i).toFixed(1)+','+Y(v).toFixed(1)).join(' ')}"/>`;
+  const end=(s,c)=>{const v=pts[s][n-1];return`<text class="bt ${c}" x="${X(n-1)+6}" y="${Y(v)+4}">${s} ${esc(bRs(v))}</text>`};
+  const ev=Math.abs(pts.MNQ[n-1]-pts.MYM[n-1])<sp*0.07;
+  let g='';for(let i=0;i<=4;i++){const v=mn+sp*i/4;g+=`<line class="bg" x1="${pl}" x2="${W-pr}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}"/><text class="ba" x="${pl-6}" y="${(Y(v)+4).toFixed(1)}" text-anchor="end">${v.toFixed(1).replace('.',',')}</text>`}
+  const lbl=[0,Math.floor((n-1)/2),n-1].filter((v,i,a)=>a.indexOf(v)===i).map(i=>`<text class="ba" x="${X(i).toFixed(1)}" y="${H-6}" text-anchor="middle">${esc(jShortD(rows[i].mon))}</text>`).join('');
+  return`<svg class="bsv" viewBox="0 0 ${W} ${H}" role="img" aria-label="Kumulatívne R po týždňoch: MNQ ${esc(bRs(pts.MNQ[n-1]))}, MYM ${esc(bRs(pts.MYM[n-1]))}">${g}<line class="bz" x1="${pl}" x2="${W-pr}" y1="${Y(0).toFixed(1)}" y2="${Y(0).toFixed(1)}"/>${line('MNQ','m1')}${line('MYM','m2')}${ev?'':end('MNQ','m1')+end('MYM','m2')}${lbl}</svg>
+  <div class="bleg"><span class="m1t">MNQ ${esc(bRs(pts.MNQ[n-1]))}</span><span class="m2t">MYM ${esc(bRs(pts.MYM[n-1]))}</span><span class="sub">kumulatívne R po týždňoch</span></div>`}
+function bScore(){const all=bWeeks(),ws=all.filter(bInPer),inW=new Set(ws.map(w=>w.mon)),agg=bAgg(bList().filter(x=>inW.has(bMonOf(x.r.date)))),vd=bVerdict(ws,agg);
+  const per=B_PER.map(p=>`<button data-act="bper" data-v="${p[0]}" aria-pressed="${B.per===p[0]}">${p[1]}</button>`).join('');
+  return`<h2>Ktorý inštrument sa ti viac oplatí: MNQ alebo MYM?</h2><div class="jsub" role="group" aria-label="Obdobie">${per}</div>
+  <div class="btsc">${bTeam('MNQ',ws,agg,vd.lead,vd.strong)}<div class="btvs">vs</div>${bTeam('MYM',ws,agg,vd.lead,vd.strong)}</div>${vd.html}
+  <h3 class="jh3">Koľko týždňov vyhral ktorý inštrument</h3>${B_MET.map(m=>bBar(m[1],m[2],bCount(ws,m[0]))).join('')}
+  <p class="sub">Týždne, kde si údaj nevyplnil, sa dopočítajú z obchodov (R, body, čistý prieraz). Označenie „viedol lepšie“ platí len podľa teba. Body sú hrubé body indexu, takže MYM má pri rovnakom % pohybe viac bodov než MNQ. Ako hlavné kritérium ber R. R závisí od počtu kontraktov, ktorý zadáš.</p>`}
+function bDetail(){const ws=bWeeks().filter(bInPer),inW=new Set(ws.map(w=>w.mon)),ag=bAgg(bList().filter(x=>inW.has(bMonOf(x.r.date))));
+  const rows=['MNQ','MYM','MCL'].filter(s=>s!=='MCL'||ag.MCL.n).map(s=>{const a=ag[s],pf=a.gl>0?(a.gp/a.gl).toFixed(2):(a.gp>0?'∞':'—'),cl=a.cy+a.cn;
+    return`<tr><td><span class="bd ${s==='MNQ'?'b':s==='MYM'?'g':''}">${s}</span></td><td>${a.n}</td><td>${a.n?Math.round(a.w/a.n*100)+' %':'—'}</td><td class="${cls(a.R)}">${esc(bRs(a.R))}</td><td class="${cls(a.R)}">${a.n?esc(bRs(a.R/a.n)):'—'}</td><td>${pf}</td><td>${a.np?esc(bNf(a.pts,2)):'—'}</td><td>${a.np?esc(bNf(a.pct,2))+' %':'—'}</td><td>${cl?Math.round(a.cy/cl*100)+' % ('+cl+')':'—'}</td></tr>`}).join('');
+  return`<h2>Detail podľa inštrumentu</h2><div class="tw"><table class="jt"><thead><tr><th>Symbol</th><th>Obchody</th><th>Win rate</th><th>R spolu</th><th>Ø R</th><th>Profit factor</th><th>Body spolu</th><th>% pohyb spolu</th><th>Čistý prieraz</th></tr></thead><tbody>${rows}</tbody></table></div>
+  <p class="sub">Body = rozdiel cien na 1 kontrakt (pri Short opačne). % pohyb = body ÷ vstupná cena, vhodné na férové porovnanie MNQ a MYM.</p><h3 class="jh3">Priebeh R po týždňoch</h3>${bChart(ws)}`}
+function bHist(){const ws=bWeeks().filter(bInPer).reverse();
+  if(!ws.length)return'<h2>História týždňov</h2><div class="empty">Zatiaľ nemáš žiadny týždeň v tomto období.</div>';
+  const shown=ws.slice(0,B.lim),bdg=(v,s)=>{if(!v)return'<span class="bd">—</span>';const t=v==='both'?'Rovnako':v;return`<span class="bd ${v==='MNQ'?'b':v==='MYM'?'g':''}">${t}${s==='auto'?'<small> auto</small>':''}</span>`};
+  const body=shown.map(w=>{const m=w.ag.MNQ,y=w.ag.MYM,rc=(a)=>a.n?`<span class="${cls(a.R)}">${esc(bRs(a.R))}</span> <small>(${a.n})</small>`:'—';
+    return`<tr${w.mon===B.wk?' class="cur"':''}><td>${esc(jShortD(w.mon))} – ${esc(jShortD(jAdd(w.mon,6)))} ${w.mon.slice(0,4)}</td><td>${rc(m)}</td><td>${rc(y)}</td><td>${bdg(w.eff.moreR,w.src.moreR)}</td><td>${bdg(w.eff.clean,w.src.clean)}</td><td>${bdg(w.eff.pts,w.src.pts)}</td><td>${bdg(w.eff.lead,w.src.lead)}</td><td><button data-act="bopen" data-d="${w.mon}">Otvoriť</button></td></tr>`}).join('');
+  return`<h2>História týždňov</h2><div class="tw"><table class="jt"><thead><tr><th>Týždeň</th><th>MNQ R (obch.)</th><th>MYM R (obch.)</th><th>Viac R</th><th>Čistejší prieraz</th><th>Viac bodov</th><th>Viedol lepšie</th><th></th></tr></thead><tbody>${body}</tbody></table></div>`+(ws.length>shown.length?`<div class="row"><button data-act="bmore">Zobraziť ďalšie (${ws.length-shown.length})</button></div>`:'')}
+function bWeekHtml(){const mon=B.wk,e=jAdd(mon,6),w=bWeeks().find(x=>x.mon===mon)||{mon,list:[],ag:bAgg([]),au:{moreR:'',pts:'',clean:''},rec:{},eff:{},src:{}},rec=w.rec||{},ag=w.ag;
+  const cur=jMon(jYmd(new Date()))===mon,nav=`<div class="jdt"><button data-act="bprev" aria-label="Predchádzajúci týždeň">‹</button><div class="bwk"><b>${esc(jShortD(mon))} – ${esc(jShortD(e))} ${e.slice(0,4)}</b><span>Týždeň ${esc(isoWeek(jDt(mon)).replace(/^\d{4}-T0?/,''))}${cur?' (tento)':''}</span></div><button data-act="bnext" aria-label="Nasledujúci týždeň">›</button><button data-act="btoday">Tento týždeň</button></div>`;
+  const row=(l,f)=>`<tr><td>${l}</td><td>${f(ag.MNQ)}</td><td>${f(ag.MYM)}</td></tr>`,r2=a=>a.n?`<b class="${cls(a.R)}">${esc(bRs(a.R))}</b>`:'—';
+  const tbl=`<div class="tw"><table class="jt"><thead><tr><th>Z obchodov tohto týždňa</th><th>MNQ</th><th>MYM</th></tr></thead><tbody>${row('Obchody',a=>a.n||'—')}${row('R spolu',r2)}${row('Body spolu (na 1 kontrakt)',a=>a.np?esc(bNf(a.pts,2)):'—')}${row('% pohyb spolu',a=>a.np?esc(bNf(a.pct,2))+' %':'—')}${row('Čistý prieraz',a=>a.cy+a.cn?Math.round(a.cy/(a.cy+a.cn)*100)+' % ('+(a.cy+a.cn)+')':'—')}</tbody></table></div>`;
+  const hint=f=>{const au=w.au[f];return au?`<small>z obchodov: ${au==='both'?'rovnako':au}</small>`:'<small>z obchodov sa nedá určiť</small>'};
+  const sel=B_MET.map(m=>`<label>${m[2]}<select data-bw="${m[0]}">${jOpt(B_OPT,rec[m[0]]||'')}</select>${m[0]==='lead'?'':hint(m[0])}</label>`).join('');
+  return`<section class="card"><h2>Týždeň: kto bol lepší?</h2><p class="sub">Vyber týždeň, zapíš, ktorý inštrument bol lepší, a pridaj obchody nižšie. Ak výber necháš prázdny, údaj sa dopočíta z obchodov.</p>${nav}${tbl}
+  <div class="jg">${sel}<label class="jw">Poznámka k týždňu<textarea data-bw="note" rows="2" maxlength="4000">${esc(rec.note||'')}</textarea></label></div><p class="sub"><span id="bsave" role="status" aria-live="polite">${J.err?esc(J.err):'Zmeny sa ukladajú automaticky.'}</span></p></section>`}
+function bRecStr(v){const s=x=>x==null?'':String(x);return{date:v.date,tin:v.tin,tout:v.tout,sym:v.sym,side:v.side,qty:s(v.qty),entry:s(v.entry),exit:s(v.exit),comm:s(v.comm||''),rDirect:s(v.rDirect),strat:v.strat,clean:v.clean,note:v.note}}
+function bRead(){const o={};document.querySelectorAll('#pg6 [data-bf]').forEach(e=>{o[e.dataset.bf]=e.value});return o}
+function bKeep(){if(!document.querySelector('#pg6 [data-bf]'))return;const o=bRead();B.last={sym:o.sym||B.last.sym,side:o.side||B.last.side};
+  B.draft=['tin','tout','entry','exit','comm','rDirect','strat','clean','note'].some(k=>o[k]&&o[k]!=='')?o:null}
+function bForm(){const merr=B.err;B.err='';const e=B.edit&&bTr()[B.edit]?bTr()[B.edit]:null,td=jYmd(new Date()),dd=jMon(td)===B.wk?td:B.wk,
+  fv=B.draft||bRecStr(e||{date:dd,tin:'',tout:'',sym:B.last.sym||'MNQ',side:B.last.side||'Long',qty:1,entry:null,exit:null,comm:0,rDirect:null,strat:'',clean:'',note:''}),
+  names=Array.from(new Set([].concat(S.auto.w.map(w=>w.name),S.trades.map(t=>t.strat||''),Object.keys(bTr()).map(i=>bTr()[i].strat)).filter(Boolean)));
+  const inp=(f,t,ex)=>`<input type="${t||'text'}" data-bf="${f}" value="${esc(fv[f])}"${ex||''}>`,num=(f,ph)=>inp(f,'text',` inputmode="decimal" autocomplete="off" placeholder="${ph||''}"`);
+  return`<section class="card"><h2>${e?'Upraviť backtest obchod':'Pridať backtest obchod'}</h2><p class="sub">Zapíš obchod z backtestu. Nezapočíta sa do Žurnálu ani Dashboardu. R sa počíta rovnako ako u reálnych obchodov (čistý P&amp;L ÷ 1R).</p>
+  <div class="jg"><label>Dátum a deň${inp('date','date')}</label><label>Čas vstupu${inp('tin','time')}</label><label>Čas výstupu${inp('tout','time')}</label>
+  <label>Symbol<select data-bf="sym">${['MNQ','MYM','MCL'].map(x=>`<option${fv.sym===x?' selected':''}>${x}</option>`).join('')}</select></label>
+  <label>Smer<select data-bf="side"><option${fv.side==='Long'?' selected':''}>Long</option><option${fv.side==='Short'?' selected':''}>Short</option></select></label>
+  <label>Počet kontraktov${inp('qty','number',' min="1" step="1" inputmode="numeric"')}</label>
+  <label>Vstupná cena${num('entry')}</label><label>Výstupná cena${num('exit')}</label><label>Poplatky v USD (voliteľné)${num('comm','0')}</label>
+  <label>…alebo priamo R (ak nemáš ceny)${num('rDirect','napr. 2 alebo -1')}</label>
+  <label>Stratégia<input type="text" data-bf="strat" list="bstrats" value="${esc(fv.strat)}" placeholder="podľa času sa doplní sama"><datalist id="bstrats">${names.map(n=>`<option value="${esc(n)}">`).join('')}</datalist></label>
+  <label>Čistý prieraz?<select data-bf="clean">${jOpt(B_CL,fv.clean)}</select></label>
+  <label class="jw">Poznámka<textarea rows="2" maxlength="4000" data-bf="note">${esc(fv.note)}</textarea></label></div>
+  <p class="jerr" id="berr" role="alert">${esc(merr||'')}</p>
+  <div class="row"><button class="pri" data-act="bsavetr">${e?'Uložiť zmeny':'Pridať obchod'}</button>${e?'<button data-act="bcancel">Zrušiť úpravu</button>':(B.draft?'<button data-act="bcancel">Zahodiť rozpísané</button>':'')}</div><p class="sub">Ak zadáš ceny aj R, použijú sa ceny. Dátum určuje, do ktorého týždňa obchod patrí.</p></section>`}
+function bCard(x){const r=x.r,c=x.c,wl=c.R>0?' w':c.R<0?' l':'',res=c.R>0?['WIN','pos']:c.R<0?['LOSS','neg']:['BREAK-EVEN',''];
+  return`<div class="jtr${wl}"><div class="jth"><div><span>Dátum a čas</span><b>${esc(r.date)} ${esc(r.tin)}${r.tout?'–'+esc(r.tout):''}</b></div><div><span>Symbol / smer</span><b>${esc(r.sym)} ${esc(r.side)} ×${esc(r.qty)}</b></div>
+  <div><span>Vstup → výstup</span><b>${r.entry!=null?esc(r.entry+' → '+r.exit):'zadané ako R'}</b></div><div><span>Body</span><b class="${cls(c.pts)}">${c.pts!=null?esc(bNf(c.pts,2)):'—'}</b></div>
+  <div><span>Stratégia</span><b>${esc(r.strat||(r.tin?autoStrat(r.date+'T'+r.tin,true):'')||'—')}</b></div><div><span>Čistý prieraz</span><b>${r.clean==='yes'?'Áno':r.clean==='no'?'Nie':'—'}</b></div>
+  <div><span>Čistý P&amp;L</span><b class="${cls(c.pnl)}">${c.src==='R'?'≈ ':''}${esc(m$(c.pnl))}</b></div><div><span>Výsledok</span><b class="${res[1]}">${res[0]}</b></div><div><span>R</span><b class="${cls(c.R)}">${esc(bRs(c.R))}</b></div></div>
+  ${r.note?`<p style="margin:0;overflow-wrap:anywhere">${esc(r.note)}</p>`:''}<div class="row"><button data-act="bedit" data-t="${esc(x.id)}">Upraviť</button><button data-act="bdel" data-t="${esc(x.id)}">Vymazať</button></div></div>`}
+function bTradesHtml(){const mon=B.wk,e=jAdd(mon,6),l=bList().filter(x=>x.r.date>=mon&&x.r.date<=e).sort((a,b)=>a.r.date===b.r.date?((a.r.tin||'')<(b.r.tin||'')?-1:1):(a.r.date<b.r.date?-1:1));
+  return`<h2>Obchody v tomto týždni (${l.length})</h2>`+(l.length?'<div class="jstack">'+l.map(bCard).join('')+'</div>':'<div class="empty">V tomto týždni zatiaľ nie sú žiadne backtest obchody.</div>')}
+function bUpdate(){if(!$('bsc'))return;$('bsc').innerHTML=bScore();$('bdet').innerHTML=bDetail();$('bhist').innerHTML=bHist();if($('btr'))$('btr').innerHTML=bTradesHtml()}
+function bRender(keep){if(keep)bKeep();$('pg6').innerHTML=`<section class="card" id="bsc">${bScore()}</section>${bWeekHtml()}${bForm()}<section class="card" id="btr">${bTradesHtml()}</section><section class="card" id="bdet">${bDetail()}</section><section class="card" id="bhist">${bHist()}</section>`}
+function bSaveTr(){const o=bRead(),er=[];
+  const raw={date:o.date,tin:o.tin,tout:o.tout,sym:o.sym,side:o.side,qty:+o.qty,entry:bPn(o.entry),exit:bPn(o.exit),comm:bPn(o.comm)==null?0:bPn(o.comm),rDirect:bPn(o.rDirect),strat:String(o.strat||'').trim(),clean:o.clean,note:o.note||''};
+  if(!okD(raw.date))er.push('Zadaj dátum.');
+  if(!(raw.qty>=1&&raw.qty<=1000&&Number.isInteger(raw.qty)))er.push('Počet kontraktov musí byť celé číslo 1 až 1000.');
+  ['entry','exit','comm','rDirect'].forEach(f=>{if(Number.isNaN(raw[f]))er.push('Pole „'+({entry:'Vstupná cena',exit:'Výstupná cena',comm:'Poplatky',rDirect:'R'})[f]+'“ musí byť číslo.')});
+  if(raw.comm<0)er.push('Poplatky nemôžu byť záporné.');
+  if(!er.length&&!((raw.entry!=null&&raw.exit!=null)||raw.rDirect!=null))er.push('Zadaj vstupnú aj výstupnú cenu, alebo priamo R.');
+  if(!er.length&&(raw.entry!=null)!==(raw.exit!=null)&&raw.rDirect==null)er.push('Zadaj vstupnú aj výstupnú cenu.');
+  if(!raw.strat&&raw.tin)raw.strat=autoStrat(raw.date+'T'+raw.tin,true)||'';
+  if(er.length){B.err=er.join(' ');B.draft=o;return bRender()}
+  const rec=jBtRec(raw);if(!jBtOk(rec)){B.err='Záznam sa nepodarilo uložiť, skontroluj údaje.';B.draft=o;return bRender()}
+  const id=B.edit||('b'+Date.now().toString(36)+Math.random().toString(36).slice(2,6));bTr()[id]=rec;
+  B.last={sym:rec.sym,side:rec.side};B.edit=null;B.draft=null;B.err='';B.wk=jMon(rec.date);jFlush();bRender()}
+function bSetWeek(el){const f=el.dataset.bw,mon=B.wk;let w=bWk()[mon];if(!w)w=bWk()[mon]=jBtWeek({});
+  if(f==='note')w.note=el.value.slice(0,4000);else if(B_MET.some(m=>m[0]===f))w[f]=['MNQ','MYM','both'].indexOf(el.value)>=0?el.value:'';else return;
+  if(!jBtWeekHas(w))delete bWk()[mon];bUpdate();jSaveSoon()}
+$('pg6').addEventListener('input',e=>{const el=e.target;if(el.dataset&&el.dataset.bw&&el.tagName==='TEXTAREA')bSetWeek(el)});
+$('pg6').addEventListener('change',e=>{const el=e.target;if(el.dataset&&el.dataset.bw&&el.tagName==='SELECT')bSetWeek(el)});
+$('pg6').addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act,go=k=>{if(jT)jFlush();B.wk=k;B.lim=60;bRender(true)};
+  if(a==='bprev')return go(jAdd(B.wk,-7));if(a==='bnext')return go(jAdd(B.wk,7));if(a==='btoday')return go(jMon(jYmd(new Date())));
+  if(a==='bopen'&&okD(b.dataset.d)){go(b.dataset.d);window.scrollTo(0,0);return}
+  if(a==='bper'){B.per=B_PER.some(p=>p[0]===b.dataset.v)?b.dataset.v:'all';bUpdate();return}
+  if(a==='bmore'){B.lim+=60;$('bhist').innerHTML=bHist();return}
+  if(a==='bsavetr')return bSaveTr();
+  if(a==='bcancel'){B.edit=null;B.draft=null;return bRender()}
+  if(a==='bedit'&&bTr()[b.dataset.t]){B.edit=b.dataset.t;B.draft=null;bRender();const f=document.querySelector('#pg6 [data-bf="date"]');if(f&&f.scrollIntoView)f.scrollIntoView({block:'center'});return}
+  if(a==='bdel'){if(!jArm(b,'Naozaj vymazať? Klikni znova'))return;bKeep();delete bTr()[b.dataset.t];if(B.edit===b.dataset.t){B.edit=null;B.draft=null}jFlush();bRender()}});
+
 // ---- ZDIEĽANIE A NAČÍTANIE ZÁLOHY (systémové zdieľanie, AirDrop, súbor zo zariadenia)
 const BK={pending:null};
 const bkMsg=t=>{const m=$('bm');if(m)m.textContent=t};
@@ -1759,17 +1991,11 @@ async function bkShare(){if(typeof jT!=='undefined'&&jT)jFlush();const txt=JSON.
   bkDownload(txt,name);bkMsg('Zdieľanie nie je v tomto prehliadači dostupné. Záloha sa stiahla ako súbor.')}
 function bkPick(file){file.text().then(x=>{try{const o=JSON.parse(x);if(!o||!Array.isArray(o.trades))throw 0;const n=norm(o);BK.pending=o;
   const dj=Object.keys(n.journal.days).length+Object.keys(n.journal.notes).length+Object.keys(n.journal.market).length;
-  $('bm').innerHTML=`Súbor obsahuje ${n.trades.length} obchodov (teraz máš ${S.trades.length}). Obchody sa nahradia obchodmi zo súboru, denník, poznámky a analýza trhu sa zlúčia (záznamov v súbore: ${dj}). Údaje, ktoré už máš vyplnené, sa neprepíšu. Program si pred načítaním odloží aktuálny stav, takže sa to dá vrátiť. <span class="row" style="margin-top:8px"><button id="bkok" class="pri">Načítať</button><button id="bkno">Zrušiť</button></span>`}
+  $('bm').innerHTML=`Súbor obsahuje ${n.trades.length} obchodov (teraz máš ${S.trades.length}). Obchody sa nahradia obchodmi zo súboru, denník, poznámky a analýza trhu sa zlúčia (záznamov v súbore: ${dj}). <span class="row" style="margin-top:8px"><button id="bkok" class="pri">Načítať</button><button id="bkno">Zrušiť</button></span>`}
   catch(er){BK.pending=null;bkMsg('Súbor nie je platná záloha.')}}).catch(()=>bkMsg('Súbor sa nepodarilo prečítať.'))}
-document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('#bkok,#bkno,#bkundo');if(!b)return;
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('#bkok,#bkno');if(!b)return;
   if(b.id==='bkno'){BK.pending=null;bkMsg('Načítanie bolo zrušené.');return}
-  if(b.id==='bkundo'){let r=null;try{r=JSON.parse(localStorage.getItem('tj1undo')||'null')}catch(er){}
-    if(!r||!Array.isArray(r.trades)){bkMsg('Stav pred načítaním už nie je k dispozícii.');return}
-    S=norm(r);S.journal=normJ(r.journal);save();try{localStorage.removeItem('tj1undo')}catch(er){}render();showTab(UI.tab);bkMsg('Vrátené do stavu pred načítaním zálohy.');return}
-  const o=BK.pending;BK.pending=null;if(!o)return;if(typeof jT!=='undefined'&&jT)jFlush();
-  let undo=false;try{localStorage.setItem('tj1undo',JSON.stringify(S));undo=true}catch(er){}
-  restoreS(o);save();render();showTab(UI.tab);
-  $('bm').innerHTML='Načítané. Obchodov: '+S.trades.length+'. Vyplnené údaje v denníku a analýze trhu ostali zachované, súbor iba doplnil chýbajúce.'+(undo?' <span class="row" style="margin-top:8px"><button id="bkundo">Vrátiť späť</button></span>':'')});
+  const o=BK.pending;BK.pending=null;if(!o)return;restoreS(o);save();render();showTab(UI.tab);bkMsg('Načítané. Obchodov: '+S.trades.length)});
 if($('bshare'))$('bshare').onclick=bkShare;
 if($('bfile')&&$('bfi')){$('bfile').onclick=()=>$('bfi').click();$('bfi').onchange=e=>{const f=e.target.files[0];if(f)bkPick(f);e.target.value=''}}
 
